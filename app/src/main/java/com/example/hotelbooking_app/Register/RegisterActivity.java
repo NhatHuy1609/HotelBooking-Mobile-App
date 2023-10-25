@@ -19,8 +19,6 @@ public class RegisterActivity extends AppCompatActivity {
         openRegister();
     }
 
-
-
     private void openRegister() {
         setContentView(R.layout.sinup_layout);
         Button createBtn=findViewById(R.id.signup_create_btn);

@@ -65,11 +65,7 @@ public class AdditionalProfileActivity extends AppCompatActivity {
                 calendarDialog.dismiss();
             }
         });
-
         calendarDialog.show();
-
-
-
     }
     private void uploadImg() {
         ImageView imageView = findViewById(R.id.profile_ImgUpload);

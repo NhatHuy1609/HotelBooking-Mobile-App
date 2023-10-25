@@ -11,7 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.hotelbooking_app.Booking.Fragment.BookingGuestsSelectBottomSheet;
 import com.example.hotelbooking_app.Booking.Fragment.BookingRoomsSelectBottomSheet;
+
+import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
+
 import com.example.hotelbooking_app.Booking.Interface.OnSaveClickListener;
+
 import com.example.hotelbooking_app.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
@@ -32,10 +36,12 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_layout);
 
+
         // Initialize UI elements
         guestsSelect = findViewById(R.id.guests_number_select);
         roomsSelect = findViewById(R.id.room_type_select);
         datesSelect = findViewById(R.id.dates_select);
+
 
         setupGuestsSelect();
         setupRoomsSelect();
@@ -66,6 +72,7 @@ public class BookingActivity extends AppCompatActivity {
                 .setTheme(R.style.ThemeMaterialCalendar)
                 .build();
 
+
         datePicker.addOnPositiveButtonClickListener(selection -> {
             Pair<Long, Long> dateRange = datePicker.getSelection();
             String formattedDateRange = formatTimestampRange(dateRange.first, dateRange.second);
@@ -75,9 +82,11 @@ public class BookingActivity extends AppCompatActivity {
         datesSelect.setOnClickListener(v -> showDatePicker());
     }
 
+
     private void showDatePicker() {
         datePicker.show(getSupportFragmentManager(), "datePicker_tag");
     }
+
 
     private String formatTimestampRange(long startTimestamp, long endTimestamp) {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());

@@ -37,9 +37,13 @@ public class ReviewsActivity extends AppCompatActivity {
         ReviewAdapter adapter = new ReviewAdapter(reviews);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Quy định cách dữ liệu sẽ được hiển thị (theo danh sách, lưới, vv).
-        setStarRating(3.5f);
+        Float rate=computeRating(reviews);
+        setStarRating(rate);
+    }
 
-
+    private Float computeRating(List<Review> reviews) {
+        float totalRating=reviews.stream().map(Review::getRating).reduce(0.f, (a,b) -> a+b);
+        return  totalRating/((float)reviews.size());
     }
 
     private void setStarRating(float userRating) {
