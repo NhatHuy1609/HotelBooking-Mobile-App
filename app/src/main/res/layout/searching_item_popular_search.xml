@@ -15,7 +15,7 @@
 
 
         <ImageButton
-            android:id="@+id/hotel_small_img"
+            android:id="@+id/item_img_popular_search"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:background="@drawable/searching_image_muongthanh"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvPplHotelName"
+            android:id="@+id/item_tv_popular_search_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -34,11 +34,11 @@
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/hotel_small_img"
+            app:layout_constraintStart_toEndOf="@+id/item_img_popular_search"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvSearchCount"
+            android:id="@+id/item_tv_popular_search_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -47,10 +47,10 @@
             android:textColor="@color/searching_grey"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/hotel_small_img" />
+            app:layout_constraintStart_toEndOf="@+id/item_img_popular_search" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button2"
+            android:id="@+id/item_tv_popular_search_button"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:background="@drawable/searching_round_button_background"

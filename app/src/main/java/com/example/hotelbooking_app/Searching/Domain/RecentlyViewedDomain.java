@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class RecentlyViewedDomain implements Serializable {
     private String name;
     private String address;
-    private double rating;
-    private int ratingCount;
+    private double score;
+    private int count;
 
-    public RecentlyViewedDomain(String name, String address, double rating, int ratingCount) {
+    public RecentlyViewedDomain(String name, String address, double score, int count) {
         this.name = name;
         this.address = address;
-        this.rating = rating;
-        this.ratingCount = ratingCount;
+        this.score = score;
+        this.count = count;
     }
 
     public String getName() {
@@ -31,19 +31,19 @@ public class RecentlyViewedDomain implements Serializable {
         this.address = address;
     }
 
-    public double getRating() {
-        return rating;
+    public double getScore() {
+        return score;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
+    public void setScore(double score) {
+        this.score = score;
     }
 
-    public int getRatingCount() {
-        return ratingCount;
+    public int getCount() {
+        return count;
     }
 
-    public void setRatingCount(int ratingCount) {
-        this.ratingCount = ratingCount;
+    public void setCount(int count) {
+        this.count = count;
     }
 }

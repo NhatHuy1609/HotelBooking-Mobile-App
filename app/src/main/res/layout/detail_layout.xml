@@ -8,10 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -39,7 +37,7 @@
                         android:layout_height="match_parent">
 
                         <com.denzcoskun.imageslider.ImageSlider
-                            android:id="@+id/imgSlider"
+                            android:id="@+id/detail_img_slider"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             app:iss_auto_cycle="true"
@@ -53,7 +51,7 @@
                             app:layout_constraintVertical_bias="0.0" />
 
                         <ImageButton
-                            android:id="@+id/detail_backBtn"
+                            android:id="@+id/detail_back_button"
                             android:layout_width="wrap_content"
                             android:layout_height="32dp"
                             android:layout_marginStart="12dp"
@@ -63,19 +61,19 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvDetailHotel"
+                            android:id="@+id/detail_tv_detail_hotel"
                             android:layout_width="wrap_content"
                             android:layout_height="19dp"
                             android:text="Detail Hotel"
                             android:textColor="@color/white"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/detail_backBtn"
-                            app:layout_constraintEnd_toStartOf="@+id/detail_favoriteBtn"
-                            app:layout_constraintStart_toEndOf="@+id/detail_backBtn"
-                            app:layout_constraintTop_toTopOf="@+id/detail_backBtn" />
+                            app:layout_constraintBottom_toBottomOf="@+id/detail_back_button"
+                            app:layout_constraintEnd_toStartOf="@+id/detail_favorite_button"
+                            app:layout_constraintStart_toEndOf="@+id/detail_back_button"
+                            app:layout_constraintTop_toTopOf="@+id/detail_back_button" />
 
                         <ImageButton
-                            android:id="@+id/detail_favoriteBtn"
+                            android:id="@+id/detail_favorite_button"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginTop="16dp"
@@ -85,7 +83,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvDetailHotelAddress"
+                            android:id="@+id/detail_tv_hotel_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
@@ -95,11 +93,11 @@
                             android:text="270 Vo Nguyen Giap, Da Nang"
                             android:textColor="@color/white"
                             android:textSize="14sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/imgSlider"
-                            app:layout_constraintStart_toStartOf="@+id/imgSlider" />
+                            app:layout_constraintBottom_toBottomOf="@+id/detail_img_slider"
+                            app:layout_constraintStart_toStartOf="@+id/detail_img_slider" />
 
                         <TextView
-                            android:id="@+id/tvDetailHotelName"
+                            android:id="@+id/detail_tv_hotel_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
@@ -109,8 +107,8 @@
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toTopOf="@+id/tvDetailHotelAddress"
-                            app:layout_constraintStart_toStartOf="@+id/imgSlider" />
+                            app:layout_constraintBottom_toTopOf="@+id/detail_tv_hotel_address"
+                            app:layout_constraintStart_toStartOf="@+id/detail_img_slider" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -127,7 +125,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvCommonFacilities"
+                    android:id="@+id/detail_tv_common_facilities"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -137,10 +135,10 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvSeeAll"
+                    android:id="@+id/searching_tv_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txtSeeAll"
+                    android:text="See All"
                     android:textColor="@color/searching_primaryColor"
                     android:textSize="16sp" />
 
@@ -165,7 +163,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/imgFacility_1"
+                            android:id="@+id/detail_img_facility_1"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:background="@drawable/detail_round_border_background"
@@ -176,7 +174,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvFacility_1"
+                            android:id="@+id/detail_tv_facility_1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -185,7 +183,7 @@
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgFacility_1" />
+                            app:layout_constraintTop_toBottomOf="@+id/detail_img_facility_1" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
@@ -200,7 +198,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/imgFacility_2"
+                            android:id="@+id/detail_img_facility_2"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:background="@drawable/detail_round_border_background"
@@ -211,7 +209,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvFacility_2"
+                            android:id="@+id/detail_tv_facility_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -220,7 +218,7 @@
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgFacility_2" />
+                            app:layout_constraintTop_toBottomOf="@+id/detail_img_facility_2" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
@@ -235,7 +233,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/imgFacility_3"
+                            android:id="@+id/detail_img_facility_3"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:background="@drawable/detail_round_border_background"
@@ -246,7 +244,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvFacility_3"
+                            android:id="@+id/detail_tv_facility_3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -255,7 +253,7 @@
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgFacility_3" />
+                            app:layout_constraintTop_toBottomOf="@+id/detail_img_facility_3" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
@@ -270,7 +268,7 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:id="@+id/imgFacility_4"
+                            android:id="@+id/detail_img_facility_4"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:background="@drawable/detail_round_border_background"
@@ -281,7 +279,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/tvFacility_4"
+                            android:id="@+id/detail_tv_facility_4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
@@ -290,7 +288,7 @@
                             android:textSize="10sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/imgFacility_4" />
+                            app:layout_constraintTop_toBottomOf="@+id/detail_img_facility_4" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -304,7 +302,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvOverview"
+                    android:id="@+id/detail_tv_overview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -316,7 +314,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/detail_tv_overview_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -334,7 +332,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvLocation"
+                    android:id="@+id/detail_tv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -344,20 +342,119 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvViewDetail"
+                    android:id="@+id/detail_tv_view_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txtViewDetail"
+                    android:text="View Detail"
                     android:textColor="@color/searching_primaryColor"
                     android:textSize="16sp" />
 
             </LinearLayout>
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp">
 
-            </FrameLayout>
+                <ImageView
+                    android:id="@+id/detail_img_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"
+                    android:background="@drawable/detail_map"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/detail_tv_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reviews"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/detail_tv_view_see_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See All"
+                    android:textColor="@color/searching_primaryColor"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/detail_lv_reviews_item"
+                android:layout_width="match_parent"
+                android:layout_height="265dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp"
+                android:dividerHeight="8dp"
+                tools:listitem="@layout/detail_item_reviews" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp">
+
+                <TextView
+                    android:id="@+id/detail_tv_price_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:text="Price"
+                    android:textSize="14sp"
+                    android:textColor="@color/searching_primaryColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/detail_tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginStart="12dp"
+                    android:text="$24.00"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/detail_booking_button"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="16dp"
+                    android:background="@drawable/detail_booking_button_background"
+                    android:text="Booking now"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>

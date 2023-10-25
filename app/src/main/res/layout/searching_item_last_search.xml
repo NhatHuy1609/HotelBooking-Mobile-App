@@ -15,7 +15,7 @@
 
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/item_tv_last_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tag name"
@@ -26,13 +26,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/removeBtn"
+            android:id="@+id/searching_remove_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@drawable/searching_close_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/tvName"
-            app:layout_constraintStart_toEndOf="@+id/tvName"
-            app:layout_constraintTop_toTopOf="@+id/tvName" />
+            app:layout_constraintBottom_toBottomOf="@+id/item_tv_last_search"
+            app:layout_constraintStart_toEndOf="@+id/item_tv_last_search"
+            app:layout_constraintTop_toTopOf="@+id/item_tv_last_search" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

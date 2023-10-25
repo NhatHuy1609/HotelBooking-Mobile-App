@@ -9,7 +9,7 @@
 
 
     <ImageView
-        android:id="@+id/hotel_img"
+        android:id="@+id/item_img_recently_viewed"
         android:layout_width="245dp"
         android:layout_height="165dp"
         android:scaleType="centerCrop"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/hotel_img">
+        app:layout_constraintTop_toBottomOf="@+id/item_img_recently_viewed">
 
 
         <LinearLayout
@@ -46,7 +46,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvRaingPoint"
+                    android:id="@+id/item_tv_recently_viewed_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -60,16 +60,16 @@
                     tools:ignore="MissingConstraints" />
 
                 <TextView
-                    android:id="@+id/tvRatingCount"
+                    android:id="@+id/item_tv_recently_viewed_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="(Rating count)"
                     android:textColor="@color/searching_grey"
                     android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvRaingPoint"
-                    app:layout_constraintStart_toEndOf="@id/tvRaingPoint"
-                    app:layout_constraintTop_toTopOf="@+id/tvRaingPoint"
+                    app:layout_constraintBottom_toBottomOf="@+id/item_tv_recently_viewed_score"
+                    app:layout_constraintStart_toEndOf="@id/item_tv_recently_viewed_score"
+                    app:layout_constraintTop_toTopOf="@+id/item_tv_recently_viewed_score"
                     tools:ignore="MissingConstraints" />
 
 
@@ -80,7 +80,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvHotelName"
+            android:id="@+id/item_tv_recently_viewed_name"
             android:layout_width="245dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -90,7 +90,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/tvHotelAddress"
+            android:id="@+id/item_tv_recently_viewed_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -112,7 +112,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/tvRoomType"
+                    android:id="@+id/item_tv_recently_viewed_wifi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
@@ -123,7 +123,7 @@
                     tools:ignore="MissingConstraints" />
 
                 <TextView
-                    android:id="@+id/tvWifi"
+                    android:id="@+id/item_tv_recently_viewed_room_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
@@ -131,14 +131,14 @@
                     android:textColor="@color/searching_primaryColor"
                     android:textSize="12sp"
                     app:drawableStartCompat="@drawable/searching_bed_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvRoomType"
-                    app:layout_constraintEnd_toStartOf="@+id/tvGym"
-                    app:layout_constraintStart_toEndOf="@+id/tvRoomType"
-                    app:layout_constraintTop_toTopOf="@+id/tvRoomType"
+                    app:layout_constraintBottom_toBottomOf="@+id/item_tv_recently_viewed_wifi"
+                    app:layout_constraintEnd_toStartOf="@+id/item_tv_recently_viewed_gym"
+                    app:layout_constraintStart_toEndOf="@+id/item_tv_recently_viewed_wifi"
+                    app:layout_constraintTop_toTopOf="@+id/item_tv_recently_viewed_wifi"
                     tools:ignore="MissingConstraints" />
 
                 <TextView
-                    android:id="@+id/tvGym"
+                    android:id="@+id/item_tv_recently_viewed_gym"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawablePadding="4dp"
@@ -148,7 +148,7 @@
                     app:drawableStartCompat="@drawable/searching_gym_icon"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvWifi"
+                    app:layout_constraintTop_toTopOf="@+id/item_tv_recently_viewed_room_type"
                     tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
