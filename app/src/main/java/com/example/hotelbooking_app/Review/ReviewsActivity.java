@@ -1,30 +1,26 @@
-package com.example.hotelbooking_app.Register;
-
-import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
+package com.example.hotelbooking_app.Review;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.example.hotelbooking_app.R;
-import com.example.hotelbooking_app.Register.Adapter.ReviewAdapter;
-import com.example.hotelbooking_app.Register.Model.Review;
+import com.example.hotelbooking_app.Review.Adapter.ReviewAdapter;
+import com.example.hotelbooking_app.Review.Model.Review;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class ReviewsActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         openReview();
-        openRegister();
-    }
-
-    private void openRegister() {
-        setContentView(R.layout.sinup_layout);
     }
 
     private void openReview() {
@@ -41,7 +37,13 @@ public class MainActivity extends AppCompatActivity {
         ReviewAdapter adapter = new ReviewAdapter(reviews);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Quy định cách dữ liệu sẽ được hiển thị (theo danh sách, lưới, vv).
-        setStarRating(3.5f);
+        Float rate=computeRating(reviews);
+        setStarRating(rate);
+    }
+
+    private Float computeRating(List<Review> reviews) {
+        float totalRating=reviews.stream().map(Review::getRating).reduce(0.f, (a,b) -> a+b);
+        return  totalRating/((float)reviews.size());
     }
 
     private void setStarRating(float userRating) {

@@ -36,5 +36,6 @@
     <color name="huan_olive">#FF808000</color>
     <color name="huan_navy">#FF000080</color>
     <color name="huan_textbox">#F2F9FA</color>
+    <color name="huan_upload">#FCFFFA</color>
 
 </resources>

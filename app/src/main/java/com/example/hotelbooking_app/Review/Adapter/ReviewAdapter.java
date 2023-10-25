@@ -1,4 +1,4 @@
-package com.example.hotelbooking_app.Register.Adapter;
+package com.example.hotelbooking_app.Review.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelbooking_app.R;
-import com.example.hotelbooking_app.Register.Model.Review;
+import com.example.hotelbooking_app.Review.Model.Review;
 
 import java.util.List;
 

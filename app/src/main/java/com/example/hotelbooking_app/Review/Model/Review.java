@@ -1,4 +1,4 @@
-package com.example.hotelbooking_app.Register.Model;
+package com.example.hotelbooking_app.Review.Model;
 
 public class Review {
     private String reviewerName;

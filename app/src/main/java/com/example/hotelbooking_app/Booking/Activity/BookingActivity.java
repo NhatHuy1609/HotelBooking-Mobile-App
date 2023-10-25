@@ -1,8 +1,9 @@
 package com.example.hotelbooking_app.Booking.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,20 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelbooking_app.Booking.Adapter.BookingRoomTypeAdapter;
 import com.example.hotelbooking_app.Booking.Fragment.BookingGuestsSelectBottomSheet;
-import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 import com.example.hotelbooking_app.Booking.Fragment.BookingRoomsSelectBottomSheet;
+import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 import com.example.hotelbooking_app.R;
-import com.example.hotelbooking_app.Register.Adapter.ReviewAdapter;
-import com.example.hotelbooking_app.Register.Model.Review;
+import com.example.hotelbooking_app.Register.RegisterActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BookingActivity  extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_layout);
+
         TextView guestsSelect = findViewById(R.id.guests_number_select);
         TextView roomsSelect = findViewById(R.id.room_type_select);
         guestsSelect.setOnClickListener(new View.OnClickListener() {
@@ -59,8 +60,7 @@ public class BookingActivity  extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        recyclerView.setAdapter(bookingRoomTypeAdapter);
-    }
+        recyclerView.setAdapter(bookingRoomTypeAdapter);}
 
 
 }
