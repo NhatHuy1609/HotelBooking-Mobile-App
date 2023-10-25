@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingHorizontal="24dp"
-    android:paddingVertical="24dp">
+    android:paddingVertical="24dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         android:id="@+id/booking_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="64dp"
         android:divider="@drawable/booking_divider_20"
         android:orientation="vertical"
         android:showDividers="middle">
@@ -210,4 +210,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

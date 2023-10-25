@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.HotelBooking_App" parent="Base.Theme.HotelBooking_App" />
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>
