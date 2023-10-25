@@ -2,71 +2,89 @@ package com.example.hotelbooking_app.Booking.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+//import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.hotelbooking_app.Booking.Adapter.BookingRoomTypeAdapter;
 import com.example.hotelbooking_app.Booking.Fragment.BookingGuestsSelectBottomSheet;
-import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 import com.example.hotelbooking_app.Booking.Fragment.BookingRoomsSelectBottomSheet;
+import com.example.hotelbooking_app.Booking.Interface.OnSaveClickListener;
 import com.example.hotelbooking_app.R;
-import com.example.hotelbooking_app.Register.RegisterActivity;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import androidx.core.util.Pair;
+public class BookingActivity extends AppCompatActivity {
 
-public class BookingActivity  extends AppCompatActivity {
+    private TextView guestsSelect;
+    private TextView roomsSelect;
+    private TextView datesSelect;
+    private MaterialDatePicker<Pair<Long, Long>> datePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_layout);
 
-        Button openRegistrationButton = findViewById(R.id.continue_button);
-        openRegistrationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              // Mở RegistrationActivity khi người dùng nhấn nút
-              TextView guestsSelect = findViewById(R.id.guests_number_select);
-              TextView roomsSelect = findViewById(R.id.room_type_select);
-        guestsSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BookingGuestsSelectBottomSheet guestsSelectBottomSheet = new BookingGuestsSelectBottomSheet();
-                guestsSelectBottomSheet.show(getSupportFragmentManager(), guestsSelectBottomSheet.getTag());
-            }
-        });
+        // Initialize UI elements
+        guestsSelect = findViewById(R.id.guests_number_select);
+        roomsSelect = findViewById(R.id.room_type_select);
+        datesSelect = findViewById(R.id.dates_select);
 
-        roomsSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BookingRoomsSelectBottomSheet bookingRoomsSelectBottomSheet = new BookingRoomsSelectBottomSheet();
-                bookingRoomsSelectBottomSheet.show(getSupportFragmentManager(), bookingRoomsSelectBottomSheet.getTag());
-            }
-        });
+        setupGuestsSelect();
+        setupRoomsSelect();
+        setupDateSelect();
     }
 
-
-    public void createRoomTypeRecyclerView() {
-        RecyclerView recyclerView;
-        ArrayList<BookingRoomType> roomTypeList = new ArrayList<>();
-        roomTypeList.add(new BookingRoomType("King Room", "This is king room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-
-        recyclerView = findViewById(R.id.booking_room_type_recycler_view);
-        BookingRoomTypeAdapter bookingRoomTypeAdapter = new BookingRoomTypeAdapter(this, roomTypeList);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
-        recyclerView.setAdapter(bookingRoomTypeAdapter);
+    private void setupGuestsSelect() {
+        guestsSelect.setOnClickListener(v -> showGuestsSelectBottomSheet());
     }
 
+    private void showGuestsSelectBottomSheet() {
+        BookingGuestsSelectBottomSheet guestsSelectBottomSheet = new BookingGuestsSelectBottomSheet();
+        guestsSelectBottomSheet.show(getSupportFragmentManager(), guestsSelectBottomSheet.getTag());
+    }
+
+    private void setupRoomsSelect() {
+        roomsSelect.setOnClickListener(v -> showRoomsSelectBottomSheet());
+    }
+
+    private void showRoomsSelectBottomSheet() {
+        BookingRoomsSelectBottomSheet bookingRoomsSelectBottomSheet = new BookingRoomsSelectBottomSheet();
+        bookingRoomsSelectBottomSheet.show(getSupportFragmentManager(), bookingRoomsSelectBottomSheet.getTag());
+    }
+
+    private void setupDateSelect() {
+        datePicker = MaterialDatePicker.Builder.dateRangePicker()
+                .setTitleText("Select Date")
+                .setTheme(R.style.ThemeMaterialCalendar)
+                .build();
+
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+            Pair<Long, Long> dateRange = datePicker.getSelection();
+            String formattedDateRange = formatTimestampRange(dateRange.first, dateRange.second);
+            datesSelect.setText(formattedDateRange);
+        });
+
+        datesSelect.setOnClickListener(v -> showDatePicker());
+    }
+
+    private void showDatePicker() {
+        datePicker.show(getSupportFragmentManager(), "datePicker_tag");
+    }
+
+    private String formatTimestampRange(long startTimestamp, long endTimestamp) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        Date startDate = new Date(startTimestamp);
+        Date endDate = new Date(endTimestamp);
+        String formattedStart = dateFormat.format(startDate);
+        String formattedEnd = dateFormat.format(endDate);
+        return formattedStart + " - " + formattedEnd;
+    }
 }

@@ -15,7 +15,8 @@
     <color name="booking_grey">#949494</color>
     <color name="booking_light_grey">#F6F6F6</color>
     <color name="booking_medium_grey">#ECECEC</color>
-
+    <color name="booking_cyan_light_900">#06B3C4</color>
+    <color name="booking_cyan_light_100">#E5F7F9</color>
 
     <color name="huan_red">#FFFF0000</color>
     <color name="huan_green">#FF00FF00</color>
