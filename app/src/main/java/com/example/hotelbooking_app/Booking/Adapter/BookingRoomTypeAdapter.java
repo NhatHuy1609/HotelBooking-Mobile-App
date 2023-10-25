@@ -79,6 +79,7 @@ public class BookingRoomTypeAdapter extends RecyclerView.Adapter<BookingRoomType
         holder.ckbRoom.setChecked(roomType.isSelected());
     }
 
+
     @Override
     public int getItemCount() {
         return roomTypeArrayList.size();
