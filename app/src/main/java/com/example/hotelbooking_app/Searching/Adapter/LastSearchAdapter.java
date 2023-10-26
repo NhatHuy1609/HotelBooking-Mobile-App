@@ -14,27 +14,27 @@ import com.example.hotelbooking_app.Searching.Domain.LastSearchDomain;
 import java.util.ArrayList;
 
 public class LastSearchAdapter extends RecyclerView.Adapter<LastSearchAdapter.lastSearchHolder> {
-    ArrayList<LastSearchDomain> data;
-    public LastSearchAdapter(ArrayList<LastSearchDomain> data) {
-        this.data = data;
+    ArrayList<LastSearchDomain> arrLastSearchData;
+    public LastSearchAdapter(ArrayList<LastSearchDomain> arrLastSearchData) {
+        this.arrLastSearchData = arrLastSearchData;
     }
 
     @NonNull
     @Override
     public lastSearchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.searching_rv_last_search, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.searching_item_last_search, parent, false);
         return new lastSearchHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull lastSearchHolder holder, int position) {
-        holder.tvName.setText(data.get(position).getName());
+        holder.tvName.setText(arrLastSearchData.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return arrLastSearchData.size();
     }
 
     public class lastSearchHolder extends RecyclerView.ViewHolder {
@@ -43,7 +43,7 @@ public class LastSearchAdapter extends RecyclerView.Adapter<LastSearchAdapter.la
         public lastSearchHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvName = itemView.findViewById(R.id.tvName);
+            tvName = itemView.findViewById(R.id.item_tv_last_search);
         }
     }
 }
