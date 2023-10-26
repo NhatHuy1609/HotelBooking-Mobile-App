@@ -1,6 +1,7 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,8 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
+import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Adapter.LastSearchAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.PopularSearchAdapter;
@@ -64,7 +69,6 @@ public class SearchingActivity extends AppCompatActivity {
 
         lvPopularSearch = findViewById(R.id.searching_rv_popular_search);
         initPopularSearchListView();
-
 
     }
 

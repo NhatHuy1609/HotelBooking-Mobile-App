@@ -5,7 +5,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Adapter.ResultFilterAdapter;
@@ -30,6 +35,22 @@ public class SearchingResultsActivity extends AppCompatActivity {
 
         rvResultItem = findViewById(R.id.searching_rv_search_result_items);
         innitResultItemRecyclerView();
+        resultItemAdapter.setOnItemClickListener(new ResultItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(SearchingResultsActivity.this, DetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton resultBackBtn = (ImageButton) findViewById(R.id.searching_result_back_button);
+        resultBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchingResultsActivity.this, SearchingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void innitResultItemRecyclerView() {

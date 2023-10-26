@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelbooking_app.R;
@@ -16,7 +17,12 @@ import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
 import java.util.ArrayList;
 
 public class ResultItemAdapter extends RecyclerView.Adapter<ResultItemAdapter.resultItemHolder> {
+    OnItemClickListener onItemClickListener;
     ArrayList<ResultItemDomain> arrResultItemData;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public ResultItemAdapter(ArrayList<ResultItemDomain> arrResultItemData) {
         this.arrResultItemData = arrResultItemData;
@@ -37,6 +43,12 @@ public class ResultItemAdapter extends RecyclerView.Adapter<ResultItemAdapter.re
     holder.tvCount.setText("(" + arrResultItemData.get(position).getCount() + ")");
     holder.tvPrice.setText(arrResultItemData.get(position).getPrice());
     holder.imgHotel.setImageResource(arrResultItemData.get(position).getPicUrl());
+    holder.cvHotel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onItemClickListener.onItemClick(position);
+        }
+    });
     }
 
     @Override
@@ -44,9 +56,14 @@ public class ResultItemAdapter extends RecyclerView.Adapter<ResultItemAdapter.re
         return arrResultItemData.size();
     }
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
     public class resultItemHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvAddress, tvScore, tvCount, tvPrice;
         ImageView imgHotel;
+        CardView cvHotel;
         public resultItemHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -56,6 +73,7 @@ public class ResultItemAdapter extends RecyclerView.Adapter<ResultItemAdapter.re
             tvCount = itemView.findViewById(R.id.item_tv_result_item_count);
             tvPrice = itemView.findViewById(R.id.item_tv_search_result_price);
             imgHotel = itemView.findViewById(R.id.item_img_search_result);
+            cvHotel = itemView.findViewById(R.id.item_cv_search_result);
         }
     }
 }
