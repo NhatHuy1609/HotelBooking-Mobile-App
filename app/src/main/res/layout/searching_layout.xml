@@ -8,6 +8,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,19 +40,14 @@
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/searching_ed_search_box"
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/searching_edittext_background"
-                    app:iconifiedByDefault="false"
-                    app:searchHintIcon="@null"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
                     app:queryHint="Search..."
-                    android:focusable="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/searching_back_button"
+                    android:background="@drawable/searching_edittext_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/searching_filter_button"
-                    app:layout_constraintHorizontal_bias="0.01"
                     app:layout_constraintStart_toEndOf="@+id/searching_back_button"
-                    app:layout_constraintTop_toTopOf="@+id/searching_back_button" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/searching_filter_button"
@@ -163,7 +159,7 @@
             <ListView
                 android:id="@+id/searching_rv_popular_search"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="270dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"

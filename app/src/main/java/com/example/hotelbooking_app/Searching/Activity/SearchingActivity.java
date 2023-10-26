@@ -1,6 +1,7 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +21,7 @@ import com.example.hotelbooking_app.Searching.Domain.RecentlyViewedDomain;
 import java.util.ArrayList;
 
 public class SearchingActivity extends AppCompatActivity {
+    androidx.appcompat.widget.SearchView searchView;
     ListView lvPopularSearch;
     RecyclerView rvLastSearch, rvRecentlyViewed;
     LastSearchAdapter lastSearchAdapter;
@@ -31,6 +33,21 @@ public class SearchingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searching_layout);
+
+        searchView = findViewById(R.id.searching_ed_search_box);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(SearchingActivity.this, SearchingResultsActivity.class);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         rvLastSearch = findViewById(R.id.searching_rv_last_search);
         initLastSearchRecyclerView();
@@ -48,8 +65,8 @@ public class SearchingActivity extends AppCompatActivity {
         lvPopularSearch = findViewById(R.id.searching_rv_popular_search);
         initPopularSearchListView();
 
-    }
 
+    }
 
 
     private void initLastSearchRecyclerView() {
