@@ -1,6 +1,7 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,12 +9,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Adapter.ReviewsItemAdapter;
 import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
@@ -44,6 +47,15 @@ public class DetailActivity extends AppCompatActivity {
 
         rvReviewsItem = findViewById(R.id.detail_rv_reviews_item);
         initReviewsItemListView();
+
+        AppCompatButton bookingBtn = (AppCompatButton) findViewById(R.id.detail_booking_button);
+        bookingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, BookingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

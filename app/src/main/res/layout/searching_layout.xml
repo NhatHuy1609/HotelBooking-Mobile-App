@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     app:queryHint="Search..."
+                    app:iconifiedByDefault="false"
                     android:background="@drawable/searching_edittext_background"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/searching_filter_button"
