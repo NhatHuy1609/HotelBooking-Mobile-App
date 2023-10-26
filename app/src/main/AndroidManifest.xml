@@ -59,7 +59,9 @@
             android:exported="true"></activity>
 
         <!--   Phan Van Linh     -->
-
+        <activity android:name=".Homescreen.HomescreenActivity"
+            android:exported="true">
+        </activity>
 
         <!--        -->
 
