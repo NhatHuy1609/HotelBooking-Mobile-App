@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/signup_linearLayout"
+        android:id="@+id/signin_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -25,7 +25,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="50dp"
             android:fontFamily="sans-serif-condensed-medium"
-            android:text="Create Account"
+            android:text="Login Account"
             android:textColor="@color/black"
             android:textSize="24dp"
             tools:layout_editor_absoluteX="16dp"
@@ -35,13 +35,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="Start learning with create your account"
+            android:text="Please login with registerd account"
             android:textColor="@color/huan_gray"
             android:textSize="16dp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/signup_linearLayout02"
+        android:id="@+id/signin_linearLayout02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="132dp"
@@ -53,51 +53,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:id="@+id/signup_linearLayoutUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="Username"
-                android:textSize="20dp" />
-
-            <LinearLayout
-                android:id="@+id/signup_linearLayoutUsernameInput"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/signup_radius_button"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/signup_imageView2"
-                    android:layout_width="35dp"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.2"
-                    app:srcCompat="@drawable/signup_user_icon" />
-
-                <EditText
-                    android:layout_width="300dp"
-                    android:layout_height="match_parent"
-                    android:hint="Create your username"
-                    android:textColor="@color/black" />
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/signup_linearLayoutPassword"
+            android:id="@+id/signin_linearLayoutPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -115,7 +74,7 @@
                 android:textSize="20dp" />
 
             <LinearLayout
-                android:id="@+id/signup_linearLayoutPasswordInput"
+                android:id="@+id/signin_linearLayoutPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/signup_radius_button"
@@ -134,13 +93,13 @@
                 <EditText
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
-                    android:hint="Create your Password"
+                    android:hint=" Email"
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/signup_linearLayoutConfirmPassword"
+            android:id="@+id/signin_linearLayoutConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -158,7 +117,7 @@
                 android:textSize="20dp" />
 
             <LinearLayout
-                android:id="@+id/signup_linearLayoutConfirmPasswordInput"
+                android:id="@+id/signin_linearLayoutConfirmPasswordInput"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/signup_radius_button"
@@ -178,7 +137,7 @@
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
-                    android:hint="Create Your Password"
+                    android:hint=" Password"
                     android:textColor="@color/black" />
 
                 <ImageView
@@ -191,52 +150,63 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/signup_linearLayout2"
+        android:id="@+id/signin_linearLayout2"
         android:layout_width="409dp"
         android:layout_height="300dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="64dp"
         android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
         android:padding="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/signup_linearLayout02">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.utils.widget.MotionButton
-            android:id="@+id/signup_create_btn"
+            android:id="@+id/signin_login_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/signup_button_custum"
-            android:textColor="@color/white"
-            android:text="Create Account" />
+            android:text="Login"
+            android:textColor="@color/white" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:orientation="horizontal">
             <TextView
-                android:id="@+id/signup_move_login"
+                android:id="@+id/signin_move_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/huan_blue"
                 android:layout_margin="2dp"
-                android:text="Do you have Account?"
+                android:text="You don't have Account?"
+                android:textAlignment="center" />
+            <TextView
+                android:id="@+id/signin_forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/huan_blue"
+                android:layout_margin="2dp"
+                android:text="Forgot password."
                 android:textAlignment="center" />
         </LinearLayout>
 
+
+
         <TextView
-            android:id="@+id/signup_textView"
+            android:id="@+id/signin_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textAlignment="center"
-            android:text="Or using other method" />
+            android:text="Or using other method"
+            android:textAlignment="center" />
 
         <LinearLayout
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:paddingLeft="60dp"
             android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/sign_up_authorization_custum"
             android:orientation="horizontal"
-            android:background="@drawable/sign_up_authorization_custum">
+            android:paddingLeft="60dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -247,18 +217,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:textSize="18dp"
+                android:gravity="center_vertical"
                 android:text="Sign up with Google"
-                android:gravity="center_vertical" />
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:paddingLeft="60dp"
             android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/sign_up_authorization_custum"
             android:orientation="horizontal"
-            android:background="@drawable/sign_up_authorization_custum">
+            android:paddingLeft="60dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -269,9 +239,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:textSize="18dp"
+                android:gravity="center_vertical"
                 android:text="Sign up with Facebook"
-                android:gravity="center_vertical" />
+                android:textSize="18dp" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
