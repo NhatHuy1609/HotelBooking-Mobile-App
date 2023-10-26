@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.provider.MediaStore;
@@ -28,7 +29,8 @@ import com.example.hotelbooking_app.R;
 public class AdditionalProfileActivity extends AppCompatActivity {
 
     private String selectedDate="";
-    private static final int PICK_IMAGE = 1;
+    private static final int PICK_IMAGE_REQUEST = 1;
+
     private ImageView imageView;
     EditText editText;
     @Override
@@ -41,6 +43,7 @@ public class AdditionalProfileActivity extends AppCompatActivity {
         setContentView(R.layout.additional_profile_layout);
         Button calendarButton = findViewById(R.id.profile_calendarButton);
         EditText editText=findViewById(R.id.profile_calendar_text);
+        imageView=findViewById(R.id.profile_ImgUpload);
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,20 +78,23 @@ public class AdditionalProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Mở giao diện chọn hình ảnh từ bộ nhớ hoặc máy ảnh
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, PICK_IMAGE);            }
+                openImageChooser();      }
         });
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void openImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Chọn ảnh"), PICK_IMAGE_REQUEST);
+    }
 
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            Uri imageUri = data.getData();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri selectedImageUri = data.getData();
             try {
-                // Chuyển đổi URI thành Bitmap và hiển thị nó trong ImageView
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
                 imageView.setImageBitmap(bitmap);
             } catch (Exception e) {
                 e.printStackTrace();
