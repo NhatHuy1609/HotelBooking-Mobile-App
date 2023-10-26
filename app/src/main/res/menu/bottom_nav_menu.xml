@@ -7,9 +7,6 @@
     <item android:id="@+id/btn_mybooking"
         android:title="My Booking"
         android:icon="@drawable/homescreen_icon_tasksquare"/>
-    <item android:id="@+id/btn_search"
-        android:title="Search"
-        android:icon="@drawable/homescreen_icon_search"/>
     <item android:id="@+id/btn_myprofile"
         android:title="My Profile"
         android:icon="@drawable/homescreen_icon_user"/>

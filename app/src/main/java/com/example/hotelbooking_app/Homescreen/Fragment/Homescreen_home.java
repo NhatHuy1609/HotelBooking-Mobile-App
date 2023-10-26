@@ -11,14 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.graphics.Color;
 import android.view.ViewTreeObserver;
+import android.content.Intent;
 
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAdapter;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAdapter;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Activity.SearchingActivity;
 
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class Homescreen_home extends Fragment {
     LinearLayout lnNearbyHotel,lnPopularHotel;
     TextView nearbyHotels;
     ScrollView scrollview;
+    ImageView btn_seach;
     ArrayList<Homescreen_Nearbyhotel> arrayNearByHotel;
     ArrayList<Homescreen_PopularHotel> arrayPopularHotel;
     Homescreen_NearbyhotelAdapter adapter;
@@ -75,6 +79,18 @@ public class Homescreen_home extends Fragment {
                 }
             }
         });
+
+        //intent searching
+        btn_seach = (ImageView) view.findViewById(R.id.home_btn_search);
+
+        btn_seach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchingActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 
