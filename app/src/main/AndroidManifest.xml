@@ -12,62 +12,55 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HotelBooking_App"
         tools:targetApi="31">
-        <activity
-            android:name=".Searching.Activity.SearchingResultsActivity"
-            android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-
-        <!-- <activity -->
-        <!-- android:name=".AdditionalProfile.AdditionalProfileActivity" -->
-        <!-- android:exported="false" -->
-        <!-- android:label="@strings/title_activity_additional_profile" -->
-        <!-- android:theme="@style/Theme.HotelBooking_App" > -->
-        <!-- </activity> -->
-        <!-- <activity -->
-        <!-- android:name=".AdditionalProfile.Profile_Activity" -->
-        <!-- android:exported="false" > -->
-        <!-- </activity> -->
-        <!-- <activity -->
-        <!-- android:name=".Register.RegisterActivity" -->
-        <!-- android:exported="false" -->
-        <!-- android:label="@string/title_activity_register" -->
-        <!-- android:theme="@style/Theme.HotelBooking_App" > -->
-        <!-- </activity> -->
+        <!--  Phan Phuoc Huan      -->
         <activity
             android:name=".Review.ReviewsActivity"
             android:exported="false"></activity>
+
         <activity
-            android:name=".Searching.Activity.DetailActivity"
-            android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            android:name=".AdditionalProfile.AdditionalProfileActivity"
+            android:exported="true"
+            android:theme="@style/Theme.HotelBooking_App">
         </activity>
+
+        <activity
+            android:name=".Register.RegisterActivity"
+            android:exported="true"
+            android:label="@string/title_activity_register"
+            android:theme="@style/Theme.HotelBooking_App">
+        </activity>
+
+        <activity
+            android:name=".Login.Activity.LoginActivity"
+            android:exported="false"></activity>
+
+        <!--  Pham Van Nhat Huy  -->
         <activity
             android:name=".Booking.Activity.BookingActivity"
             android:exported="true">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"></activity>
+
+        <!--   Truong Dinh Nhat     -->
         <activity
             android:name=".Searching.Activity.SearchingActivity"
+            android:exported="true"></activity>
+
+        <activity
+            android:name=".Searching.Activity.SearchingResultsActivity"
+            android:exported="true"></activity>
+
+        <activity
+            android:name=".Searching.Activity.DetailActivity"
+            android:exported="true"></activity>
+
+        <!--   Phan Van Linh     -->
+
+
+        <!--        -->
+
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,5 +69,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
