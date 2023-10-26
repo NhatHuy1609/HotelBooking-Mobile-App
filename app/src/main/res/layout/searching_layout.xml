@@ -8,6 +8,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
                 android:layout_marginEnd="20dp">
 
                 <ImageButton
-                    android:id="@+id/searching_backBtn"
+                    android:id="@+id/searching_back_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/searching_back_icon"
@@ -36,35 +37,26 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/searching_editText"
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searching_ed_search_box"
                     android:layout_width="0dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    app:queryHint="Search..."
                     android:background="@drawable/searching_edittext_background"
-                    android:drawableStart="@drawable/searching_search_icon"
-                    android:drawablePadding="8dp"
-                    android:hint="hotel"
-                    android:inputType="text"
-                    android:padding="8dp"
-                    android:text=""
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/searching_grey"
-                    app:layout_constraintBottom_toBottomOf="@+id/searching_backBtn"
-                    app:layout_constraintEnd_toStartOf="@+id/searching_filterBtn"
-                    app:layout_constraintHorizontal_bias="0.01"
-                    app:layout_constraintStart_toEndOf="@+id/searching_backBtn"
-                    app:layout_constraintTop_toTopOf="@+id/searching_backBtn" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/searching_filter_button"
+                    app:layout_constraintStart_toEndOf="@+id/searching_back_button"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
-                    android:id="@+id/searching_filterBtn"
+                    android:id="@+id/searching_filter_button"
                     android:layout_width="24dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/searching_filter_icon"
-                    app:layout_constraintBottom_toBottomOf="@+id/searching_editText"
+                    app:layout_constraintBottom_toBottomOf="@+id/searching_ed_search_box"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/searching_editText" />
+                    app:layout_constraintTop_toTopOf="@+id/searching_ed_search_box" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -77,7 +69,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvLastSearch"
+                    android:id="@+id/searching_tv_last_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -88,10 +80,10 @@
 
 
                 <TextView
-                    android:id="@+id/tvClearAll"
+                    android:id="@+id/searching_tv_clear_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txtClearAll"
+                    android:text="Clear All"
                     android:textColor="@color/searching_primaryColor"
                     android:textSize="16sp" />
 
@@ -99,7 +91,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvLastSearch"
+                android:id="@+id/searching_rv_last_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -116,7 +108,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvRecentlyViewed"
+                    android:id="@+id/searching_tv_recently_viewed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -126,17 +118,17 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvSeeAll"
+                    android:id="@+id/searching_tv_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txtSeeAll"
+                    android:text="See All"
                     android:textColor="@color/searching_primaryColor"
                     android:textSize="16sp" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvRecentlyViewed"
+                android:id="@+id/searching_rv_recently_viewed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -153,7 +145,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tvPopularSearch"
+                    android:id="@+id/searching_tv_popular_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -165,14 +157,14 @@
             </LinearLayout>
 
             <ListView
-                android:id="@+id/lvPopularSearch"
+                android:id="@+id/searching_rv_popular_search"
                 android:layout_width="match_parent"
-                android:layout_height="226dp"
+                android:layout_height="270dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
-                android:dividerHeight="8dp"
-                tools:listitem="@layout/searching_lv_popular_search" />
+                android:dividerHeight="4dp"
+                tools:listitem="@layout/searching_item_popular_search" />
 
         </LinearLayout>
     </ScrollView>

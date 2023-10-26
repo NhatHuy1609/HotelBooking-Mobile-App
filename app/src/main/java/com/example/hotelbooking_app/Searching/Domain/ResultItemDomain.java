@@ -1,17 +1,17 @@
 package com.example.hotelbooking_app.Searching.Domain;
 
-import java.io.Serializable;
-
-public class RecentlyViewedDomain implements Serializable {
+public class ResultItemDomain {
     private String name;
     private String address;
+    private String price;
     private double score;
     private int count;
     private int picUrl;
 
-    public RecentlyViewedDomain(String name, String address, double score, int count, int picUrl) {
+    public ResultItemDomain(String name, String address, String price, double score, int count, int picUrl) {
         this.name = name;
         this.address = address;
+        this.price = price;
         this.score = score;
         this.count = count;
         this.picUrl = picUrl;
@@ -31,6 +31,14 @@ public class RecentlyViewedDomain implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     public double getScore() {

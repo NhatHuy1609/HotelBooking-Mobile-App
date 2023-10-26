@@ -35,14 +35,14 @@ public class PopularSearchAdapter extends ArrayAdapter<PopularSearchDomain> {
     @SuppressLint({"ViewHolder", "SetTextI18n"})
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        convertView = LayoutInflater.from(context).inflate(R.layout.searching_lv_popular_search, parent, false);
+        convertView = LayoutInflater.from(context).inflate(R.layout.searching_item_popular_search, parent, false);
 
         //Lay 1 phan tu trong mang
 
 
-        TextView tvName = convertView.findViewById(R.id.tvPplHotelName);
-        TextView tvCount = convertView.findViewById(R.id.tvSearchCount);
-        ImageView hotelImg = convertView.findViewById(R.id.hotel_small_img);
+        TextView tvName = convertView.findViewById(R.id.item_tv_popular_search_name);
+        TextView tvCount = convertView.findViewById(R.id.item_tv_popular_search_count);
+        ImageView hotelImg = convertView.findViewById(R.id.item_img_popular_search);
 
         PopularSearchDomain pplSearch = data.get(position);
 
