@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.Booking.Adapter.BookingRoomTypeAdapter;
@@ -28,15 +28,14 @@ import java.util.ArrayList;
 
 
 public class BookingRoomsSelectBottomSheet extends BottomSheetDialogFragment {
-    public BookingRoomsSelectBottomSheet() {
-        // Required empty public constructor
-    }
-
-
 
     private View contentView;
     private BottomSheetBehavior<View> bottomSheetBehavior;
     private int initialHeight = 1200; // Replace with your desired initial height
+
+    public BookingRoomsSelectBottomSheet() {
+        // Required empty public constructor
+    }
 
     @NonNull
     @Override
@@ -64,11 +63,6 @@ public class BookingRoomsSelectBottomSheet extends BottomSheetDialogFragment {
         RecyclerView recyclerView = rootView.findViewById(R.id.booking_room_type_recycler_view);
         ArrayList<BookingRoomType> roomTypeList = new ArrayList<>();
         roomTypeList.add(new BookingRoomType("King Room", "This is king room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
         roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
         roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
         roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));

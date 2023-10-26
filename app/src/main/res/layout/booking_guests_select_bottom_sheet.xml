@@ -88,11 +88,11 @@
                     </FrameLayout>
 
                     <TextView
-                        android:id="@+id/booking_room_number_select"
+                        android:id="@+id/booking_room_number_select_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="12dp"
-                        android:text="6"
+                        android:text="0"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -167,11 +167,11 @@
                     </FrameLayout>
 
                     <TextView
-                        android:id="@+id/booking_room_adult_number_select"
+                        android:id="@+id/booking_adult_number_select_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="12dp"
-                        android:text="6"
+                        android:text="0"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -247,11 +247,11 @@
                     </FrameLayout>
 
                     <TextView
-                        android:id="@+id/booking_room_child_number_select"
+                        android:id="@+id/booking_child_number_select_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="12dp"
-                        android:text="6"
+                        android:text="0"
                         android:textSize="16dp"
                         android:textStyle="bold" />
 
@@ -275,7 +275,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/booking_guestsSelect_saveBtn"
+        android:id="@+id/booking_guests_select_save_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"

@@ -4,7 +4,7 @@
     <string name="txtClearAll">Clear All</string>
     <string name="txtSeeAll">See All</string>
     <string name="detail_text_view_detail">View Details</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_register">RegisterActivity</string>
     <!-- Strings used for fragments for navigation -->
