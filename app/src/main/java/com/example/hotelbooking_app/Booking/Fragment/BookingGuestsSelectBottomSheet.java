@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.example.hotelbooking_app.Booking.Data.BookingFormDetailData;
 import com.example.hotelbooking_app.Booking.Interface.OnSaveClickListener;
 import com.example.hotelbooking_app.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -27,7 +28,7 @@ public class BookingGuestsSelectBottomSheet extends BottomSheetDialogFragment {
     private TextView txtRoomNumberVal, txtAdultNumberVal, txtChildNumberVal;
     private AppCompatButton saveSelectBtn;
     private OnSaveClickListener onSaveClickListener;
-
+    private BookingFormDetailData bookingFormData;
 
     private View contentView;
     private BottomSheetBehavior<View> bottomSheetBehavior;
@@ -35,6 +36,11 @@ public class BookingGuestsSelectBottomSheet extends BottomSheetDialogFragment {
 
     public BookingGuestsSelectBottomSheet() {
         // Required empty public constructor
+    }
+
+    public BookingGuestsSelectBottomSheet(BookingFormDetailData bookingFormDetailData) {
+        // Required empty public constructor
+        this.bookingFormData = bookingFormDetailData;
     }
 
     @Override
@@ -50,9 +56,9 @@ public class BookingGuestsSelectBottomSheet extends BottomSheetDialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        // Create bottom sheet dialog instance
         BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
-
         contentView = LayoutInflater.from(getContext()).inflate(R.layout.booking_guests_select_bottom_sheet, null);
         bottomSheetDialog.setContentView(contentView);
 
@@ -78,6 +84,11 @@ public class BookingGuestsSelectBottomSheet extends BottomSheetDialogFragment {
         txtChildNumberVal = rootView.findViewById(R.id.booking_child_number_select_value);
         saveSelectBtn = rootView.findViewById(R.id.booking_guests_select_save_button);
 
+        // Set up displaying the selected value
+        txtRoomNumberVal.setText(String.valueOf(bookingFormData.getSelectedRoomValue()));
+        txtAdultNumberVal.setText(String.valueOf(bookingFormData.getSelectedAdultValue()));
+        txtChildNumberVal.setText(String.valueOf(bookingFormData.getSelectedChildValue()));
+
         // Set up increasing, decreasing guest, room number
         setUpRoomNumberAdjust();
         setUpAdultNumberAdjust();
@@ -87,62 +98,78 @@ public class BookingGuestsSelectBottomSheet extends BottomSheetDialogFragment {
         return rootView;
     }
 
+    public void setUpBookingGuestsBottomSheetView() {
+
+    }
+
     public void setUpRoomNumberAdjust() {
         increaseRoomBtn.setOnClickListener(v -> {
-            int selectedRoomVal = Integer.parseInt(txtRoomNumberVal.getText().toString());
+            int selectedRoomVal = bookingFormData.getSelectedRoomValue();
             int newSelectedRoomVal = selectedRoomVal + 1;
+
             txtRoomNumberVal.setText(String.valueOf(newSelectedRoomVal));
+            bookingFormData.setSelectedRoomValue(newSelectedRoomVal);
         });
 
         decreaseRoomBtn.setOnClickListener(v -> {
-            int selectedRoomVal = Integer.parseInt(txtRoomNumberVal.getText().toString());
+            int selectedRoomVal = bookingFormData.getSelectedRoomValue();
 
             if (selectedRoomVal > 0) {
                 int newSelectedRoomVal = selectedRoomVal - 1;
+
                 txtRoomNumberVal.setText(String.valueOf(newSelectedRoomVal));
+                bookingFormData.setSelectedRoomValue(newSelectedRoomVal);
             }
         });
     }
 
     public void setUpAdultNumberAdjust() {
         increaseAdultBtn.setOnClickListener(v -> {
-            int selectedAdultVal = Integer.parseInt(txtAdultNumberVal.getText().toString());
+            int selectedAdultVal = bookingFormData.getSelectedAdultValue();
             int newSelectedAdultVal = selectedAdultVal + 1;
+
             txtAdultNumberVal.setText(String.valueOf(newSelectedAdultVal));
+            bookingFormData.setSelectedAdultValue(newSelectedAdultVal);
         });
 
         decreaseAdultBtn.setOnClickListener(v -> {
-            int selectedAdultVal = Integer.parseInt(txtAdultNumberVal.getText().toString());
+            int selectedAdultVal = bookingFormData.getSelectedAdultValue();
 
             if (selectedAdultVal > 0) {
                 int newSelectedAdultVal = selectedAdultVal - 1;
+
                 txtAdultNumberVal.setText(String.valueOf(newSelectedAdultVal));
+                bookingFormData.setSelectedAdultValue(newSelectedAdultVal);
             }
         });
     }
 
     public void setUpChildNumberAdjust() {
         increaseChildBtn.setOnClickListener(v -> {
-            int selectedChildVal = Integer.parseInt(txtChildNumberVal.getText().toString());
+            int selectedChildVal = bookingFormData.getSelectedChildValue();
             int newSelectedChildVal = selectedChildVal + 1;
+
             txtChildNumberVal.setText(String.valueOf(newSelectedChildVal));
+            bookingFormData.setSelectedChildValue(newSelectedChildVal);
         });
 
         decreaseChildBtn.setOnClickListener(v -> {
-            int selectedChildVal = Integer.parseInt(txtChildNumberVal.getText().toString());
+            int selectedChildVal = bookingFormData.getSelectedChildValue();
 
             if (selectedChildVal > 0) {
                 int newSelectedChildVal = selectedChildVal - 1;
+
                 txtChildNumberVal.setText(String.valueOf(newSelectedChildVal));
+                bookingFormData.setSelectedChildValue(newSelectedChildVal);
             }
         });
     }
 
     public void setUpSaveSelect() {
         saveSelectBtn.setOnClickListener(v -> {
-            int selectedAdultVal = Integer.parseInt(txtAdultNumberVal.getText().toString());
-            int selectedChildVal = Integer.parseInt(txtChildNumberVal.getText().toString());
-            int totalSelectedRoomVal = Integer.parseInt(txtRoomNumberVal.getText().toString());
+            int selectedAdultVal = bookingFormData.getSelectedAdultValue();
+            int selectedChildVal = bookingFormData.getSelectedChildValue();
+            int totalSelectedRoomVal = bookingFormData.getSelectedRoomValue();
             int totalSelectedGuestsNumber = selectedAdultVal + selectedChildVal;
 
             onSaveClickListener.onSaveClick(totalSelectedGuestsNumber, totalSelectedRoomVal);

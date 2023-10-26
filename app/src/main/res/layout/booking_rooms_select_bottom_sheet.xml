@@ -74,7 +74,7 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/booking_guestsSelect_saveBtn"
+        android:id="@+id/booking_rooms_select_button"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"

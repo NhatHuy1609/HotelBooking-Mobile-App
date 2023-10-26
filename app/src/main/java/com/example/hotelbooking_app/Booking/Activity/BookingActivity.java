@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hotelbooking_app.Booking.Data.BookingFormDetailData;
 import com.example.hotelbooking_app.Booking.Fragment.BookingGuestsSelectBottomSheet;
 import com.example.hotelbooking_app.Booking.Fragment.BookingRoomsSelectBottomSheet;
 
@@ -21,21 +22,27 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import androidx.core.util.Pair;
-public class BookingActivity extends AppCompatActivity {
+import androidx.lifecycle.ViewModelProvider;
+
+public class BookingActivity extends AppCompatActivity implements OnSaveClickListener{
 
     private TextView guestsSelect;
     private TextView roomsSelect;
     private TextView datesSelect;
     private MaterialDatePicker<Pair<Long, Long>> datePicker;
+    BookingFormDetailData bookingFormDetailData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking_layout);
 
+        // Initialize Form Detail Data
+        bookingFormDetailData = new BookingFormDetailData();
 
         // Initialize UI elements
         guestsSelect = findViewById(R.id.guests_number_select);
@@ -43,26 +50,26 @@ public class BookingActivity extends AppCompatActivity {
         datesSelect = findViewById(R.id.dates_select);
 
 
-        setupGuestsSelect();
-        setupRoomsSelect();
+        setupGuestsSelect(bookingFormDetailData);
+        setupRoomsSelect(bookingFormDetailData);
         setupDateSelect();
     }
 
-    private void setupGuestsSelect() {
-        guestsSelect.setOnClickListener(v -> showGuestsSelectBottomSheet());
+    private void setupGuestsSelect(BookingFormDetailData bookingFormDetailData) {
+        guestsSelect.setOnClickListener(v -> showGuestsSelectBottomSheet(bookingFormDetailData));
     }
 
-    private void showGuestsSelectBottomSheet() {
-        BookingGuestsSelectBottomSheet guestsSelectBottomSheet = new BookingGuestsSelectBottomSheet();
+    private void showGuestsSelectBottomSheet(BookingFormDetailData bookingFormDetailData) {
+        BookingGuestsSelectBottomSheet guestsSelectBottomSheet = new BookingGuestsSelectBottomSheet(bookingFormDetailData);
         guestsSelectBottomSheet.show(getSupportFragmentManager(), guestsSelectBottomSheet.getTag());
     }
 
-    private void setupRoomsSelect() {
-        roomsSelect.setOnClickListener(v -> showRoomsSelectBottomSheet());
+    private void setupRoomsSelect(BookingFormDetailData bookingFormDetailData) {
+        roomsSelect.setOnClickListener(v -> showRoomsSelectBottomSheet(bookingFormDetailData));
     }
 
-    private void showRoomsSelectBottomSheet() {
-        BookingRoomsSelectBottomSheet bookingRoomsSelectBottomSheet = new BookingRoomsSelectBottomSheet();
+    private void showRoomsSelectBottomSheet(BookingFormDetailData bookingFormDetailData) {
+        BookingRoomsSelectBottomSheet bookingRoomsSelectBottomSheet = new BookingRoomsSelectBottomSheet(bookingFormDetailData);
         bookingRoomsSelectBottomSheet.show(getSupportFragmentManager(), bookingRoomsSelectBottomSheet.getTag());
     }
 
@@ -75,7 +82,13 @@ public class BookingActivity extends AppCompatActivity {
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
             Pair<Long, Long> dateRange = datePicker.getSelection();
-            String formattedDateRange = formatTimestampRange(dateRange.first, dateRange.second);
+
+            Date startDate = new Date(dateRange.first);
+            Date endDate = new Date(dateRange.second);
+            String formattedDateRange = formatTimestampRange(startDate, endDate);
+
+            bookingFormDetailData.setStartDate(startDate);
+            bookingFormDetailData.setEndDate(endDate);
             datesSelect.setText(formattedDateRange);
         });
 
@@ -88,12 +101,25 @@ public class BookingActivity extends AppCompatActivity {
     }
 
 
-    private String formatTimestampRange(long startTimestamp, long endTimestamp) {
+    private String formatTimestampRange(Date startDate, Date endDate) {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        Date startDate = new Date(startTimestamp);
-        Date endDate = new Date(endTimestamp);
         String formattedStart = dateFormat.format(startDate);
         String formattedEnd = dateFormat.format(endDate);
+
         return formattedStart + " - " + formattedEnd;
+    }
+
+    @Override
+    public void onSaveClick(int totalGuests, int totalRooms) {
+        String selectedValue = totalGuests + " guests " + "- " + totalRooms + " rooms";
+        guestsSelect.setText(selectedValue);
+    }
+
+    @Override
+    public void onSelectClick(ArrayList<BookingRoomType> roomTypeList) {
+        String displayValue = roomTypeList.size() + " room types";
+
+        bookingFormDetailData.setRoomTypeList(roomTypeList);
+        roomsSelect.setText(displayValue);
     }
 }

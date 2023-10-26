@@ -1,10 +1,12 @@
 package com.example.hotelbooking_app.Booking.Fragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,6 +20,8 @@ import android.widget.TextView;
 
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.Booking.Adapter.BookingRoomTypeAdapter;
+import com.example.hotelbooking_app.Booking.Data.BookingFormDetailData;
+import com.example.hotelbooking_app.Booking.Interface.OnSaveClickListener;
 import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 import com.example.hotelbooking_app.R;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -25,16 +29,41 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class BookingRoomsSelectBottomSheet extends BottomSheetDialogFragment {
 
     private View contentView;
+    private AppCompatButton selectRoomTypeBtn;
+
+    private RecyclerView recyclerView;
+    private ArrayList<BookingRoomType> roomTypeList;
+
     private BottomSheetBehavior<View> bottomSheetBehavior;
     private int initialHeight = 1200; // Replace with your desired initial height
 
+    private OnSaveClickListener onSaveClickListener;
+    private BookingFormDetailData bookingFormData;
+
     public BookingRoomsSelectBottomSheet() {
         // Required empty public constructor
+    }
+
+    public BookingRoomsSelectBottomSheet(BookingFormDetailData bookingFormDetailData) {
+        // Required empty public constructor
+        this.bookingFormData = bookingFormDetailData;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            onSaveClickListener = (OnSaveClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnSaveClickListener");
+        }
     }
 
     @NonNull
@@ -56,20 +85,52 @@ public class BookingRoomsSelectBottomSheet extends BottomSheetDialogFragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.roomTypeList = new ArrayList<>();
+        roomTypeList.add(new BookingRoomType(1,"King Room", "This is king room type", false));
+        roomTypeList.add(new BookingRoomType(2,"Queen Room", "This is queen room type", false));
+        roomTypeList.add(new BookingRoomType(3,"A Room", "This is queen A type", false));
+        roomTypeList.add(new BookingRoomType(4,"B Room", "This is queen B type", false));
+        roomTypeList.add(new BookingRoomType(5,"C Room", "This is queen C type", false));
+        roomTypeList.add(new BookingRoomType(6,"D Room", "This is queen D type", false));
+        roomTypeList.add(new BookingRoomType(7,"E Room", "This is queen E type", false));
+        roomTypeList.add(new BookingRoomType(8,"F Room", "This is queen F type", false));
+
+
+        // Handle filter selected room type
+        if (bookingFormData.getRoomTypeList() != null) {
+            List<Integer> allSelectedIds = this.bookingFormData.getRoomTypeList().stream()
+                    .map(BookingRoomType::getId)
+                    .collect(Collectors.toList());
+
+            roomTypeList.forEach(roomType -> {
+                if (allSelectedIds.contains(roomType.getId())) {
+                    roomType.setSelected(true);
+                }
+            });
+
+            List<BookingRoomType> selectedRoomsType = roomTypeList.stream()
+                    .filter(roomType -> allSelectedIds.contains(roomType.getId()))
+                    .collect(Collectors.toList());
+            List<BookingRoomType> deselectedRoomsType =roomTypeList.stream()
+                    .filter(roomType -> !allSelectedIds.contains(roomType.getId()))
+                    .collect(Collectors.toList());
+
+            List<BookingRoomType> mergedRoomTypes = new ArrayList<>();
+            mergedRoomTypes.addAll(selectedRoomsType);
+            mergedRoomTypes.addAll(deselectedRoomsType);
+
+            roomTypeList = (ArrayList<BookingRoomType>) mergedRoomTypes;
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.booking_rooms_select_bottom_sheet, container, false);
 
         // Initialize your RecyclerView and data here
-        RecyclerView recyclerView = rootView.findViewById(R.id.booking_room_type_recycler_view);
-        ArrayList<BookingRoomType> roomTypeList = new ArrayList<>();
-        roomTypeList.add(new BookingRoomType("King Room", "This is king room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType("Queen Room", "This is queen room type", false));
+        this.recyclerView = rootView.findViewById(R.id.booking_room_type_recycler_view);
 
         // Set up the RecyclerView
         BookingRoomTypeAdapter bookingRoomTypeAdapter = new BookingRoomTypeAdapter((BookingActivity) requireContext(), roomTypeList);
@@ -78,6 +139,19 @@ public class BookingRoomsSelectBottomSheet extends BottomSheetDialogFragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL));
         recyclerView.setAdapter(bookingRoomTypeAdapter);
 
+        // Handle click select button
+        selectRoomTypeBtn = rootView.findViewById(R.id.booking_rooms_select_button);
+        setUpSelectRoomType();
+
         return rootView;
+    }
+
+    public void setUpSelectRoomType() {
+        selectRoomTypeBtn.setOnClickListener(v -> {
+            List<BookingRoomType> selectedRoomList = roomTypeList.stream().filter(roomType -> roomType.isSelected() == true).collect(Collectors.toList());
+            onSaveClickListener.onSelectClick((ArrayList<BookingRoomType>) selectedRoomList);
+
+            dismiss();
+        });
     }
 }
