@@ -10,6 +10,7 @@ import android.view.View;
 import android.os.Bundle;
 
 
+import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAdapter;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
@@ -50,9 +51,5 @@ public class HomescreenActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
-
-
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 import com.example.hotelbooking_app.Booking.Interface.OnSaveClickListener;
 
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.io.Serializable;
@@ -33,6 +35,7 @@ import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
 public class BookingActivity extends AppCompatActivity implements OnSaveClickListener{
+    private FrameLayout backBtn;
 
     private TextView guestsSelect;
     private TextView roomsSelect;
@@ -56,12 +59,21 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
         datesSelect = findViewById(R.id.dates_select);
         phoneNumberSelect = findViewById(R.id.booking_phone_number);
         continueBtn = findViewById(R.id.booking_continue_button);
+        backBtn = findViewById(R.id.booking_back_button);
 
 
         setupGuestsSelect(bookingFormDetailData);
         setupRoomsSelect(bookingFormDetailData);
         setupDateSelect();
         setUpNavigateToCheckout();
+        setUpNavigateBackToDetail();
+    }
+
+    public void setUpNavigateBackToDetail() {
+        backBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, DetailActivity.class);
+            startActivity(intent);
+        });
     }
 
     public void setUpNavigateToCheckout() {

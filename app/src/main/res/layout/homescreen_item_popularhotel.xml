@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/homescreen_item_popular_hotel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <FrameLayout
+        android:id="@+id/homescreen_frame_popular_hotel"
         android:layout_width="230dp"
         android:layout_height="300dp"
         android:layout_marginLeft="10dp"

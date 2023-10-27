@@ -99,11 +99,12 @@
                     </TextView>
                 </LinearLayout>
                 <HorizontalScrollView
+                    android:id="@+id/homescreen_horizontal_scroll_view"
                     android:layout_width="match_parent"
                     android:layout_height="300dp">
                     <LinearLayout
                         android:id="@+id/home_lvpopularhotel"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
                     </LinearLayout>
