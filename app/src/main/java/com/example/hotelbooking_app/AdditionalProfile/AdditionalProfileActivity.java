@@ -24,6 +24,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.R;
 
 public class AdditionalProfileActivity extends AppCompatActivity {
@@ -32,6 +33,8 @@ public class AdditionalProfileActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
 
     private ImageView imageView;
+    private Button skipBtn;
+    private  Button cpmBtn;
     EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,23 @@ public class AdditionalProfileActivity extends AppCompatActivity {
                 editText.setText(selectedDate);
             }
         });
+        skipBtn=findViewById(R.id.profile_skip_btn);
+        skipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(AdditionalProfileActivity.this, HomescreenActivity.class);
+                startActivity(intent);
+            }
+        });
+        cpmBtn=findViewById(R.id.profile_complete_btn);
+        cpmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(AdditionalProfileActivity.this, HomescreenActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         uploadImg();
 
@@ -80,6 +100,9 @@ public class AdditionalProfileActivity extends AppCompatActivity {
                 // Mở giao diện chọn hình ảnh từ bộ nhớ hoặc máy ảnh
                 openImageChooser();      }
         });
+
+
+
     }
     private void openImageChooser() {
         Intent intent = new Intent();
