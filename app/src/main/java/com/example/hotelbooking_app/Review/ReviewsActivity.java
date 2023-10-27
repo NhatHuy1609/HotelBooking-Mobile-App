@@ -4,23 +4,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.Adapter.ReviewAdapter;
 import com.example.hotelbooking_app.Review.Model.Review;
+import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewsActivity extends AppCompatActivity {
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         openReview();
+        imageView=findViewById(R.id.review_back_icon);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ReviewsActivity.this, DetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void openReview() {

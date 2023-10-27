@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/review_back_icon"
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:gravity="center"
@@ -32,11 +33,11 @@
             android:text="Reviews"
             android:textSize="23dp" />
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:src="@drawable/review_menu" />
+<!--        <ImageView-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:gravity="center"-->
+<!--            android:src="@drawable/review_menu" />-->
 
     </LinearLayout>
 
