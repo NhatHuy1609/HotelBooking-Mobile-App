@@ -37,8 +37,7 @@
             android:theme="@style/Theme.HotelBooking_App"></activity>
         <activity
             android:name=".Login.Activity.LoginActivity"
-            android:exported="true">
-        </activity> <!-- Pham Van Nhat Huy -->
+            android:exported="true"></activity> <!-- Pham Van Nhat Huy -->
         <activity
             android:name=".Booking.Activity.BookingActivity"
             android:exported="true"></activity>
@@ -58,8 +57,7 @@
             android:exported="true"></activity> <!--  -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
