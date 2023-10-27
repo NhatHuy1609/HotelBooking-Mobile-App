@@ -73,6 +73,14 @@ public class SearchingActivity extends AppCompatActivity {
         lvPopularSearch = findViewById(R.id.searching_rv_popular_search);
         initPopularSearchListView();
 
+        ImageButton returnHomeBtn = (ImageButton) findViewById(R.id.searching_back_button);
+        returnHomeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SearchingActivity.this, HomescreenActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
