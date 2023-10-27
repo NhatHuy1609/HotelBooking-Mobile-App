@@ -41,16 +41,26 @@ public class Homescreen_mybooking extends Fragment {
                     View bookedView = inflater.inflate(R.layout.homescreen_mybooking_fragment_booked, container, false);
                     linearLayout.addView(bookedView);
                 }
+                if (tab.getPosition() == 1) {
+                    View historyView = inflater.inflate(R.layout.homescreen_mybooking_fragment_history, container, false);
+                    linearLayout.addView(historyView);
+                }
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // TODO: Implement this method
+            }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+                // TODO: Implement this method
+            }
         });
+
+
         // back home
-        mybooking_btn_back = (ImageButton) view.findViewById(R.id.mybooking_btn_back);
+        mybooking_btn_back = (ImageButton) view.findViewById(R.id.aboutus_btn_back);
 
         // Set a click listener for the button
         mybooking_btn_back.setOnClickListener(new View.OnClickListener() {

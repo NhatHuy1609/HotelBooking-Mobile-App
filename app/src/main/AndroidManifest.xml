@@ -21,13 +21,15 @@
         <activity
             android:name=".AdditionalProfile.AdditionalProfileActivity"
             android:exported="true"
-            android:theme="@style/Theme.HotelBooking_App"></activity>
+            android:theme="@style/Theme.HotelBooking_App">
+        </activity>
 
         <activity
             android:name=".Register.RegisterActivity"
             android:exported="true"
             android:label="@string/title_activity_register"
-            android:theme="@style/Theme.HotelBooking_App"></activity>
+            android:theme="@style/Theme.HotelBooking_App">
+        </activity>
 
         <activity
             android:name=".Login.Activity.LoginActivity"
@@ -42,16 +44,16 @@
         <!--  Pham Van Nhat Huy  -->
         <activity
             android:name=".Booking.Activity.BookingActivity"
-            android:exported="true"></activity>
+            android:exported="true">
 
-        <activity
-            android:name=".Booking.Activity.BookingCheckoutActivity"
-            android:exported="true"></activity>
+
+        </activity>
 
         <!--   Truong Dinh Nhat     -->
         <activity
             android:name=".Searching.Activity.SearchingActivity"
             android:exported="true">
+
 
         </activity>
 
@@ -64,13 +66,22 @@
             android:exported="true"></activity>
 
         <!--   Phan Van Linh     -->
-        <activity
-            android:name=".Homescreen.HomescreenActivity"
-            android:exported="true"></activity>
+        <activity android:name=".Homescreen.HomescreenActivity"
+            android:exported="true">
+
+
+        </activity>
+
+        <!--        -->
 
         <activity
             android:name=".MainActivity"
             android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 </manifest>

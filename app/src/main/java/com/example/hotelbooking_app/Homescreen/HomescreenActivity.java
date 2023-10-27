@@ -10,7 +10,7 @@ import android.view.View;
 import android.os.Bundle;
 
 
-import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAdapter;
+import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_about_us;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
@@ -26,6 +26,7 @@ public class HomescreenActivity extends AppCompatActivity {
 
     Homescreen_home homefragment = new Homescreen_home();
     Homescreen_mybooking mybookingfragment = new Homescreen_mybooking();
+    Homescreen_about_us about_us = new Homescreen_about_us();
 
 
     @Override
@@ -47,9 +48,17 @@ public class HomescreenActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.btn_mybooking) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, mybookingfragment).commit();
                     return true;
+                } else if (item.getItemId() == R.id.btn_about_us) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, about_us).commit();
+                    return true;
                 }
+
                 return false;
             }
         });
+
+
     }
+
+
 }

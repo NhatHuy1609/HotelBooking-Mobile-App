@@ -43,7 +43,7 @@ public class Homescreen_BookedAdapter extends BaseAdapter {
         view = inflater.inflate(layout, null);
 
         // ánh xạ view
-        TextView txtTen = (TextView) view.findViewById(R.id.mybooing_name_booked);
+        TextView txtTen = (TextView) view.findViewById(R.id.mybooking_name_booked);
         TextView txtDiaChi = (TextView) view.findViewById(R.id.mybooking_location_booked);
         ImageView imgHinh = (ImageView) view.findViewById(R.id.mybooking_img_booked);
         TextView txtDanhGia = (TextView) view.findViewById(R.id.mybooking_rate_booked);

@@ -11,13 +11,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
-            android:id="@+id/mybooking_top_navigation"
+            android:id="@+id/aboutus_top_navigation"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal"
             android:gravity="center">
             <ImageButton
-                android:id="@+id/mybooking_btn_back"
+                android:id="@+id/aboutus_btn_back"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@drawable/homescreen_icon_arrow_left"

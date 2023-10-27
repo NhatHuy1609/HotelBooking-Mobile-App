@@ -9,5 +9,9 @@
         android:icon="@drawable/homescreen_icon_tasksquare"/>
     <item android:id="@+id/btn_myprofile"
         android:title="My Profile"
-        android:icon="@drawable/homescreen_icon_user"/>
+        android:icon="@drawable/homescreen_icon_user" />
+    <item
+        android:id="@+id/btn_about_us"
+        android:title="About Us"
+        android:icon="@drawable/homescreen_icon_people"></item>
 </menu>
