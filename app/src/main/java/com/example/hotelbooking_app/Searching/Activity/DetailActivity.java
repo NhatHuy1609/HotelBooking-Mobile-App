@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Review.ReviewsActivity;
 import com.example.hotelbooking_app.Searching.Adapter.ReviewsItemAdapter;
 import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
 
@@ -53,6 +55,16 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, BookingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        TextView tvReviewsSeeAll = (TextView) findViewById(R.id.detail_tv_reviews_see_all);
+        tvReviewsSeeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, ReviewsActivity.class);
                 startActivity(intent);
             }
         });
