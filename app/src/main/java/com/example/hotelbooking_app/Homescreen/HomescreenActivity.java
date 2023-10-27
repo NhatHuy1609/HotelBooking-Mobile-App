@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 
 import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_about_us;
+import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_myprofile;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
@@ -27,7 +28,7 @@ public class HomescreenActivity extends AppCompatActivity {
     Homescreen_home homefragment = new Homescreen_home();
     Homescreen_mybooking mybookingfragment = new Homescreen_mybooking();
     Homescreen_about_us about_us = new Homescreen_about_us();
-
+    Homescreen_myprofile myprofile = new Homescreen_myprofile();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,10 @@ public class HomescreenActivity extends AppCompatActivity {
                     return true;
                 } else if (item.getItemId() == R.id.btn_about_us) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, about_us).commit();
+                    return true;
+                }
+                else if (item.getItemId() == R.id.btn_myprofile) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, myprofile).commit();
                     return true;
                 }
 

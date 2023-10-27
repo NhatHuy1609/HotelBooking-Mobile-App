@@ -28,16 +28,18 @@ public class Homescreen_mybooking_booked extends Fragment {
 
         adapter = new Homescreen_BookedAdapter(getActivity(),R.layout.homescreen_item_booked, arrayBookedHotel);
 
-        lnBookedHotel = (LinearLayout) view.findViewById(R.id.mybooking_container);
+        lnBookedHotel = (LinearLayout) view.findViewById(R.id.lvBookedHotel);
 
-        for (Homescreen_Booked hotel : arrayBookedHotel) {
-            View hotelView = inflater.inflate(R.layout.homescreen_item_booked,null);
-            lnBookedHotel.addView(hotelView);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View ittem = adapter.getView(i, null, null);
+            lnBookedHotel.addView(ittem);
         }
         return view;
     }
     private void AnhXa() {
+        arrayBookedHotel.add(new Homescreen_Booked("MUONG THANH", "My An Beach", 4.9, 500, "$100/Day", R.drawable.homescreen_muongthanh,"27 March","14 December"));
         arrayBookedHotel.add(new Homescreen_Booked("HAIAN", "My An Beach", 4.9, 500, "$100/Day", R.drawable.homescreen_haian,"23 June","26 October"));
-        arrayBookedHotel.add(new Homescreen_Booked("HAIAN", "My An Beach", 4.9, 500, "$100/Day", R.drawable.homescreen_haian,"23 June","26 October"));
+        arrayBookedHotel.add(new Homescreen_Booked("NOVOTEL", "My An Beach", 4.9, 500, "$100/Day", R.drawable.homescreen_novotel,"27 March","14 December"));
+        arrayBookedHotel.add(new Homescreen_Booked("MERODA", "My An Beach", 4.9, 500, "$100/Day", R.drawable.homescreen_meroda,"23 June","26 October"));
     }
 }

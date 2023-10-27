@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_home;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.ImageButton;
 
 import com.example.hotelbooking_app.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class Homescreen_mybooking extends Fragment {
+    BottomNavigationView bottomNavigationView;
     ImageButton mybooking_btn_back;
 
     @Override
@@ -30,20 +36,23 @@ public class Homescreen_mybooking extends Fragment {
 
         final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.mybooking_container);
 
-        View bookedView = inflater.inflate(R.layout.homescreen_mybooking_fragment_booked, container, false);
-        linearLayout.addView(bookedView);
 
+        Fragment fragment = new Homescreen_mybooking_booked();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.mybooking_container, fragment).commit();
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                linearLayout.removeAllViews();
+                Fragment fragment = null;
                 if (tab.getPosition() == 0) {
-                    View bookedView = inflater.inflate(R.layout.homescreen_mybooking_fragment_booked, container, false);
-                    linearLayout.addView(bookedView);
+                    fragment = new Homescreen_mybooking_booked();
                 }
                 if (tab.getPosition() == 1) {
-                    View historyView = inflater.inflate(R.layout.homescreen_mybooking_fragment_history, container, false);
-                    linearLayout.addView(historyView);
+                    fragment = new Homescreen_mybooking_history();
+                }
+                if (fragment != null) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.mybooking_container, fragment).commit();
                 }
             }
 
@@ -59,19 +68,16 @@ public class Homescreen_mybooking extends Fragment {
         });
 
 
+
         // back home
-        mybooking_btn_back = (ImageButton) view.findViewById(R.id.aboutus_btn_back);
+        mybooking_btn_back = (ImageButton) view.findViewById(R.id.myprofile_btn_back);
+        bottomNavigationView = getActivity().findViewById(R.id.homescreen_bottom_navigation);
 
         // Set a click listener for the button
         mybooking_btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Fragment fragment_2 = new Homescreen_home();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.homescreen_containerr, fragment_2);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                bottomNavigationView.setSelectedItemId(R.id.btn_home);
             }
         });
         return view;
