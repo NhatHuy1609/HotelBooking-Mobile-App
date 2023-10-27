@@ -21,6 +21,7 @@ import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAd
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 import com.example.hotelbooking_app.Searching.Activity.SearchingActivity;
 
 
@@ -49,6 +50,7 @@ public class Homescreen_home extends Fragment {
         AnhXa();
 
         adapter = new Homescreen_NearbyhotelAdapter(getActivity(), R.layout.homescreen_item_nearbyhotel, arrayNearByHotel);
+
         adapter_1 = new Homescreen_PopularHotelAdapter(getActivity(), R.layout.homescreen_item_popularhotel, arrayPopularHotel);
 
         lnNearbyHotel = (LinearLayout) view.findViewById(R.id.home_lvNearbyHotel);
@@ -80,9 +82,8 @@ public class Homescreen_home extends Fragment {
             }
         });
 
-        //intent searching
+        // Intent searching
         btn_seach = (ImageView) view.findViewById(R.id.home_btn_search);
-
         btn_seach.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

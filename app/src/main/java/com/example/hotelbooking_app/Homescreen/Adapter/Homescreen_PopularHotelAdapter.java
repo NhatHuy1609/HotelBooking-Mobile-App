@@ -1,5 +1,6 @@
 package com.example.hotelbooking_app.Homescreen.Adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 
 import java.util.List;
 
@@ -52,7 +54,6 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
         TextView txtDanhGia = (TextView) view.findViewById(R.id.home_rate_popularhotel);
         TextView txtSLDanhGia = (TextView) view.findViewById(R.id.home_SLdanhgia_popularhotel);
         TextView txtGia = (TextView) view.findViewById(R.id.home_price_popularhotel);
-
 
         //gán giá trị
         Homescreen_PopularHotel popularHotel = popularHotelList.get(i);
