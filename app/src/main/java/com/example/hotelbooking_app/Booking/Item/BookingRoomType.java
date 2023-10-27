@@ -1,6 +1,8 @@
 package com.example.hotelbooking_app.Booking.Item;
 
-public class BookingRoomType {
+import java.io.Serializable;
+
+public class BookingRoomType implements Serializable {
     private int id;
     private String name;
     private String description;
