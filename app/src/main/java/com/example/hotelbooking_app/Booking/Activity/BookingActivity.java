@@ -34,7 +34,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
-public class BookingActivity extends AppCompatActivity implements OnSaveClickListener{
+public class BookingActivity extends AppCompatActivity implements OnSaveClickListener {
     private FrameLayout backBtn;
 
     private TextView guestsSelect;
@@ -61,6 +61,12 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
         continueBtn = findViewById(R.id.booking_continue_button);
         backBtn = findViewById(R.id.booking_back_button);
 
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            bookingFormDetailData = (BookingFormDetailData) bundle.getSerializable("bookingFormData");
+            updateBookingFormView(bookingFormDetailData);
+        }
 
         setupGuestsSelect(bookingFormDetailData);
         setupRoomsSelect(bookingFormDetailData);
@@ -69,14 +75,28 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
         setUpNavigateBackToDetail();
     }
 
-    public void setUpNavigateBackToDetail() {
+    private void updateBookingFormView(BookingFormDetailData data) {
+        if (data != null) {
+            String dateFormatted = formatDateRange(data.getStartDate(), data.getEndDate());
+            String guestRoomQuantity = (data.getSelectedAdultValue() + data.getSelectedChildValue()) + " guests " + "- " + data.getSelectedRoomValue() + " rooms";
+            String roomTypeQuantity = data.getRoomTypeList().size() + " room types";
+            String phoneNumber = data.getPhoneNumber();
+
+            datesSelect.setText(dateFormatted);
+            guestsSelect.setText(guestRoomQuantity);
+            roomsSelect.setText(roomTypeQuantity);
+            phoneNumberSelect.setText(phoneNumber);
+        }
+    }
+
+    private void setUpNavigateBackToDetail() {
         backBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, DetailActivity.class);
             startActivity(intent);
         });
     }
 
-    public void setUpNavigateToCheckout() {
+    private void setUpNavigateToCheckout() {
         continueBtn.setOnClickListener(v -> {
             bookingFormDetailData.setPhoneNumber(String.valueOf(phoneNumberSelect.getText()));
 
@@ -120,7 +140,7 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
 
             Date startDate = new Date(dateRange.first);
             Date endDate = new Date(dateRange.second);
-            String formattedDateRange = formatTimestampRange(startDate, endDate);
+            String formattedDateRange = formatDateRange(startDate, endDate);
 
             bookingFormDetailData.setStartDate(startDate);
             bookingFormDetailData.setEndDate(endDate);
@@ -136,7 +156,7 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
     }
 
 
-    private String formatTimestampRange(Date startDate, Date endDate) {
+    private String formatDateRange(Date startDate, Date endDate) {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedStart = dateFormat.format(startDate);
         String formattedEnd = dateFormat.format(endDate);

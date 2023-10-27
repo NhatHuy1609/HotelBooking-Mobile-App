@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hotelbooking_app.Booking.Data.BookingFormDetailData;
 import com.example.hotelbooking_app.R;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +20,7 @@ public class BookingCheckoutActivity extends AppCompatActivity {
     private FrameLayout backBtn;
 
     private TextView dateInfor, guestInfor, phoneInfor, roomTypeInfor;
+    private BookingFormDetailData bookingFormDetailData;
 
 
     @Override
@@ -36,17 +38,21 @@ public class BookingCheckoutActivity extends AppCompatActivity {
         Intent bookingActivityIntent = getIntent();
         Bundle bookingActivityBundle = bookingActivityIntent.getExtras();
         if (bookingActivityBundle != null) {
-            BookingFormDetailData bookingFormDetailData = (BookingFormDetailData) bookingActivityBundle.getSerializable("bookingFormData");
+            bookingFormDetailData = (BookingFormDetailData) bookingActivityBundle.getSerializable("bookingFormData");
             updateCheckoutView(bookingFormDetailData);
         }
 
-        setUpNavigateToBookingActivity();
+        setUpNavigateToBookingActivity(bookingFormDetailData);
     }
 
-    private void setUpNavigateToBookingActivity() {
+    private void setUpNavigateToBookingActivity(BookingFormDetailData data) {
         backBtn = findViewById(R.id.checkout_back_button);
         backBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, BookingActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bookingFormData", (Serializable) data);
+            intent.putExtras(bundle);
+
             startActivity(intent);
         });
     }
