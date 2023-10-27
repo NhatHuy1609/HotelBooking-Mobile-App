@@ -2,10 +2,11 @@ package com.example.hotelbooking_app.Booking.Data;
 
 import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class BookingFormDetailData {
+public class BookingFormDetailData implements Serializable {
     private int selectedRoomValue;
     private int selectedAdultValue;
     private int selectedChildValue;

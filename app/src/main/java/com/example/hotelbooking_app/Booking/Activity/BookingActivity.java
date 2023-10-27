@@ -5,6 +5,7 @@ import android.os.Bundle;
 //import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,14 @@ import com.example.hotelbooking_app.Booking.Interface.OnSaveClickListener;
 import com.example.hotelbooking_app.R;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,6 +37,8 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
     private TextView guestsSelect;
     private TextView roomsSelect;
     private TextView datesSelect;
+    private EditText phoneNumberSelect;
+    private AppCompatButton continueBtn;
     private MaterialDatePicker<Pair<Long, Long>> datePicker;
     BookingFormDetailData bookingFormDetailData;
 
@@ -48,11 +54,28 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
         guestsSelect = findViewById(R.id.guests_number_select);
         roomsSelect = findViewById(R.id.room_type_select);
         datesSelect = findViewById(R.id.dates_select);
+        phoneNumberSelect = findViewById(R.id.booking_phone_number);
+        continueBtn = findViewById(R.id.booking_continue_button);
 
 
         setupGuestsSelect(bookingFormDetailData);
         setupRoomsSelect(bookingFormDetailData);
         setupDateSelect();
+        setUpNavigateToCheckout();
+    }
+
+    public void setUpNavigateToCheckout() {
+        continueBtn.setOnClickListener(v -> {
+            bookingFormDetailData.setPhoneNumber(String.valueOf(phoneNumberSelect.getText()));
+
+            Intent intent = new Intent(this, BookingCheckoutActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putSerializable("bookingFormData", (Serializable) bookingFormDetailData);
+            intent.putExtras(bundle);
+
+            startActivity(intent);
+        });
     }
 
     private void setupGuestsSelect(BookingFormDetailData bookingFormDetailData) {
