@@ -1,13 +1,16 @@
 package com.example.hotelbooking_app.Homescreen.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -44,8 +47,7 @@ public class Homescreen_setting extends Fragment {
         setting_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                showSignOutDialog();
             }
         });
 
@@ -63,6 +65,30 @@ public class Homescreen_setting extends Fragment {
 
         return view;
 
+    }
+    public void showSignOutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = getLayoutInflater().inflate(R.layout.homescreen_arlert, null);
+        builder.setView(view);
+
+        builder.setTitle("Sign out of your account?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Chuyển hướng sang LoginActivity khi nhấn "OK"
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Xử lý hành động khi nhấn "Cancel" ở đây (nếu cần)
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
