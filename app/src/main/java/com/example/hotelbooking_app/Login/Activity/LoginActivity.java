@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("email", emailText.getText().toString());
                             editor.putString("password", passwordText.getText().toString());
 
-                        }else{
+                        } else {
                             editor.putString("email", "");
                             editor.putString("password", "");
                         }
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        forgotPasswordTextView=findViewById(R.id.signin_forgot_password);
+        forgotPasswordTextView = findViewById(R.id.signin_forgot_password);
         forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,8 +113,6 @@ public class LoginActivity extends AppCompatActivity {
                 bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
             }
         });
-
-
 
 
     }

@@ -41,13 +41,15 @@
             android:theme="@style/Theme.HotelBooking_App"></activity>
         <activity
             android:name=".Login.Activity.LoginActivity"
-            android:exported="true" /> <!-- Pham Van Nhat Huy -->
+            android:exported="true" />
+        <!-- Pham Van Nhat Huy -->
         <activity
             android:name=".Booking.Activity.BookingActivity"
             android:exported="true" />
         <activity
             android:name=".Booking.Activity.BookingCheckoutActivity"
-            android:exported="true" /> <!-- Truong Dinh Nhat -->
+            android:exported="true" />
+        <!-- Truong Dinh Nhat -->
         <activity
             android:name=".Searching.Activity.SearchingActivity"
             android:exported="true" />

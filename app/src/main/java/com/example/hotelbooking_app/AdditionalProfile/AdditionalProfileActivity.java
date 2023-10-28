@@ -98,9 +98,6 @@ public class AdditionalProfileActivity extends AppCompatActivity {
                 // Mở giao diện chọn hình ảnh từ bộ nhớ hoặc máy ảnh
                 openImageChooser();      }
         });
-
-
-
     }
     private void openImageChooser() {
         Intent intent = new Intent();

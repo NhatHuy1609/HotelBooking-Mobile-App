@@ -6,8 +6,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.example.hotelbooking_app.Booking.Data.BookingFormDetailData;
+import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.R;
 
 import java.io.Serializable;
@@ -20,6 +22,7 @@ public class BookingCheckoutActivity extends AppCompatActivity {
     private FrameLayout backBtn;
 
     private TextView dateInfor, guestInfor, phoneInfor, roomTypeInfor;
+    private AppCompatButton confirmBtn;
     private BookingFormDetailData bookingFormDetailData;
 
 
@@ -33,6 +36,7 @@ public class BookingCheckoutActivity extends AppCompatActivity {
         guestInfor = findViewById(R.id.checkout_booking_information_guest);
         phoneInfor = findViewById(R.id.checkout_booking_information_phone_number);
         roomTypeInfor = findViewById(R.id.checkout_booking_information_room_type);
+        confirmBtn = findViewById(R.id.checkout_confirm_button);
 
         //
         Intent bookingActivityIntent = getIntent();
@@ -43,6 +47,7 @@ public class BookingCheckoutActivity extends AppCompatActivity {
         }
 
         setUpNavigateToBookingActivity(bookingFormDetailData);
+        setUpClickConfirmCheckout();
     }
 
     private void setUpNavigateToBookingActivity(BookingFormDetailData data) {
@@ -53,6 +58,13 @@ public class BookingCheckoutActivity extends AppCompatActivity {
             bundle.putSerializable("bookingFormData", (Serializable) data);
             intent.putExtras(bundle);
 
+            startActivity(intent);
+        });
+    }
+
+    private void setUpClickConfirmCheckout() {
+        confirmBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HomescreenActivity.class);
             startActivity(intent);
         });
     }
