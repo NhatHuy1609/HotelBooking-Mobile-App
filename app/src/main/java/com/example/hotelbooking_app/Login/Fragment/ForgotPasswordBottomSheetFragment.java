@@ -25,7 +25,7 @@ public class ForgotPasswordBottomSheetFragment extends BottomSheetDialogFragment
                 Bundle arg = getArguments();
                 if (arg != null) {
                     String email = arg.getString("email");
-                    editText.findViewById(R.id.frament_email_forgotPassword);
+                    editText=view.findViewById(R.id.frament_email_forgotPassword);
                     editText.setText(email);
                 }
             }catch (Exception e){
