@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -68,14 +67,13 @@ public class Homescreen_setting extends Fragment {
     }
     public void showSignOutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getLayoutInflater().inflate(R.layout.homescreen_arlert, null);
+        View view = getLayoutInflater().inflate(R.layout.homescreen_arlert_signout, null);
         builder.setView(view);
 
-        builder.setTitle("Sign out of your account?")
+        builder.setTitle("Logout of your account?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Chuyển hướng sang LoginActivity khi nhấn "OK"
                         Intent intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                     }
@@ -83,7 +81,6 @@ public class Homescreen_setting extends Fragment {
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        // Xử lý hành động khi nhấn "Cancel" ở đây (nếu cần)
                     }
                 });
 
