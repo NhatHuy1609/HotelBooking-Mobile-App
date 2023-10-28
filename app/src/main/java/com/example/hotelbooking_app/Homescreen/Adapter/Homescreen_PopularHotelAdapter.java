@@ -18,15 +18,15 @@ import com.example.hotelbooking_app.Searching.Adapter.RecentlyViewedAdapter;
 import java.util.List;
 
 public class Homescreen_PopularHotelAdapter extends BaseAdapter {
-    OnItemClickListener onItemClickListener;
+//    OnItemClickListener onItemClickListener;
 
     private Context context;
     private int layout;
     private List<Homescreen_PopularHotel> popularHotelList;
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
+//    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+//        this.onItemClickListener = onItemClickListener;
+//    }
 
     public Homescreen_PopularHotelAdapter(Context context, int layout, List<Homescreen_PopularHotel> popularHotelList) {
         this.context = context;
@@ -49,9 +49,9 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
         return 0;
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
+//    public interface OnItemClickListener {
+//        void onItemClick(int position);
+//    }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -67,7 +67,7 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
         TextView txtSLDanhGia = (TextView) view.findViewById(R.id.home_SLdanhgia_popularhotel);
         TextView txtGia = (TextView) view.findViewById(R.id.home_price_popularhotel);
 
-        RelativeLayout pplHotelItem = (RelativeLayout) view.findViewById(R.id.homescreen_item_popular_hotel);
+//        RelativeLayout pplHotelItem = (RelativeLayout) view.findViewById(R.id.homescreen_item_popular_hotel);
 
         //gán giá trị
         Homescreen_PopularHotel popularHotel = popularHotelList.get(i);
@@ -79,14 +79,14 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
         txtSLDanhGia.setText(String.valueOf(popularHotel.getSoLuongDanhGia()));
         txtGia.setText(popularHotel.getGia());
 
-        pplHotelItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(i);
-                }
-            }
-        });
+//        pplHotelItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (onItemClickListener != null) {
+//                    onItemClickListener.onItemClick(i);
+//                }
+//            }
+//        });
 
         return view;
     }

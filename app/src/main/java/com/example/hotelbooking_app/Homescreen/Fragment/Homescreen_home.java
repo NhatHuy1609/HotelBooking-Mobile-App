@@ -63,16 +63,17 @@ public class Homescreen_home extends Fragment {
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.homescreen_horizontal_scroll_view);
 
         lnNearbyHotel = (LinearLayout) view.findViewById(R.id.home_lvNearbyHotel);
+//        lnPopularHotel = (LinearLayout) view.findViewById(R.id.home_lvpopularhotel);
         lnPopularHotel = (LinearLayout) horizontalScrollView.getChildAt(0);
 
-        for (Homescreen_Nearbyhotel hotel : arrayNearByHotel) {
-            View hotelView = inflater.inflate(R.layout.homescreen_item_nearbyhotel, null);
-            lnNearbyHotel.addView(hotelView);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View ittem = adapter.getView(i, null, null);
+            lnNearbyHotel.addView(ittem);
         }
 
-        for (Homescreen_PopularHotel hotel : arrayPopularHotel) {
-            View hotelView = inflater.inflate(R.layout.homescreen_item_popularhotel, null);
-            lnPopularHotel.addView(hotelView);
+        for (int i = 0; i < adapter_1.getCount(); i++) {
+            View ittem = adapter_1.getView(i, null, null);
+            lnPopularHotel.addView(ittem);
         }
 
         //đổi màu textnearbyhotel
@@ -106,7 +107,7 @@ public class Homescreen_home extends Fragment {
             });
         }
 
-        // Intent searching
+         //Intent searching
         btn_seach = (ImageView) view.findViewById(R.id.home_btn_search);
         btn_seach.setOnClickListener(new View.OnClickListener() {
             @Override
