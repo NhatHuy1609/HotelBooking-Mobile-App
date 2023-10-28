@@ -1,6 +1,9 @@
 package com.example.hotelbooking_app.Review;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.Adapter.ReviewAdapter;
+import com.example.hotelbooking_app.Review.Fragment.ReviewCommentFragment;
 import com.example.hotelbooking_app.Review.Model.Review;
 import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 
@@ -33,6 +37,16 @@ public class ReviewsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        openFragment();
+    }
+
+    private void openFragment() {
+        ReviewCommentFragment fragment= new ReviewCommentFragment();
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.commit();
     }
 
     private void openReview() {

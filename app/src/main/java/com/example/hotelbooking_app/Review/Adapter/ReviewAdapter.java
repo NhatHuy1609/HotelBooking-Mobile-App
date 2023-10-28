@@ -58,7 +58,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             ratingTextView.setText(String.valueOf(review.getRating()));
             evaluatedStarImageView.setImageResource(R.drawable.review_star);
             reviewTextTextView.setText(review.getReviewText());
-            avatarReviewer.setImageResource(R.drawable.review_avatar_reviewer);
+            avatarReviewer.setImageResource(R.drawable.profile_avatar_default);
         }
     }
 }
