@@ -46,7 +46,6 @@ public class AdditionalProfileActivity extends AppCompatActivity {
         setContentView(R.layout.additional_profile_layout);
         Button calendarButton = findViewById(R.id.profile_calendarButton);
         EditText editText=findViewById(R.id.profile_calendar_text);
-        imageView=findViewById(R.id.profile_ImgUpload);
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,10 +90,9 @@ public class AdditionalProfileActivity extends AppCompatActivity {
         calendarDialog.show();
     }
     private void uploadImg() {
-        ImageView imageView = findViewById(R.id.profile_ImgUpload);
-        Button uploadButton = findViewById(R.id.profile_uploadButton);
+        imageView = findViewById(R.id.review_item_avatar);
 
-        uploadButton.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Mở giao diện chọn hình ảnh từ bộ nhớ hoặc máy ảnh
