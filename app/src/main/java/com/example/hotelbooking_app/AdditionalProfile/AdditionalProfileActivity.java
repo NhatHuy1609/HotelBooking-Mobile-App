@@ -45,12 +45,11 @@ public class AdditionalProfileActivity extends AppCompatActivity {
     private void openAdditionalProfile() {
         setContentView(R.layout.additional_profile_layout);
         Button calendarButton = findViewById(R.id.profile_calendarButton);
-        EditText editText=findViewById(R.id.profile_calendar_text);
+         editText=findViewById(R.id.profile_calendar_text);
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCalendarDialog(); // Gọi hàm để hiển thị lịch
-                editText.setText(selectedDate);
             }
         });
         skipBtn=findViewById(R.id.profile_skip_btn);
@@ -84,6 +83,7 @@ public class AdditionalProfileActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                editText.setText(selectedDate);
                 calendarDialog.dismiss();
             }
         });
