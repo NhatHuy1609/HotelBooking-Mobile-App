@@ -50,4 +50,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_additional_profile">AdditionalProfileActivity</string>
+    <string name="title_activity_homescreen_myprofile">Homescreen_myprofile</string>
 </resources>

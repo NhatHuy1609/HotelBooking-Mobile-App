@@ -15,14 +15,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 
-public class Homescreen_myprofile extends Fragment {
+public class Homescreen_setting extends Fragment {
     BottomNavigationView bottomNavigationView;
     ImageButton btn_back;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.homescreen_fragment_myprofile, container, false);
+        View view = inflater.inflate(R.layout.homescreen_fragment_setting, container, false);
         // back home
         btn_back = (ImageButton) view.findViewById(R.id.myprofile_btn_back);
         bottomNavigationView = getActivity().findViewById(R.id.homescreen_bottom_navigation);

@@ -17,17 +17,15 @@ import android.widget.ImageView;
 import android.graphics.Color;
 import android.view.ViewTreeObserver;
 import android.content.Intent;
-import android.widget.Toast;
-
+import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_myprofile;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAdapter;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAdapter;
-import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
-import com.example.hotelbooking_app.MainActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 import com.example.hotelbooking_app.Searching.Activity.SearchingActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 import java.util.ArrayList;
@@ -38,7 +36,10 @@ public class Homescreen_home extends Fragment {
     LinearLayout lnNearbyHotel,lnPopularHotel;
     TextView nearbyHotels;
     ScrollView scrollview;
+
     ImageView btn_seach;
+    RelativeLayout btn_acc;
+    BottomNavigationView bottomNavigationView;
     ArrayList<Homescreen_Nearbyhotel> arrayNearByHotel;
     ArrayList<Homescreen_PopularHotel> arrayPopularHotel;
     Homescreen_NearbyhotelAdapter adapter;
@@ -75,6 +76,18 @@ public class Homescreen_home extends Fragment {
             View ittem = adapter_1.getView(i, null, null);
             lnPopularHotel.addView(ittem);
         }
+
+        //TmageButton accout
+        btn_acc = (RelativeLayout) view.findViewById(R.id.home_btn_acc);
+
+        // Set a click listener for the button
+        btn_acc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Homescreen_myprofile.class);
+                startActivity(intent);
+            }
+        });
 
         //đổi màu textnearbyhotel
         nearbyHotels = view.findViewById(R.id.home_nearbyhotels);
@@ -116,6 +129,8 @@ public class Homescreen_home extends Fragment {
                 startActivity(intent);
             }
         });
+
+
 
         return view;
     }

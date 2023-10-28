@@ -3,10 +3,7 @@ package com.example.hotelbooking_app.Homescreen.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.fragment.app.FragmentManager;
-
-import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_home;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +14,6 @@ import android.widget.ImageButton;
 import com.example.hotelbooking_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class Homescreen_mybooking extends Fragment {

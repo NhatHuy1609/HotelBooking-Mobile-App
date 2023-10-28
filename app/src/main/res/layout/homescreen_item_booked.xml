@@ -5,6 +5,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="170dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
@@ -111,7 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/bookedhotels_infhotel"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="@drawable/homescreen_booked_custom_date">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

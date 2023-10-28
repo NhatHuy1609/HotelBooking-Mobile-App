@@ -22,6 +22,7 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp">
                     <RelativeLayout
+                        android:id="@+id/home_btn_acc"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="10dp">
@@ -29,7 +30,7 @@
                             android:id="@+id/home_img_accout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/homescreen_pvl"
+                            android:src="@drawable/splash_screen_logo02"
                             android:clipToOutline="true"
                             android:background="@drawable/homescreen_custom_img">
                         </ImageView>

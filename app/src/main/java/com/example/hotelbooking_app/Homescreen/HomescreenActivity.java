@@ -1,26 +1,18 @@
 package com.example.hotelbooking_app.Homescreen;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
-
 import android.view.MenuItem;
-import android.view.View;
 import android.os.Bundle;
 
 
 import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_about_us;
-import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_myprofile;
-import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
-import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
+import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_setting;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_home;
 import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_mybooking;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
-import java.util.ArrayList;
 
 public class HomescreenActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -28,7 +20,7 @@ public class HomescreenActivity extends AppCompatActivity {
     Homescreen_home homefragment = new Homescreen_home();
     Homescreen_mybooking mybookingfragment = new Homescreen_mybooking();
     Homescreen_about_us about_us = new Homescreen_about_us();
-    Homescreen_myprofile myprofile = new Homescreen_myprofile();
+    Homescreen_setting setting = new Homescreen_setting();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +45,8 @@ public class HomescreenActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, about_us).commit();
                     return true;
                 }
-                else if (item.getItemId() == R.id.btn_myprofile) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, myprofile).commit();
+                else if (item.getItemId() == R.id.btn_setting) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, setting).commit();
                     return true;
                 }
 
