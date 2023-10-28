@@ -77,7 +77,7 @@ public class Homescreen_home extends Fragment {
             lnPopularHotel.addView(ittem);
         }
 
-        //TmageButton accout
+        //ImageButton accout
         btn_acc = (RelativeLayout) view.findViewById(R.id.home_btn_acc);
 
         // Set a click listener for the button
