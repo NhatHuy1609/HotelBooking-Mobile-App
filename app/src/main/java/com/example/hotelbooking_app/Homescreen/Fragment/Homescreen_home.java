@@ -4,6 +4,14 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+import android.widget.ArrayAdapter;
+import android.content.DialogInterface;
+import android.widget.AdapterView;
+
+
+
+
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Spinner;
+
 import android.widget.ImageView;
 import android.graphics.Color;
 import android.view.ViewTreeObserver;
@@ -33,8 +43,8 @@ import java.util.ArrayList;
 
 public class Homescreen_home extends Fragment {
     HorizontalScrollView horizontalScrollView;
-    LinearLayout lnNearbyHotel,lnPopularHotel;
-    TextView nearbyHotels;
+    LinearLayout lnNearbyHotel,lnPopularHotel,lnLocation;
+    TextView nearbyHotels,txtLocation;
     ScrollView scrollview;
 
     ImageView btn_seach;
@@ -77,7 +87,7 @@ public class Homescreen_home extends Fragment {
             lnPopularHotel.addView(ittem);
         }
 
-        //TmageButton accout
+        //ImageButton accout
         btn_acc = (RelativeLayout) view.findViewById(R.id.home_btn_acc);
 
         // Set a click listener for the button
@@ -86,6 +96,17 @@ public class Homescreen_home extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Homescreen_myprofile.class);
                 startActivity(intent);
+            }
+        });
+
+        //text location
+        lnLocation = (LinearLayout) view.findViewById(R.id.home_lnlocation);
+        txtLocation = (TextView) view.findViewById(R.id.home_txt_location);
+        lnLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                showAlertDialogLocation();
             }
         });
 
@@ -152,4 +173,72 @@ public class Homescreen_home extends Fragment {
         arrayNearByHotel.add(new Homescreen_Nearbyhotel("MERODA","My An Beach",4.9,500,"$100/Day",R.drawable.homescreen_meroda));
 
     }
+
+    private void showAlertDialogLocation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Location");
+
+
+        View alertDialogView = getLayoutInflater().inflate(R.layout.homescreen_arlert_enter_location, null);
+        builder.setView(alertDialogView);
+
+
+        Spinner tpSpinner = alertDialogView.findViewById(R.id.thanhpho_spinner);
+        Spinner quanSpinner = alertDialogView.findViewById(R.id.quan_spinner);
+
+        String[] tpOptions = getResources().getStringArray(R.array.thanhpho_data);
+        String[] quanOptions = getResources().getStringArray(R.array.quan_data);
+
+
+        ArrayAdapter<String> quanAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, tpOptions);
+        tpSpinner.setAdapter(quanAdapter);
+
+        ArrayAdapter<String> phuongAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, quanOptions);
+        quanSpinner.setAdapter(phuongAdapter);
+
+        // Xử lý khi người dùng chọn mục từ Spinner
+        tpSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
+
+        quanSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Xử lý khi người dùng bấm nút OK
+                String selectedQuan = tpSpinner.getSelectedItem().toString();
+                String selectedPhuong = quanSpinner.getSelectedItem().toString();
+                txtLocation.setText(selectedQuan + ", " + selectedPhuong);
+            }
+        });
+
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.create().show();
+    }
+
 }

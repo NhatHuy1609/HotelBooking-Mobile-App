@@ -51,4 +51,18 @@
     </string>
     <string name="title_activity_additional_profile">AdditionalProfileActivity</string>
     <string name="title_activity_homescreen_myprofile">Homescreen_myprofile</string>
+
+    <string name="select_thanhpho">Chọn Thành Phố</string>
+    <string name="select_quan">Chọn Quận</string>
+    <string-array name="thanhpho_data">
+        <item>Đà Nẵng</item>
+        <item>Hà Nội</item>
+        <item>TP Hồ Chí Minh</item>
+    </string-array>
+    <string-array name="quan_data">
+        <item>Quận 1</item>
+        <item>Quận 2</item>
+        <item>Quận 3</item>
+
+    </string-array>
 </resources>
