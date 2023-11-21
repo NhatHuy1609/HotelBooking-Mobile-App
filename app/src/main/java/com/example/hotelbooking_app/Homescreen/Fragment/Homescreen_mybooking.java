@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ImageButton;
 
+import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -73,8 +74,12 @@ public class Homescreen_mybooking extends Fragment {
         mybooking_btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomNavigationView.setSelectedItemId(R.id.btn_home);
+                // Add this line to go back to the previous fragment
+                getFragmentManager().popBackStack();
+                // Update the selected item in the BottomNavigationView
+                bottomNavigationView.setSelectedItemId(((HomescreenActivity)getActivity()).getPreviousFragmentId());
             }
+
         });
         return view;
     }

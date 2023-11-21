@@ -9,24 +9,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.R;
 import android.content.Intent;
+import android.widget.ImageView;
 
 
-public class Homescreen_myprofile extends AppCompatActivity {
-    ImageButton btn_back;
+public class Homescreen_changepassword extends AppCompatActivity {
+    ImageView changepassword_btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.homescreen_myprofile);
-
-        btn_back = (ImageButton) findViewById(R.id.myprofile_btn_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.homescreen_changepassword);
+        changepassword_btn_back = findViewById(R.id.changepassword_btn_back);
+        changepassword_btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
-
     }
 }
+

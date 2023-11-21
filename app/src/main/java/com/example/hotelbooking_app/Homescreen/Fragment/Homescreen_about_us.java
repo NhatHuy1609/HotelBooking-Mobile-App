@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,9 +29,15 @@ public class Homescreen_about_us extends Fragment {
         aboutus_btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomNavigationView.setSelectedItemId(R.id.btn_home);
+                // Add this line to go back to the previous fragment
+                getFragmentManager().popBackStack();
+                // Update the selected item in the BottomNavigationView
+                bottomNavigationView.setSelectedItemId(((HomescreenActivity)getActivity()).getPreviousFragmentId());
             }
+
         });
         return view;
+
     }
 }
+

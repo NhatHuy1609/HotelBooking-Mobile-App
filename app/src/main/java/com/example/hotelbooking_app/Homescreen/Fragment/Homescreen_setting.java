@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_changepassword;
 import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_myprofile;
+import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.Login.Activity.LoginActivity;
 import com.example.hotelbooking_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,7 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class Homescreen_setting extends Fragment {
     BottomNavigationView bottomNavigationView;
     ImageButton btn_back;
-    LinearLayout setting_logout,setting_editprofile;
+    LinearLayout setting_logout,setting_editprofile,setting_changepassword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,8 +40,12 @@ public class Homescreen_setting extends Fragment {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomNavigationView.setSelectedItemId(R.id.btn_home);
+                // Add this line to go back to the previous fragment
+                getFragmentManager().popBackStack();
+                // Update the selected item in the BottomNavigationView
+                bottomNavigationView.setSelectedItemId(((HomescreenActivity)getActivity()).getPreviousFragmentId());
             }
+
         });
         //logout
         setting_logout = (LinearLayout) view.findViewById(R.id.setting_btn_logout);
@@ -52,10 +58,18 @@ public class Homescreen_setting extends Fragment {
 
         //edit profile
         setting_editprofile = (LinearLayout) view.findViewById(R.id.setting_btn_editprofile);
+        setting_changepassword = (LinearLayout) view.findViewById(R.id.setting_btn_changepassword);
         setting_editprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Homescreen_myprofile.class);
+                startActivity(intent);
+            }
+        });
+        setting_changepassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Homescreen_changepassword.class);
                 startActivity(intent);
             }
         });

@@ -118,7 +118,7 @@ public class Homescreen_home extends Fragment {
             @Override
             public void onScrollChanged() {
                 int scrollY = scrollview.getScrollY();
-                if (scrollY > scrollview.getHeight()/8) {
+                if (scrollY > (dpToPx(420)-scrollview.getHeight()/2)) {
                     nearbyHotels.setTextColor(Color.WHITE);
                 } else {
                     nearbyHotels.setTextColor(Color.BLACK);
@@ -240,5 +240,10 @@ public class Homescreen_home extends Fragment {
 
         builder.create().show();
     }
+    public int dpToPx(int dp) {
+        float density = getResources().getDisplayMetrics().density;
+        return Math.round((float)dp * density);
+    }
+
 
 }
