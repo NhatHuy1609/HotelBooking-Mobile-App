@@ -2,19 +2,24 @@ package com.example.hotelbooking_app.Homescreen.Fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_changepassword;
 import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_myprofile;
+import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_notifications;
 import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.Login.Activity.LoginActivity;
 import com.example.hotelbooking_app.R;
@@ -26,7 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class Homescreen_setting extends Fragment {
     BottomNavigationView bottomNavigationView;
     ImageButton btn_back;
-    LinearLayout setting_logout,setting_editprofile,setting_changepassword;
+    LinearLayout setting_logout,setting_editprofile,setting_changepassword,setting_notifications, setting_language;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +64,8 @@ public class Homescreen_setting extends Fragment {
         //edit profile
         setting_editprofile = (LinearLayout) view.findViewById(R.id.setting_btn_editprofile);
         setting_changepassword = (LinearLayout) view.findViewById(R.id.setting_btn_changepassword);
+        setting_notifications = (LinearLayout) view.findViewById(R.id.setting_btn_notifications);
+        setting_language = (LinearLayout) view.findViewById(R.id.setting_btn_language);
         setting_editprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +80,19 @@ public class Homescreen_setting extends Fragment {
                 startActivity(intent);
             }
         });
+        setting_notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Homescreen_notifications.class);
+                startActivity(intent);
+            }
+        });
+        setting_language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLanguageDialog();
+            }
+        });
 
 
 
@@ -81,7 +101,7 @@ public class Homescreen_setting extends Fragment {
     }
     public void showSignOutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getLayoutInflater().inflate(R.layout.homescreen_arlert_signout, null);
+        View view = getLayoutInflater().inflate(R.layout.homescreen_arlert_empty, null);
         builder.setView(view);
 
         builder.setTitle("Logout of your account?")
@@ -101,5 +121,32 @@ public class Homescreen_setting extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    public void showLanguageDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = getLayoutInflater().inflate(R.layout.homescreen_arlert_empty, null);
+        builder.setView(view);
+
+        // Set the title with a custom font size
+        TextView title = new TextView(getActivity());
+        title.setText("Other languages will be updated later");
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        title.setTypeface(null, Typeface.BOLD);
+        title.setGravity(Gravity.CENTER);
+
+
+        builder.setCustomTitle(title);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 
 }
