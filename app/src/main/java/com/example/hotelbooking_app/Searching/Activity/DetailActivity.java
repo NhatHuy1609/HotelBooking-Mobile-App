@@ -87,8 +87,8 @@ public class DetailActivity extends AppCompatActivity {
         ArrayList<ReviewsItemDomain> arrReviewsItemData = new ArrayList<>();
 
         arrReviewsItemData.add(new ReviewsItemDomain("Truong Dinh Nhat", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
-        arrReviewsItemData.add(new ReviewsItemDomain("Truong Dinh Nhat", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
-        arrReviewsItemData.add(new ReviewsItemDomain("Truong Dinh Nhat", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
+        arrReviewsItemData.add(new ReviewsItemDomain("Pham Van Nhat Huy", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
+        arrReviewsItemData.add(new ReviewsItemDomain("Phan Van Linh", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
 
         reviewsItemAdapter = new ReviewsItemAdapter(arrReviewsItemData);
         rvReviewsItem.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));

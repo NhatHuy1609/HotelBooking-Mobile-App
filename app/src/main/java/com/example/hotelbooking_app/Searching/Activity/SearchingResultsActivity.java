@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.SearchView;
 
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Adapter.ResultFilterAdapter;
@@ -24,6 +25,8 @@ public class SearchingResultsActivity extends AppCompatActivity {
     ResultFilterAdapter resultFilterAdapter;
     ResultItemAdapter resultItemAdapter;
     RecyclerView rvResultFilter, rvResultItem;
+    androidx.appcompat.widget.SearchView searchView;
+    ArrayList<ResultItemDomain> arrResultItemData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,25 @@ public class SearchingResultsActivity extends AppCompatActivity {
 
         rvResultItem = findViewById(R.id.searching_rv_search_result_items);
         innitResultItemRecyclerView();
+
+        searchView = findViewById(R.id.searching_ed_result_search_view);
+
+
+
+
+        //Receiving data in Searching activity
+        Intent intent = getIntent();
+        if (intent != null) {
+            String searchQuery = intent.getStringExtra("SEARCH_QUERY");
+            searchView.setQuery(searchQuery, false);
+
+            ArrayList<ResultItemDomain> allResults = arrResultItemData;
+            ArrayList<ResultItemDomain> filteredResults = filterResults(allResults, searchQuery);
+
+            resultItemAdapter = new ResultItemAdapter(filteredResults);
+            rvResultItem.setAdapter(resultItemAdapter);
+        }
+
         resultItemAdapter.setOnItemClickListener(new ResultItemAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -53,10 +75,22 @@ public class SearchingResultsActivity extends AppCompatActivity {
         });
     }
 
+    private ArrayList<ResultItemDomain> filterResults(ArrayList<ResultItemDomain> allResults, String searchQuery) {
+        ArrayList<ResultItemDomain> filteredResults = new ArrayList<>();
+
+        for (ResultItemDomain result : allResults) {
+            if (result.getName().toLowerCase().contains(searchQuery.toLowerCase())) {
+                filteredResults.add(result);
+            }
+        }
+
+        return filteredResults;
+    }
+
     private void innitResultItemRecyclerView() {
-        ArrayList<ResultItemDomain> arrResultItemData = new ArrayList<>();
+        arrResultItemData = new ArrayList<>();
         arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
+        arrResultItemData.add(new ResultItemDomain("HAI AN HOTEL", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
         arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
         arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
         arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
