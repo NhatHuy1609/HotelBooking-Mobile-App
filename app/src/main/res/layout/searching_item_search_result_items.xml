@@ -6,13 +6,13 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp">
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="153dp"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:background="@drawable/searching_recently_viewed_background">
 
         <ImageView
             android:id="@+id/item_img_search_result"
-            android:layout_width="153dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
             android:scaleType="fitXY"
             android:src="@drawable/searching_image_muongthanh"

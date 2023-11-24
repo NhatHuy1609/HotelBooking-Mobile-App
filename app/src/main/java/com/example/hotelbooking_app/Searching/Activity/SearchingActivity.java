@@ -47,6 +47,7 @@ public class SearchingActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(SearchingActivity.this, SearchingResultsActivity.class);
+                intent.putExtra("SEARCH_QUERY", query);
                 startActivity(intent);
                 return true;
             }
