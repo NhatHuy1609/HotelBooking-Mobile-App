@@ -100,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("password", "");
                         }
                         editor.apply();
+                        authentication(emailText.getText().toString(), passwordText.getText().toString());
 
                         String jwtToken = sharedPreferences.getString("jwtKey", null);
 
