@@ -1,22 +1,34 @@
 package com.example.hotelbooking_app.Homescreen.Hotels;
 
+import android.graphics.Bitmap;
+
 public class Homescreen_PopularHotel {
+    private int hotelId;
     private String Ten;
     private String DiaChi;
     private double DanhGia;
     private int SoLuongDanhGia;
-    private String Gia;
-    //    private String MoTa;
-    private int Hinh;
+    private double Gia;
+    private Bitmap Hinh;
+    private boolean isRedHeart;
 
-    public Homescreen_PopularHotel(String ten, String diaChi, double danhGia, int soLuongDanhGia, String gia /* ,String moTa */, int hinh) {
+    public Homescreen_PopularHotel(int hotelId, String ten, String diaChi, double danhGia, int soLuongDanhGia, double gia, Bitmap hinh, boolean isRedHeart) {
+        this.hotelId = hotelId;
         Ten = ten;
         DiaChi = diaChi;
         DanhGia = danhGia;
         SoLuongDanhGia = soLuongDanhGia;
         Gia = gia;
-//        MoTa = moTa;
         Hinh = hinh;
+        this.isRedHeart = isRedHeart;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getTen() {
@@ -51,27 +63,27 @@ public class Homescreen_PopularHotel {
         SoLuongDanhGia = soLuongDanhGia;
     }
 
-    public String getGia() {
+    public double getGia() {
         return Gia;
     }
 
-    public void setGia(String gia) {
+    public void setGia(double gia) {
         Gia = gia;
     }
 
-//    public String getMoTa() {
-//        return MoTa;
-//    }
-//
-//    public void setMoTa(String moTa) {
-//        MoTa = moTa;
-//    }
-
-    public int getHinh() {
+    public Bitmap getHinh() {
         return Hinh;
     }
 
-    public void setHinh(int hinh) {
+    public void setHinh(Bitmap hinh) {
         Hinh = hinh;
+    }
+
+    public boolean isRedHeart() {
+        return isRedHeart;
+    }
+
+    public void setRedHeart(boolean redHeart) {
+        isRedHeart = redHeart;
     }
 }

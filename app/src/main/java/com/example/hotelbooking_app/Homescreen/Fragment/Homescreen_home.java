@@ -32,9 +32,6 @@ import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiResponse;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.ImageDetail;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.RatingApiResponse;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.Review;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.ReviewApiResponse;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
@@ -44,11 +41,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -76,11 +73,10 @@ public class Homescreen_home extends Fragment {
 
         arrayNearByHotel = new ArrayList<>();
         arrayPopularHotel = new ArrayList<>();
-
+        new PpHotelsAsyncTask().execute();
         new HotelsAsyncTask().execute();
 
         adapter = new Homescreen_NearbyhotelAdapter(getActivity(), R.layout.homescreen_item_nearbyhotel, arrayNearByHotel);
-
 
 
 
@@ -90,16 +86,12 @@ public class Homescreen_home extends Fragment {
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.homescreen_horizontal_scroll_view);
 
         lnNearbyHotel = (LinearLayout) view.findViewById(R.id.home_lvNearbyHotel);
-        Log.d("Layout Child Count", "Child count: " + lnNearbyHotel.getChildCount());
 
-//        lnPopularHotel = (LinearLayout) view.findViewById(R.id.home_lvpopularhotel);
-        lnPopularHotel = (LinearLayout) horizontalScrollView.getChildAt(0);
+        lnPopularHotel = (LinearLayout) view.findViewById(R.id.home_lvpopularhotel);
+//        lnPopularHotel = (LinearLayout) horizontalScrollView.getChildAt(0);
 
 
-        for (int i = 0; i < adapter_1.getCount(); i++) {
-            View ittem = adapter_1.getView(i, null, null);
-            lnPopularHotel.addView(ittem);
-        }
+
 
         //ImageButton accout
         btn_acc = (RelativeLayout) view.findViewById(R.id.home_btn_acc);
@@ -160,7 +152,61 @@ public class Homescreen_home extends Fragment {
 
         return view;
     }
+    private class PpHotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_PopularHotel>> {
+        @Override
+        protected List<Homescreen_PopularHotel> doInBackground(Void... voids) {
+            List<Homescreen_PopularHotel> result = new ArrayList<>();
+            // Retrofit network request
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            String jwtToken = sharedPreferences.getString("jwtKey", null);
 
+            HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
+            Call<HotelApiResponse> call = hotelEndpoint.getPpHotels("Bearer " + jwtToken);
+            try {
+                Response<HotelApiResponse> response = call.execute();
+                if (response.isSuccessful()) {
+                    List<Hotel> apiHotels = response.body().getData();
+                    for (Hotel apiHotel : apiHotels) {
+                        // Convert API Hotel to Homescreen_Nearbyhotel
+                        double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
+                        Homescreen_PopularHotel popularHotel = new Homescreen_PopularHotel(
+                                apiHotel.getId(),
+                                apiHotel.getName(),
+                                apiHotel.getAddress(),
+                                formattedRate,
+                                apiHotel.getReviewQuantity(),
+                                apiHotel.getPrice(),
+                                getHinhFromImageDetails(apiHotel.getImageDetails()),
+                                apiHotel.isFavourited()
+                        );
+
+                        // Add to result list
+                        result.add(popularHotel);
+                    }
+                } else {
+                    Log.e("API Error", "Error response from API: " + response.message());
+                }
+            } catch (IOException e) {
+                Log.e("API Error", "Exception during API call: " + e.getMessage());
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<Homescreen_PopularHotel> result) {
+            if (result != null) {
+                arrayPopularHotel.clear();
+                arrayPopularHotel.addAll(result);
+                adapter_1.notifyDataSetChanged();
+                for (int i = 0; i < adapter_1.getCount(); i++) {
+                    View ittem = adapter_1.getView(i, null, null);
+                    lnPopularHotel.addView(ittem);
+                }
+            }
+
+        }
+    }
     private class HotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_Nearbyhotel>> {
         @Override
         protected List<Homescreen_Nearbyhotel> doInBackground(Void... voids) {
@@ -180,27 +226,29 @@ public class Homescreen_home extends Fragment {
                     for (Hotel apiHotel : apiHotels) {
 
                         // Get hotel rating
-                        Call<RatingApiResponse> ratingCall = hotelEndpoint.getHotelRating(apiHotel.getId(), "Bearer " + jwtToken);
-                        Response<RatingApiResponse> ratingResponse = ratingCall.execute();
-                        double rating = 0.0;
-                        if (ratingResponse.isSuccessful()) {
-                            rating = ratingResponse.body().getData();
-                        }
+//                        Call<RatingApiResponse> ratingCall = hotelEndpoint.getHotelRating(apiHotel.getId(), "Bearer " + jwtToken);
+//                        Response<RatingApiResponse> ratingResponse = ratingCall.execute();
+//                        double rating = 0.0;
+//                        if (ratingResponse.isSuccessful()) {
+//                            rating = ratingResponse.body().getData();
+//                        }
 
                         // Get hotel reviews
-                        Call<ReviewApiResponse> reviewCall = hotelEndpoint.getReviews(apiHotel.getId(), "Bearer " + jwtToken);
-                        Response<ReviewApiResponse> reviewResponse = reviewCall.execute();
-                        int reviewCount = 0;
-                        if (reviewResponse.isSuccessful()) {
-                            reviewCount = reviewResponse.body().getData().size();
-                        }
+//                        Call<ReviewApiResponse> reviewCall = hotelEndpoint.getReviews(apiHotel.getId(), "Bearer " + jwtToken);
+//                        Response<ReviewApiResponse> reviewResponse = reviewCall.execute();
+//                        int reviewCount = 0;
+//                        if (reviewResponse.isSuccessful()) {
+//                            reviewCount = reviewResponse.body().getData().size();
+//                        }
 
                         // Convert API Hotel to Homescreen_Nearbyhotel
+                        double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
                         Homescreen_Nearbyhotel nearbyHotel = new Homescreen_Nearbyhotel(
+                                apiHotel.getId(),
                                 apiHotel.getName(),
                                 apiHotel.getAddress(),
-                                rating,
-                                reviewCount,
+                                formattedRate,
+                                apiHotel.getReviewQuantity(),
                                 apiHotel.getPrice(),
                                 getHinhFromImageDetails(apiHotel.getImageDetails())
                         );
@@ -234,6 +282,7 @@ public class Homescreen_home extends Fragment {
                     for (Homescreen_Nearbyhotel hotel : arrayNearByHotel) {
                         Log.d("Hotel Info", "Hotel Name: " + hotel.getTen());
                         Log.d("Hotel Info", "Hotel rate: " + hotel.getDanhGia());
+                        Log.d("Hotel Info", "Hotel rate: " + hotel.getSoLuongDanhGia());
                     }
                 } else {
                     Log.e("Hotel Info", "arrayNearByHotel is empty");

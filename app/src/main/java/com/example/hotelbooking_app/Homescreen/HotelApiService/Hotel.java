@@ -17,6 +17,36 @@ public class Hotel {
 
     @SerializedName("imageDetails")
     private List<ImageDetail> imageDetails;
+    @SerializedName("reviewQuantity")
+    private int reviewQuantity;
+    @SerializedName("rate")
+    private double rate;
+    @SerializedName("isFavourited")
+    private boolean isFavourited;
+
+    public boolean isFavourited() {
+        return isFavourited;
+    }
+
+    public void setFavourited(boolean favourited) {
+        isFavourited = favourited;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+    public int getReviewQuantity() {
+        return reviewQuantity;
+    }
+
+    public void setReviewQuantity(int reviewQuantity) {
+        this.reviewQuantity = reviewQuantity;
+    }
 
     public int getId() {
         return id;

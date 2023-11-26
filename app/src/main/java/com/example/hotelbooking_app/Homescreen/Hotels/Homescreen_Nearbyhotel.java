@@ -2,20 +2,34 @@ package com.example.hotelbooking_app.Homescreen.Hotels;
 
 import android.graphics.Bitmap;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Homescreen_Nearbyhotel {
+    private int hotelId;
     private String Ten;
     private String DiaChi;
     private double DanhGia;
     private int SoLuongDanhGia;
     private double Gia;
     private Bitmap Hinh;
-    public Homescreen_Nearbyhotel(String ten, String diaChi, double danhGia, int soLuongDanhGia, double gia , Bitmap hinh) {
+
+    public Homescreen_Nearbyhotel(int hotelId, String ten, String diaChi, double danhGia, int soLuongDanhGia, double gia, Bitmap hinh) {
+        this.hotelId = hotelId;
         Ten = ten;
         DiaChi = diaChi;
         DanhGia = danhGia;
         SoLuongDanhGia = soLuongDanhGia;
         Gia = gia;
         Hinh = hinh;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getTen() {
