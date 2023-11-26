@@ -39,10 +39,13 @@
         </LinearLayout>
         <ImageView
             android:id="@+id/myprofile_imgacc"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/splash_screen_logo02"
-            android:layout_gravity="center"/>
+            android:clipToOutline="true"
+            android:background="@drawable/reviews_avatar"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
@@ -67,7 +70,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/homescreen_icon_user"/>
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="20dp"
@@ -75,7 +78,8 @@
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:background="@null"/>
 
         </LinearLayout>
         <LinearLayout
@@ -102,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/homescreen_icon_sms"/>
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="20dp"
@@ -110,7 +114,8 @@
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:background="@null"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

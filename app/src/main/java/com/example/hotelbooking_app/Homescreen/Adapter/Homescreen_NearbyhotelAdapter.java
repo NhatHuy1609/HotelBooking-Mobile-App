@@ -59,10 +59,10 @@ public class Homescreen_NearbyhotelAdapter extends BaseAdapter {
 
         txtTen.setText(nearbyhotel.getTen());
         txtDiaChi.setText(nearbyhotel.getDiaChi());
-        imgHinh.setImageResource(nearbyhotel.getHinh());
+        imgHinh.setImageBitmap(nearbyhotel.getHinh());
         txtDanhGia.setText(String.valueOf(nearbyhotel.getDanhGia()));
         txtSLDanhGia.setText(String.valueOf(nearbyhotel.getSoLuongDanhGia()));
-        txtGia.setText(nearbyhotel.getGia());
+        txtGia.setText(String.valueOf(nearbyhotel.getGia()));
         return view;
     }
 }

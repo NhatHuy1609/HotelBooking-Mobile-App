@@ -29,7 +29,7 @@ public class Homescreen_mybooking extends Fragment {
 
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.mybooking_tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Booked"));
-        tabLayout.addTab(tabLayout.newTab().setText("History"));
+        tabLayout.addTab(tabLayout.newTab().setText("Favorite"));
 
         final LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.mybooking_container);
 
