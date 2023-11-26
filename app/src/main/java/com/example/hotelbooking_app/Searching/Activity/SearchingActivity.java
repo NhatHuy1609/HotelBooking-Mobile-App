@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +33,10 @@ import com.example.hotelbooking_app.Searching.Domain.LastSearchDomain;
 import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
 import com.example.hotelbooking_app.Searching.Domain.PopularSearchDomain;
 import com.example.hotelbooking_app.Searching.Domain.RecentlyViewedDomain;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +48,7 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
     RecentlyViewedAdapter recentlyViewedAdapter;
     PopularHotelAdapter mPopularHotelAdapter;
     PopularSearchAdapter popularSearchAdapter;
+    ArrayList<LastSearchDomain> lastSearchList;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -50,12 +56,28 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searching_layout);
 
+        lastSearchList = new ArrayList<>();
+
         searchView = findViewById(R.id.searching_ed_search_box);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public boolean onQueryTextSubmit(String query) {
                 Intent intent = new Intent(SearchingActivity.this, SearchingResultsActivity.class);
                 intent.putExtra("SEARCH_QUERY", query);
+
+                ArrayList<LastSearchDomain> existingSearchData = loadLastSearchData();
+
+                // Add the new query to the existing list
+                existingSearchData.add(new LastSearchDomain(query));
+
+                saveLastSearchData(existingSearchData);
+
+                // Update your RecyclerView and adapter
+                lastSearchAdapter.updateData(existingSearchData);
+
+                lastSearchAdapter.notifyDataSetChanged();
+
                 startActivity(intent);
                 return true;
             }
@@ -70,8 +92,6 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
         initLastSearchRecyclerView();
 
         rvRecentlyViewed = findViewById(R.id.searching_rv_recently_viewed);
-
-
         getAllPopularHotels();
 //        initRecentlyViewedRecyclerView();
 //        recentlyViewedAdapter.setOnItemClickListener(new RecentlyViewedAdapter.OnItemClickListener() {
@@ -93,26 +113,40 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
                 startActivity(intent);
             }
         });
-
     }
 
+    private ArrayList<LastSearchDomain> loadLastSearchData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("lastSearchData", null);
 
+        Type type = new TypeToken<ArrayList<LastSearchDomain>>() {}.getType();
+        if (json != null) {
+            return gson.fromJson(json, type);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    private void saveLastSearchData(ArrayList<LastSearchDomain> lastSearchList) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(lastSearchList);
+        editor.putString("lastSearchData", json);
+        editor.apply();
+    }
 
     private void initLastSearchRecyclerView() {
-        ArrayList<LastSearchDomain> arrLastSearchData;
-
-        //Setting the last search data source
-        arrLastSearchData = new ArrayList<>();
-        arrLastSearchData.add(new LastSearchDomain("hotel"));
-        arrLastSearchData.add(new LastSearchDomain("muong thanh"));
-        arrLastSearchData.add(new LastSearchDomain("da nang"));
-        arrLastSearchData.add(new LastSearchDomain("khach san 5 sao"));
+        ArrayList<LastSearchDomain> arrLastSearchData = loadLastSearchData();;
 
         lastSearchAdapter = new LastSearchAdapter(arrLastSearchData);
         rvLastSearch.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         rvLastSearch.setAdapter(lastSearchAdapter);
     }
+
+
 
     private void initPopularSearchListView() {
         ArrayList<PopularSearchDomain> arrPopularSearchData = new ArrayList<>();

@@ -12,11 +12,16 @@ import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Domain.LastSearchDomain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LastSearchAdapter extends RecyclerView.Adapter<LastSearchAdapter.lastSearchHolder> {
     ArrayList<LastSearchDomain> arrLastSearchData;
     public LastSearchAdapter(ArrayList<LastSearchDomain> arrLastSearchData) {
         this.arrLastSearchData = arrLastSearchData;
+    }
+
+    public ArrayList<LastSearchDomain> getDataList() {
+        return arrLastSearchData;
     }
 
     @NonNull
@@ -27,6 +32,8 @@ public class LastSearchAdapter extends RecyclerView.Adapter<LastSearchAdapter.la
         return new lastSearchHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull lastSearchHolder holder, int position) {
         holder.tvName.setText(arrLastSearchData.get(position).getName());
@@ -35,6 +42,15 @@ public class LastSearchAdapter extends RecyclerView.Adapter<LastSearchAdapter.la
     @Override
     public int getItemCount() {
         return arrLastSearchData.size();
+    }
+
+    public void updateData(ArrayList<LastSearchDomain> newData) {
+        this.arrLastSearchData = newData;
+    }
+
+    public void addLastSearch(LastSearchDomain lastSearch) {
+        arrLastSearchData.add(lastSearch);
+        notifyItemInserted(arrLastSearchData.size() - 1);
     }
 
     public class lastSearchHolder extends RecyclerView.ViewHolder {
