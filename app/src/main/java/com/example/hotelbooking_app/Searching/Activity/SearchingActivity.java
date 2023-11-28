@@ -1,7 +1,6 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,26 +12,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ImageButton;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.hotelbooking_app.Homescreen.Fragment.Homescreen_home;
 import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.R;
-import com.example.hotelbooking_app.Searching.API.PopularHotelApiService;
 import com.example.hotelbooking_app.Searching.Adapter.LastSearchAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.PopularHotelAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.PopularSearchAdapter;
-import com.example.hotelbooking_app.Searching.Adapter.RecentlyViewedAdapter;
 import com.example.hotelbooking_app.Searching.AsyncTask.PopularHotelApiCallAsyncTask;
+import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.LastSearchDomain;
 import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
 import com.example.hotelbooking_app.Searching.Domain.PopularSearchDomain;
-import com.example.hotelbooking_app.Searching.Domain.RecentlyViewedDomain;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -45,7 +38,6 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
     ListView lvPopularSearch;
     RecyclerView rvLastSearch, rvRecentlyViewed;
     LastSearchAdapter lastSearchAdapter;
-    RecentlyViewedAdapter recentlyViewedAdapter;
     PopularHotelAdapter mPopularHotelAdapter;
     PopularSearchAdapter popularSearchAdapter;
     ArrayList<LastSearchDomain> lastSearchList;
@@ -93,14 +85,6 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
 
         rvRecentlyViewed = findViewById(R.id.searching_rv_recently_viewed);
         getAllPopularHotels();
-//        initRecentlyViewedRecyclerView();
-//        recentlyViewedAdapter.setOnItemClickListener(new RecentlyViewedAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                Intent intent = new Intent(SearchingActivity.this, DetailActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         lvPopularSearch = findViewById(R.id.searching_rv_popular_search);
         initPopularSearchListView();
@@ -166,11 +150,10 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onApiCallSuccess(List<PopularHotel> popularHotels) {
+    public void onApiCallSuccess(List<Hotel> popularHotels) {
         if (popularHotels != null) {
             mPopularHotelAdapter = new PopularHotelAdapter(popularHotels);
             mPopularHotelAdapter.notifyDataSetChanged();
-            Toast.makeText(this, "Api call successfully", Toast.LENGTH_SHORT).show();
             rvRecentlyViewed.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
             rvRecentlyViewed.setAdapter(mPopularHotelAdapter);
         }

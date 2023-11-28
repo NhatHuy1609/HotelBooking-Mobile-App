@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -21,11 +24,16 @@ import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.ReviewsActivity;
 import com.example.hotelbooking_app.Searching.Adapter.ReviewsItemAdapter;
+import com.example.hotelbooking_app.Searching.AsyncTask.DetailHotelApiCallAsyncTask;
+import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements DetailHotelApiCallAsyncTask.ApiCallListener {
+    TextView tvName, tvAddress, tvOverview, tvPrice;
+    ImageView img1, img2, img3;
     RecyclerView rvReviewsItem;
     ImageButton detailBackBtn;
     ReviewsItemAdapter reviewsItemAdapter;
@@ -35,6 +43,11 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_layout);
+
+        Intent intent = getIntent();
+        int hotelId = intent.getIntExtra("hotelId", 0);
+
+        getDetailHotel(hotelId);
 
         detailBackBtn = findViewById(R.id.detail_back_button);
         detailBackBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,13 +61,13 @@ public class DetailActivity extends AppCompatActivity {
         hotelImageSlider();
 
         rvReviewsItem = findViewById(R.id.detail_rv_reviews_item);
-        initReviewsItemListView();
 
-        AppCompatButton bookingBtn = (AppCompatButton) findViewById(R.id.detail_booking_button);
+        AppCompatButton bookingBtn = findViewById(R.id.detail_booking_button);
         bookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, BookingActivity.class);
+                intent.putExtra("hotelId", hotelId);
                 startActivity(intent);
             }
         });
@@ -70,6 +83,33 @@ public class DetailActivity extends AppCompatActivity {
         });
     }
 
+    private void getDetailHotel(int hotelId) {
+        new DetailHotelApiCallAsyncTask(this, this).execute(hotelId);
+    }
+
+    @Override
+    public void onApiCallSuccess(Hotel hotel) {
+        if (hotel != null) {
+            tvName = findViewById(R.id.detail_tv_hotel_name);
+            tvAddress = findViewById(R.id.detail_tv_hotel_address);
+            tvOverview = findViewById(R.id.detail_tv_overview_content);
+            tvPrice = findViewById(R.id.detail_tv_price);
+
+            tvName.setText(hotel.getName());
+            tvAddress.setText(hotel.getAddress());
+            tvOverview.setText(hotel.getOverview());
+            tvPrice.setText("" + hotel.getPrice());
+            Toast.makeText(this, "Api call successfully", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    @Override
+    public void onApiCallFailure(String errorMessage) {
+        Toast.makeText(this, "Api call failed", Toast.LENGTH_SHORT).show();
+
+        Log.e("API Error", errorMessage);
+    }
 
 
     private void hotelImageSlider() {
@@ -81,17 +121,5 @@ public class DetailActivity extends AppCompatActivity {
         slideModels.add(new SlideModel(R.drawable.searching_image_muongthanh, ScaleTypes.FIT));
 
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
-    }
-
-    private void initReviewsItemListView() {
-        ArrayList<ReviewsItemDomain> arrReviewsItemData = new ArrayList<>();
-
-        arrReviewsItemData.add(new ReviewsItemDomain("Truong Dinh Nhat", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
-        arrReviewsItemData.add(new ReviewsItemDomain("Pham Van Nhat Huy", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
-        arrReviewsItemData.add(new ReviewsItemDomain("Phan Van Linh", "Amazing! The room is good than the picture. Thanks for amazing experience!", 4.5, R.drawable.detail_avatar_icon));
-
-        reviewsItemAdapter = new ReviewsItemAdapter(arrReviewsItemData);
-        rvReviewsItem.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        rvReviewsItem.setAdapter(reviewsItemAdapter);
     }
 }

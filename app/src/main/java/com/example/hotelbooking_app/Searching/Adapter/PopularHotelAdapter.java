@@ -10,19 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapter.myViewHolder> {
-    List<PopularHotel> mListPopularHotel;
+    List<Hotel> mListPopularHotel;
 
-    public PopularHotelAdapter(List<PopularHotel> mListPopularHotel) {
+    public PopularHotelAdapter(List<Hotel> mListPopularHotel) {
         this.mListPopularHotel = mListPopularHotel;
     }
 
-    public void setPopularHotels(List<PopularHotel> popularHotels) {
+    public void setPopularHotels(List<Hotel> popularHotels) {
         mListPopularHotel = popularHotels;
     }
 
@@ -35,13 +36,13 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
 
     @Override
     public void onBindViewHolder(@NonNull PopularHotelAdapter.myViewHolder holder, int position) {
-        PopularHotel hotel = mListPopularHotel.get(position);
+        Hotel hotel = mListPopularHotel.get(position);
 
         // Set other data to the views
         holder.tvName.setText(hotel.getName());
         holder.tvAddress.setText(hotel.getAddress());
-        holder.tvRating.setText("0");
-        holder.tvCount.setText("" + hotel.getReviewQuantity());
+        holder.tvRating.setText("" + hotel.getRate());
+        holder.tvCount.setText("(" + hotel.getReviewQuantity() + ")");
 
         // Load image using Picasso
         if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
