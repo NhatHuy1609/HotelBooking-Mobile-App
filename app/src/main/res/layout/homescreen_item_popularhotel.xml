@@ -8,8 +8,8 @@
     <FrameLayout
         android:id="@+id/homescreen_frame_popular_hotel"
         android:layout_width="230dp"
-        android:layout_height="300dp"
-        android:layout_marginLeft="10dp"
+        android:layout_height="270dp"
+        android:layout_marginLeft="5dp"
         android:background="@drawable/homescreen_custom_itempopular">
         <LinearLayout
             android:layout_width="match_parent"
@@ -88,47 +88,6 @@
                     android:text="My Khe Beach">
                 </TextView>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_margin="10dp">
-                <TextView
-                    android:id="@+id/home_mota1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="10sp"
-                    android:textColor="#06B3C4"
-                    android:text="Wifi"></TextView>
-                <TextView
-                    android:id="@+id/home_mota2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="10sp"
-                    android:textColor="#06B3C4"
-                    android:text="Gym"></TextView>
-                <TextView
-                    android:id="@+id/home_mota3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="10sp"
-                    android:textColor="#06B3C4"
-                    android:text="Hồ bơi"></TextView>
-                <TextView
-                    android:id="@+id/home_mota4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="10sp"
-                    android:textColor="#06B3C4"
-                    android:text="Nhà hàng"></TextView>
-            </LinearLayout>
         </LinearLayout>
         <RelativeLayout
             android:id="@+id/home_button_book"
@@ -137,7 +96,7 @@
             android:background="@drawable/home_custom_button"
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="40dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -145,24 +104,34 @@
                 android:layout_centerInParent="true"
                 android:src="@drawable/homescreen_icon_archiveadd"></ImageView>
         </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:background="@drawable/home_custom_price"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="$"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/home_price_popularhotel"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="$80/Day"
-                android:textStyle="bold"
+                android:text="80"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"></TextView>
-        </RelativeLayout>
+                android:gravity="center"
+                android:text="/Day"/>
+
+        </LinearLayout>
         <ImageView
             android:id="@+id/home_tym"
             android:layout_width="30dp"

@@ -1,6 +1,6 @@
 package com.example.hotelbooking_app.Login.AuthService;
 
 public interface AuthenticationCallback {
-    void onAuthenticationSuccess();
-    void onAuthenticationFailure();
+    void onSuccess();
+    void onFailure();
 }

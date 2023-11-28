@@ -1,21 +1,35 @@
 package com.example.hotelbooking_app.Homescreen.Hotels;
 
+import android.graphics.Bitmap;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Homescreen_Nearbyhotel {
+    private int hotelId;
     private String Ten;
     private String DiaChi;
     private double DanhGia;
     private int SoLuongDanhGia;
-    private String Gia;
-    //    private String MoTa;
-    private int Hinh;
-    public Homescreen_Nearbyhotel(String ten, String diaChi, double danhGia, int soLuongDanhGia, String gia /* ,String moTa */, int hinh) {
+    private double Gia;
+    private Bitmap Hinh;
+
+    public Homescreen_Nearbyhotel(int hotelId, String ten, String diaChi, double danhGia, int soLuongDanhGia, double gia, Bitmap hinh) {
+        this.hotelId = hotelId;
         Ten = ten;
         DiaChi = diaChi;
         DanhGia = danhGia;
         SoLuongDanhGia = soLuongDanhGia;
         Gia = gia;
-//        MoTa = moTa;
         Hinh = hinh;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getTen() {
@@ -50,27 +64,19 @@ public class Homescreen_Nearbyhotel {
         SoLuongDanhGia = soLuongDanhGia;
     }
 
-    public String getGia() {
+    public double getGia() {
         return Gia;
     }
 
-    public void setGia(String gia) {
+    public void setGia(double gia) {
         Gia = gia;
     }
 
-//    public String getMoTa() {
-//        return MoTa;
-//    }
-//
-//    public void setMoTa(String moTa) {
-//        MoTa = moTa;
-//    }
-
-    public int getHinh() {
+    public Bitmap getHinh() {
         return Hinh;
     }
 
-    public void setHinh(int hinh) {
+    public void setHinh(Bitmap hinh) {
         Hinh = hinh;
     }
 }

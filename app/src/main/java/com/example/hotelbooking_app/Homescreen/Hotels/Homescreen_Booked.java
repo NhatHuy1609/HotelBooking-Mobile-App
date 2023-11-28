@@ -1,17 +1,21 @@
 package com.example.hotelbooking_app.Homescreen.Hotels;
 
 
+import android.graphics.Bitmap;
+
+import java.util.Date;
+
 public class Homescreen_Booked {
     private String Ten;
     private String DiaChi;
     private double DanhGia;
     private int SoLuongDanhGia;
-    private String Gia;
-    private int Hinh;
-    private String NgayCheckIn;
-    private String NgayCheckOut;
+    private double Gia;
+    private Bitmap Hinh;
+    private Date NgayCheckIn;
+    private Date NgayCheckOut;
 
-    public Homescreen_Booked(String ten, String diaChi, double danhGia, int soLuongDanhGia, String gia, int hinh, String ngayCheckIn, String ngayCheckOut) {
+    public Homescreen_Booked(String ten, String diaChi, double danhGia, int soLuongDanhGia, double gia, Bitmap hinh, Date ngayCheckIn, Date ngayCheckOut) {
         Ten = ten;
         DiaChi = diaChi;
         DanhGia = danhGia;
@@ -54,35 +58,35 @@ public class Homescreen_Booked {
         SoLuongDanhGia = soLuongDanhGia;
     }
 
-    public String getGia() {
+    public double getGia() {
         return Gia;
     }
 
-    public void setGia(String gia) {
+    public void setGia(double gia) {
         Gia = gia;
     }
 
-    public int getHinh() {
+    public Bitmap getHinh() {
         return Hinh;
     }
 
-    public void setHinh(int hinh) {
+    public void setHinh(Bitmap hinh) {
         Hinh = hinh;
     }
 
-    public String getNgayCheckIn() {
+    public Date getNgayCheckIn() {
         return NgayCheckIn;
     }
 
-    public void setNgayCheckIn(String ngayCheckIn) {
+    public void setNgayCheckIn(Date ngayCheckIn) {
         NgayCheckIn = ngayCheckIn;
     }
 
-    public String getNgayCheckOut() {
+    public Date getNgayCheckOut() {
         return NgayCheckOut;
     }
 
-    public void setNgayCheckOut(String ngayCheckOut) {
+    public void setNgayCheckOut(Date ngayCheckOut) {
         NgayCheckOut = ngayCheckOut;
     }
 }

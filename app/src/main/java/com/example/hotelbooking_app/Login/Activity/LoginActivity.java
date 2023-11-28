@@ -20,13 +20,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
+import com.example.hotelbooking_app.Login.AsynTask.RefreshPasswordAsyntask;
 import com.example.hotelbooking_app.Login.AuthService.AccessTokenJson;
-import com.example.hotelbooking_app.Login.AuthService.AuthApiService;
 import com.example.hotelbooking_app.Login.AuthService.AuthEnpoint;
+import com.example.hotelbooking_app.Login.AuthService.AuthenticationCallback;
 import com.example.hotelbooking_app.Login.AuthService.AuthenticationRequest;
+import com.example.hotelbooking_app.Login.AsynTask.AuthenticationTask;
 import com.example.hotelbooking_app.Login.Fragment.ForgotPasswordBottomSheetFragment;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Register.RegisterActivity;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,7 +38,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity  {
 
     private Button loginButton;
     private EditText passwordText;
@@ -43,28 +47,40 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox checkBox;
     private TextView forgotPasswordTextView;
 
-    private static final String BASE_URL = "https://subsequent-distance-production.up.railway.app/";
+    private String BASE_URL ;
 
     private Retrofit retrofit;
-    private AuthEnpoint apiService;
+    private AuthEnpoint apiAuthEnpointService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signin_layout);
+        BASE_URL= getString(R.string.base_url);
+        // khoi tao retrofit
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        //auth
 
-        apiService = (AuthEnpoint) retrofit.create(AuthEnpoint.class);
+
+
+        // layout
         checkBox = findViewById(R.id.signin_checkbox_id);
         TextView moveRegister = findViewById(R.id.signin_move_register);
         emailText = findViewById(R.id.signin_email);
         loginButton = findViewById(R.id.signin_login_btn);
         passwordText = findViewById(R.id.signin_password_text);
         passwordImageView = findViewById(R.id.signin_password_icon);
+
+
+
+
+        // business logic
+
+        //1. Nho mat khau va email
         try {
-            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("SaveCredential", Context.MODE_PRIVATE);
             String savedUsername = sharedPreferences.getString("email", "");
             String savedPassword = sharedPreferences.getString("password", "001");
             if (!TextUtils.isEmpty(savedUsername) && !TextUtils.isEmpty(savedPassword)) {
@@ -75,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println(ex.toString());
         }
 
+        // 2. Chuyen trang Register
         moveRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,43 +99,53 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
+
+        // 3. Login
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginButton.setOnClickListener(new View.OnClickListener() {
+                //3.1 Nho mat khau
+                SharedPreferences sharedPreferences = getSharedPreferences("SaveCredential", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                if (checkBox.isChecked()) {
+                    editor.putString("email", emailText.getText().toString());
+                    editor.putString("password", passwordText.getText().toString());
 
+                } else {
+                    editor.putString("email", "");
+                    editor.putString("password", "");
+                }
+
+
+
+                //3.2 Dang nhap
+
+                new AuthenticationTask(LoginActivity.this, new AuthenticationCallback() {
                     @Override
-                    public void onClick(View v) {
-                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        if (checkBox.isChecked()) {
-                            editor.putString("email", emailText.getText().toString());
-                            editor.putString("password", passwordText.getText().toString());
-
-                        } else {
-                            editor.putString("email", "");
-                            editor.putString("password", "");
-                        }
-                        editor.apply();
-                        authentication(emailText.getText().toString(), passwordText.getText().toString());
-
-                        String jwtToken = sharedPreferences.getString("jwtKey", null);
-
-                        if (jwtToken != null) {
-                            Intent intent = new Intent(LoginActivity.this, HomescreenActivity.class);
-                            startActivity(intent);
-                        } else {
-                            showFailAuthentication();
-
-                            Log.d("JWT Token", "Không có JWT Token được lưu trữ");
-                        }
-
+                    public void onSuccess() {
+                        successLogin();
                     }
+                    @Override
+                    public void onFailure() {
+                        showFailAuthentication();
+                    }
+                }, (AuthEnpoint) retrofit.create(AuthEnpoint.class)).execute(emailText.getText().toString(), passwordText.getText().toString());
 
 
-                });
+
+
             }
+
+
         });
+
+
+
+        //4. Hien-An password
         passwordImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +161,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+
+        //5. Forgot password
         forgotPasswordTextView = findViewById(R.id.signin_forgot_password);
         forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,36 +180,45 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void showFailAuthentication() {
-        Toast.makeText(this, "Email or password are incorrect.", Toast.LENGTH_SHORT).show();
+    private void successLogin() {
+        Intent intent = new Intent(LoginActivity.this, HomescreenActivity.class);
+        startActivity(intent);
     }
 
-    public void authentication(String email, String password) {
-        // Gọi API authenticate
-        Call<AccessTokenJson> call = apiService.authenticate(new AuthenticationRequest(password,email));
-        final boolean[] isAuthentication = {};
-        // Thực hiện yêu cầu bất đồng bộ
-        call.enqueue(new Callback<AccessTokenJson>() {
+    private boolean refreshToken(String jwtToken) {
+        Call<AccessTokenJson> refreshToken= apiAuthEnpointService.refreshToken(jwtToken);
+        refreshToken.enqueue(new Callback<AccessTokenJson>() {
             @Override
             public void onResponse(Call<AccessTokenJson> call, Response<AccessTokenJson> response) {
-                if (response.isSuccessful()) {
-                    AccessTokenJson authenticationResponse = response.body();
-                    // Lấy ra đối tượng SharedPreferences
+                if(response.isSuccessful()){
+                    AccessTokenJson refeshAccessTokenJson=response.body();
                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    Log.i("JWT", ""+authenticationResponse.getAccessToken());
-                    editor.putString("jwtKey", authenticationResponse.getAccessToken());
-
+                    Log.i("JWT", ""+ refeshAccessTokenJson.getAccessToken());
+                    editor.putString("jwtKey", refeshAccessTokenJson.getAccessToken());
+                    editor.putLong("lastPuttedJwtTime",  System.currentTimeMillis());
                     editor.apply();
                 } else {
                     Log.i("JWT", "Khong duoc");
+                    throw new RuntimeException("Jwt het han roi");
                 }
+
             }
 
             @Override
             public void onFailure(Call<AccessTokenJson> call, Throwable t) {
+                throw new RuntimeException("Jwt het han roi");
             }
         });
+        return  true;
     }
+
+
+    private void showFailAuthentication() {
+        Toast.makeText(this, "Email or password are incorrect.", Toast.LENGTH_SHORT).show();
+    }
+
+
+
 }

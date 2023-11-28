@@ -89,6 +89,7 @@
                     app:srcCompat="@drawable/signup_user_icon" />
 
                 <EditText
+                    android:id="@+id/username"
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:hint="Create your username"
@@ -132,6 +133,7 @@
                     app:srcCompat="@drawable/signup_mail_icon" />
 
                 <EditText
+                    android:id="@+id/email"
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:hint="Create your Password"
@@ -169,14 +171,16 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="35dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:alpha="0.2"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/signup_padlock_icon" />
 
                 <EditText
                     android:id="@+id/signup_password_text"
-                    android:layout_width="300dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="8"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
                     android:hint="Create Your Password"
@@ -184,7 +188,8 @@
 
                 <ImageView
                     android:id="@+id/signup_password_icon"
-                    android:layout_width="27dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:alpha="0.2"
                     android:src="@drawable/signup_password_hide" />

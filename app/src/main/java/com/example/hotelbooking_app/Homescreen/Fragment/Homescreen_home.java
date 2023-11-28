@@ -1,16 +1,14 @@
 package com.example.hotelbooking_app.Homescreen.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AlertDialog;
-import android.widget.ArrayAdapter;
-import android.content.DialogInterface;
-import android.widget.AdapterView;
-
-
-
 
 
 import android.view.LayoutInflater;
@@ -21,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Spinner;
 
 import android.widget.ImageView;
 import android.graphics.Color;
@@ -30,15 +27,27 @@ import android.content.Intent;
 import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_myprofile;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAdapter;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAdapter;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Hotel;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelsApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.ImageDetail;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 import com.example.hotelbooking_app.Searching.Activity.SearchingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.squareup.picasso.Picasso;
 
+import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class Homescreen_home extends Fragment {
@@ -64,28 +73,25 @@ public class Homescreen_home extends Fragment {
 
         arrayNearByHotel = new ArrayList<>();
         arrayPopularHotel = new ArrayList<>();
-
-        AnhXa();
+        new PpHotelsAsyncTask().execute();
+        new HotelsAsyncTask().execute();
 
         adapter = new Homescreen_NearbyhotelAdapter(getActivity(), R.layout.homescreen_item_nearbyhotel, arrayNearByHotel);
+
+
+
 
         adapter_1 = new Homescreen_PopularHotelAdapter(getActivity(), R.layout.homescreen_item_popularhotel, arrayPopularHotel);
 
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.homescreen_horizontal_scroll_view);
 
         lnNearbyHotel = (LinearLayout) view.findViewById(R.id.home_lvNearbyHotel);
-//        lnPopularHotel = (LinearLayout) view.findViewById(R.id.home_lvpopularhotel);
-        lnPopularHotel = (LinearLayout) horizontalScrollView.getChildAt(0);
 
-        for (int i = 0; i < adapter.getCount(); i++) {
-            View ittem = adapter.getView(i, null, null);
-            lnNearbyHotel.addView(ittem);
-        }
+        lnPopularHotel = (LinearLayout) view.findViewById(R.id.home_lvpopularhotel);
+//        lnPopularHotel = (LinearLayout) horizontalScrollView.getChildAt(0);
 
-        for (int i = 0; i < adapter_1.getCount(); i++) {
-            View ittem = adapter_1.getView(i, null, null);
-            lnPopularHotel.addView(ittem);
-        }
+
+
 
         //ImageButton accout
         btn_acc = (RelativeLayout) view.findViewById(R.id.home_btn_acc);
@@ -99,16 +105,7 @@ public class Homescreen_home extends Fragment {
             }
         });
 
-        //text location
-        lnLocation = (LinearLayout) view.findViewById(R.id.home_lnlocation);
-        txtLocation = (TextView) view.findViewById(R.id.home_txt_location);
-        lnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                showAlertDialogLocation();
-            }
-        });
 
         //đổi màu textnearbyhotel
         nearbyHotels = view.findViewById(R.id.home_nearbyhotels);
@@ -118,7 +115,7 @@ public class Homescreen_home extends Fragment {
             @Override
             public void onScrollChanged() {
                 int scrollY = scrollview.getScrollY();
-                if (scrollY > (dpToPx(420)-scrollview.getHeight()/2)) {
+                if (scrollY > (dpToPx(390)-scrollview.getHeight()/2)) {
                     nearbyHotels.setTextColor(Color.WHITE);
                 } else {
                     nearbyHotels.setTextColor(Color.BLACK);
@@ -126,20 +123,6 @@ public class Homescreen_home extends Fragment {
             }
         });
 
-        /* Truong Dinh Nhat code intent from Home to Detail */
-        for (int i = 0; i < lnPopularHotel.getChildCount(); i++) {
-
-            View childView = lnPopularHotel.getChildAt(i);
-
-            childView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Handle click
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
 
          //Intent searching
         btn_seach = (ImageView) view.findViewById(R.id.home_btn_search);
@@ -155,91 +138,185 @@ public class Homescreen_home extends Fragment {
 
         return view;
     }
+    private class PpHotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_PopularHotel>> {
+        @Override
+        protected List<Homescreen_PopularHotel> doInBackground(Void... voids) {
+            List<Homescreen_PopularHotel> result = new ArrayList<>();
+            // Retrofit network request
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            String jwtToken = sharedPreferences.getString("jwtKey", null);
 
+            HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
+            Call<HotelsApiResponse> call = hotelEndpoint.getPpHotels("Bearer " + jwtToken);
+            try {
+                Response<HotelsApiResponse> response = call.execute();
+                if (response.isSuccessful()) {
+                    List<Hotel> apiHotels = response.body().getData();
+                    for (Hotel apiHotel : apiHotels) {
+                        // Convert API Hotel to Homescreen_Nearbyhotel
+                        double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
+                        double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
+                        Homescreen_PopularHotel popularHotel = new Homescreen_PopularHotel(
+                                apiHotel.getId(),
+                                apiHotel.getName(),
+                                apiHotel.getAddress(),
+                                formattedRate,
+                                apiHotel.getReviewQuantity(),
+                                formattedPrice,
+                                getHinhFromImageDetails(apiHotel.getImageDetails()),
+                                apiHotel.isFavourited()
+                        );
 
-    private void AnhXa() {
-        arrayPopularHotel.add(new Homescreen_PopularHotel("HAIAN","My An Beach",4.9,500,"$100/Day",R.drawable.homescreen_haian));
-        arrayPopularHotel.add(new Homescreen_PopularHotel("NOVOTEL","My An Beach",5,1000,"$100/Day",R.drawable.homescreen_novotel));
-        arrayPopularHotel.add(new Homescreen_PopularHotel("HAIAN","My An Beach",4.9,500,"$100/Day",R.drawable.homescreen_haian));
-        arrayPopularHotel.add(new Homescreen_PopularHotel("NOVOTEL","My An Beach",5,1000,"$100/Day",R.drawable.homescreen_novotel));
-        arrayPopularHotel.add(new Homescreen_PopularHotel("HAIAN","My An Beach",4.9,500,"$100/Day",R.drawable.homescreen_haian));
-        arrayPopularHotel.add(new Homescreen_PopularHotel("NOVOTEL","My An Beach",5,1000,"$100/Day",R.drawable.homescreen_novotel));
+                        // Add to result list
+                        result.add(popularHotel);
+                    }
+                } else {
+                    Log.e("API Error", "Error response from API: " + response.message());
+                }
+            } catch (IOException e) {
+                Log.e("API Error", "Exception during API call: " + e.getMessage());
+            }
 
-        arrayNearByHotel.add(new Homescreen_Nearbyhotel("MUONG THANH","My An Beach",4.9,1000,"$100/Day",R.drawable.homescreen_muongthanh));
-        arrayNearByHotel.add(new Homescreen_Nearbyhotel("MERODA","My An Beach",4.9,500,"$100/Day",R.drawable.homescreen_meroda));
-        arrayNearByHotel.add(new Homescreen_Nearbyhotel("MUONG THANH","My An Beach",4.9,1000,"$100/Day",R.drawable.homescreen_muongthanh));
-        arrayNearByHotel.add(new Homescreen_Nearbyhotel("MERODA","My An Beach",4.9,500,"$100/Day",R.drawable.homescreen_meroda));
-        arrayNearByHotel.add(new Homescreen_Nearbyhotel("MUONG THANH","My An Beach",4.9,1000,"$100/Day",R.drawable.homescreen_muongthanh));
-        arrayNearByHotel.add(new Homescreen_Nearbyhotel("MERODA","My An Beach",4.9,500,"$100/Day",R.drawable.homescreen_meroda));
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<Homescreen_PopularHotel> result) {
+            if (result != null) {
+                arrayPopularHotel.clear();
+                arrayPopularHotel.addAll(result);
+                adapter_1.notifyDataSetChanged();
+                for (int i = 0; i < adapter_1.getCount(); i++) {
+                    final int position = i;
+                    View item = adapter_1.getView(i, null, null);
+                    lnPopularHotel.addView(item);
+                    item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Lấy ID của view được nhấn
+                            int selectedHotelId = arrayPopularHotel.get(position).getHotelId();
+                            // Tạo intent để chuyển sang activity chi tiết và gửi ID
+                            Intent intent = new Intent(getContext(), DetailActivity.class);
+                            intent.putExtra("hotelId", selectedHotelId);
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
+
+        }
+    }
+    private class HotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_Nearbyhotel>> {
+        @Override
+        protected List<Homescreen_Nearbyhotel> doInBackground(Void... voids) {
+            List<Homescreen_Nearbyhotel> result = new ArrayList<>();
+
+            // Retrofit network request
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+            String jwtToken = sharedPreferences.getString("jwtKey", null);
+
+            HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
+            Call<HotelsApiResponse> call = hotelEndpoint.getHotels("Bearer " + jwtToken);
+
+            try {
+                Response<HotelsApiResponse> response = call.execute();
+                if (response.isSuccessful()) {
+                    List<Hotel> apiHotels = response.body().getData();
+                    for (Hotel apiHotel : apiHotels) {
+                        // Convert API Hotel to Homescreen_Nearbyhotel
+                        double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
+                        double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
+                        Homescreen_Nearbyhotel nearbyHotel = new Homescreen_Nearbyhotel(
+                                apiHotel.getId(),
+                                apiHotel.getName(),
+                                apiHotel.getAddress(),
+                                formattedRate,
+                                apiHotel.getReviewQuantity(),
+                                formattedPrice,
+                                getHinhFromImageDetails(apiHotel.getImageDetails())
+                        );
+
+                        // Add to result list
+                        result.add(nearbyHotel);
+                    }
+                } else {
+                    Log.e("API Error", "Error response from API: " + response.message());
+                }
+            } catch (IOException e) {
+                Log.e("API Error", "Exception during API call: " + e.getMessage());
+            }
+
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<Homescreen_Nearbyhotel> result) {
+            if (result != null) {
+                arrayNearByHotel.clear();
+                arrayNearByHotel.addAll(result);
+                adapter.notifyDataSetChanged();
+                for (int i = 0; i < adapter.getCount(); i++) {
+                    final int position = i;
+                    View item = adapter.getView(i, null, null);
+                    lnNearbyHotel.addView(item);
+                    item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Lấy ID của view được nhấn
+                            int selectedHotelId = arrayNearByHotel.get(position).getHotelId();
+                            // Tạo intent để chuyển sang activity chi tiết và gửi ID
+                            Intent intent = new Intent(getContext(), DetailActivity.class);
+                            intent.putExtra("hotelId", selectedHotelId);
+                            startActivity(intent);
+                        }
+                    });
+                }
+
+                // Check and log the contents of arrayNearByHotel
+                if (!arrayNearByHotel.isEmpty()) {
+                    for (Homescreen_Nearbyhotel hotel : arrayNearByHotel) {
+                        Log.d("Hotel Info", "Hotel Name: " + hotel.getTen());
+                        Log.d("Hotel Info", "Hotel rate: " + hotel.getDanhGia());
+                        Log.d("Hotel Info", "Hotel rate: " + hotel.getSoLuongDanhGia());
+                    }
+                } else {
+                    Log.e("Hotel Info", "arrayNearByHotel is empty");
+                }
+
+            } else {
+                Log.e("API Error", "Null response received from API");
+            }
+        }
+
 
     }
-
-    private void showAlertDialogLocation() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Location");
-
-
-        View alertDialogView = getLayoutInflater().inflate(R.layout.homescreen_arlert_enter_location, null);
-        builder.setView(alertDialogView);
-
-
-        Spinner tpSpinner = alertDialogView.findViewById(R.id.thanhpho_spinner);
-        Spinner quanSpinner = alertDialogView.findViewById(R.id.quan_spinner);
-
-        String[] tpOptions = getResources().getStringArray(R.array.thanhpho_data);
-        String[] quanOptions = getResources().getStringArray(R.array.quan_data);
-
-
-        ArrayAdapter<String> quanAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, tpOptions);
-        tpSpinner.setAdapter(quanAdapter);
-
-        ArrayAdapter<String> phuongAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, quanOptions);
-        quanSpinner.setAdapter(phuongAdapter);
-
-        // Xử lý khi người dùng chọn mục từ Spinner
-        tpSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-
-            }
-        });
-
-        quanSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-
-            }
-        });
-
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Xử lý khi người dùng bấm nút OK
-                String selectedQuan = tpSpinner.getSelectedItem().toString();
-                String selectedPhuong = quanSpinner.getSelectedItem().toString();
-                txtLocation.setText(selectedQuan + ", " + selectedPhuong);
-            }
-        });
-
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        builder.create().show();
+    // Method to extract the image URL from ImageDetails
+    private Bitmap getHinhFromImageDetails(List<ImageDetail> imageDetails) {
+        if (imageDetails != null && !imageDetails.isEmpty()) {
+            String imageUrl = imageDetails.get(0).getImageUrl();
+            // Use Picasso to load the image asynchronously and return the loaded Bitmap
+            return loadBitmapWithPicasso(imageUrl);
+        }
+        // Return a default Bitmap if no image details are available
+        return BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground);
     }
+
+
+    // In your loadBitmapWithPicasso method
+    private Bitmap loadBitmapWithPicasso(String imageUrl) {
+        try {
+            return Picasso.get()
+                    .load(imageUrl)
+                    .placeholder(R.drawable.homescreen_muongthanh)  // Set a placeholder image
+                    .error(R.drawable.homescreen_meroda)  // Set an error image
+                    .get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round((float)dp * density);

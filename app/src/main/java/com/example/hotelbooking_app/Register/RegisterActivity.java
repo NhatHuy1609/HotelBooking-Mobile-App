@@ -10,35 +10,78 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hotelbooking_app.AdditionalProfile.AdditionalProfileActivity;
 import com.example.hotelbooking_app.Login.Activity.LoginActivity;
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Register.AsynTask.RegisterAsynTask;
+import com.example.hotelbooking_app.Register.RegisterApiService.RegisterCallBack;
+import com.example.hotelbooking_app.Register.RegisterApiService.RegisterEndpoint;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private ImageView passwordImageView;
-    private TextView passwordText;
+    private EditText passwordText;
+    private EditText usernameEditText;
+    private  EditText emailEditText;
+    private Retrofit  retrofit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         openRegister();
+
     }
 
     private void openRegister() {
+
+       String BASE_URL = getString(R.string.base_url);
+        // Initialize Retrofit only once
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+
         setContentView(R.layout.sinup_layout);
         Button createBtn=findViewById(R.id.signup_create_btn);
+        TextView textView=findViewById(R.id.signup_move_login);
+        passwordText=findViewById(R.id.signup_password_text);
+        passwordImageView=findViewById(R.id.signup_password_icon);
+        usernameEditText=findViewById(R.id.username);
+        emailEditText=findViewById(R.id.email);
+
+
+
+        ///
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, AdditionalProfileActivity.class);
-                startActivity(intent);
+                String password=passwordText.getText().toString();
+                String email=emailEditText.getText().toString();
+                String username=usernameEditText.getText().toString();
+                new RegisterAsynTask(RegisterActivity.this, (RegisterEndpoint) retrofit.create(RegisterEndpoint.class), new RegisterCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        Intent intent=new Intent(RegisterActivity.this, AdditionalProfileActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        Toast.makeText(RegisterActivity.this, " Register Information are incorrect", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
-        TextView textView=findViewById(R.id.signup_move_login);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,8 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
-        passwordText=findViewById(R.id.signup_password_text);
-        passwordImageView=findViewById(R.id.signup_password_icon);
+
         passwordImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
