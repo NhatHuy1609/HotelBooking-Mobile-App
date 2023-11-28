@@ -129,17 +129,20 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:layout_width="35dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:alpha="0.2"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/signup_padlock_icon" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/signin_password_text"
-                    android:layout_width="300dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
                     android:hint=" Password"
+                    android:layout_weight="8"
+
                     android:textColor="@color/black" />
 
                 <ImageView
@@ -147,6 +150,7 @@
                     android:layout_width="27dp"
                     android:layout_height="wrap_content"
                     android:alpha="0.2"
+                    android:layout_weight="0.3"
                     android:src="@drawable/signup_password_hide" />
             </LinearLayout>
 
