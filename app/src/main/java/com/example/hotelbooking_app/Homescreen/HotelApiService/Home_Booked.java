@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class Booked {
+public class Home_Booked {
     @SerializedName("id")
     private int id;
     @SerializedName("startDate")

@@ -2,7 +2,7 @@ package com.example.hotelbooking_app.Homescreen.HotelApiService;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ImageDetail {
+public class Home_ImageDetail {
     @SerializedName("img")
     private String imageUrl;
 

@@ -27,11 +27,11 @@ import android.content.Intent;
 import com.example.hotelbooking_app.Homescreen.Activity.Homescreen_myprofile;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAdapter;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAdapter;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.Hotel;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelsApiResponse;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.ImageDetail;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_Hotel;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelApiClient;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelsApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelEndpoint;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_ImageDetail;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
@@ -146,13 +146,13 @@ public class Homescreen_home extends Fragment {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             String jwtToken = sharedPreferences.getString("jwtKey", null);
 
-            HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
-            Call<HotelsApiResponse> call = hotelEndpoint.getPpHotels("Bearer " + jwtToken);
+            Home_HotelEndpoint hotelEndpoint = Home_HotelApiClient.getClient().create(Home_HotelEndpoint.class);
+            Call<Home_HotelsApiResponse> call = hotelEndpoint.getPpHotels("Bearer " + jwtToken);
             try {
-                Response<HotelsApiResponse> response = call.execute();
+                Response<Home_HotelsApiResponse> response = call.execute();
                 if (response.isSuccessful()) {
-                    List<Hotel> apiHotels = response.body().getData();
-                    for (Hotel apiHotel : apiHotels) {
+                    List<Home_Hotel> apiHotels = response.body().getData();
+                    for (Home_Hotel apiHotel : apiHotels) {
                         // Convert API Hotel to Homescreen_Nearbyhotel
                         double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
                         double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
@@ -215,14 +215,14 @@ public class Homescreen_home extends Fragment {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             String jwtToken = sharedPreferences.getString("jwtKey", null);
 
-            HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
-            Call<HotelsApiResponse> call = hotelEndpoint.getHotels("Bearer " + jwtToken);
+            Home_HotelEndpoint hotelEndpoint = Home_HotelApiClient.getClient().create(Home_HotelEndpoint.class);
+            Call<Home_HotelsApiResponse> call = hotelEndpoint.getHotels("Bearer " + jwtToken);
 
             try {
-                Response<HotelsApiResponse> response = call.execute();
+                Response<Home_HotelsApiResponse> response = call.execute();
                 if (response.isSuccessful()) {
-                    List<Hotel> apiHotels = response.body().getData();
-                    for (Hotel apiHotel : apiHotels) {
+                    List<Home_Hotel> apiHotels = response.body().getData();
+                    for (Home_Hotel apiHotel : apiHotels) {
                         // Convert API Hotel to Homescreen_Nearbyhotel
                         double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
                         double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
@@ -291,7 +291,7 @@ public class Homescreen_home extends Fragment {
 
     }
     // Method to extract the image URL from ImageDetails
-    private Bitmap getHinhFromImageDetails(List<ImageDetail> imageDetails) {
+    private Bitmap getHinhFromImageDetails(List<Home_ImageDetail> imageDetails) {
         if (imageDetails != null && !imageDetails.isEmpty()) {
             String imageUrl = imageDetails.get(0).getImageUrl();
             // Use Picasso to load the image asynchronously and return the loaded Bitmap

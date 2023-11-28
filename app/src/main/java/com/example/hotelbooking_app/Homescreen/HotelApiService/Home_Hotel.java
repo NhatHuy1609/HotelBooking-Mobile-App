@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Hotel {
+public class Home_Hotel {
     @SerializedName("id")
     private int id;
 
@@ -16,7 +16,7 @@ public class Hotel {
     private double price;
 
     @SerializedName("imageDetails")
-    private List<ImageDetail> imageDetails;
+    private List<Home_ImageDetail> imageDetails;
     @SerializedName("reviewQuantity")
     private int reviewQuantity;
     @SerializedName("rate")
@@ -80,11 +80,11 @@ public class Hotel {
         this.price = price;
     }
 
-    public List<ImageDetail> getImageDetails() {
+    public List<Home_ImageDetail> getImageDetails() {
         return imageDetails;
     }
 
-    public void setImageDetails(List<ImageDetail> imageDetails) {
+    public void setImageDetails(List<Home_ImageDetail> imageDetails) {
         this.imageDetails = imageDetails;
     }
 

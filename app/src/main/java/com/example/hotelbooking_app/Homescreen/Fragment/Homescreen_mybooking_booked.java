@@ -15,14 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.hotelbooking_app.Homescreen.HotelApiService.Booked;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.BookedApiResponse;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.Hotel;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiResponse;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelsApiResponse;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.ImageDetail;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_Booked;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_BookedApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_Hotel;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelApiClient;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelEndpoint;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_ImageDetail;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_BookedAdapter;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Booked;
@@ -63,18 +62,18 @@ public class Homescreen_mybooking_booked extends Fragment {
             SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
             String jwtToken = sharedPreferences.getString("jwtKey", null);
 
-            HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
-            Call<BookedApiResponse> call = hotelEndpoint.getBooked("Bearer " + jwtToken);
+            Home_HotelEndpoint hotelEndpoint = Home_HotelApiClient.getClient().create(Home_HotelEndpoint.class);
+            Call<Home_BookedApiResponse> call = hotelEndpoint.getBooked("Bearer " + jwtToken);
 
             try {
-                Response<BookedApiResponse> response = call.execute();
+                Response<Home_BookedApiResponse> response = call.execute();
                 if (response.isSuccessful()) {
-                    List<Booked> apiBookeds = response.body().getData();
-                    for (Booked apiBooked : apiBookeds) {
-                        Call<HotelApiResponse> hotelCall = hotelEndpoint.getHotel(apiBooked.getHotelId(),"Bearer " + jwtToken);
-                        Response<HotelApiResponse> hotelResponse = hotelCall.execute();
+                    List<Home_Booked> apiBookeds = response.body().getData();
+                    for (Home_Booked apiBooked : apiBookeds) {
+                        Call<Home_HotelApiResponse> hotelCall = hotelEndpoint.getHotel(apiBooked.getHotelId(),"Bearer " + jwtToken);
+                        Response<Home_HotelApiResponse> hotelResponse = hotelCall.execute();
                         if (hotelResponse.isSuccessful()) {
-                            Hotel apiHotel = hotelResponse.body().getData();
+                            Home_Hotel apiHotel = hotelResponse.body().getData();
                             // Convert API Hotel to Homescreen_Booked
                             double formattedRate = Math.round(apiBooked.getHotelRate() * 10.0) / 10.0;
                             double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
@@ -137,7 +136,7 @@ public class Homescreen_mybooking_booked extends Fragment {
 
     }
     // Method to extract the image URL from ImageDetails
-    private Bitmap getHinhFromImageDetails(List<ImageDetail> imageDetails) {
+    private Bitmap getHinhFromImageDetails(List<Home_ImageDetail> imageDetails) {
         if (imageDetails != null && !imageDetails.isEmpty()) {
             String imageUrl = imageDetails.get(0).getImageUrl();
             // Use Picasso to load the image asynchronously and return the loaded Bitmap

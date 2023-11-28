@@ -2,9 +2,9 @@ package com.example.hotelbooking_app.Homescreen.HotelApiService;
 
 import java.util.List;
 
-public class HotelsApiResponse {
+public class Home_HotelsApiResponse {
     private String message;
-    private List<Hotel> data;
+    private List<Home_Hotel> data;
     private String status;
 
 
@@ -13,11 +13,11 @@ public class HotelsApiResponse {
         this.message = message;
     }
 
-    public List<Hotel> getData() {
+    public List<Home_Hotel> getData() {
         return data;
     }
 
-    public void setData(List<Hotel> data) {
+    public void setData(List<Home_Hotel> data) {
         this.data = data;
     }
 

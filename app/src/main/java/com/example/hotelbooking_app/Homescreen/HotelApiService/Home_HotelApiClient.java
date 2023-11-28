@@ -2,7 +2,7 @@ package com.example.hotelbooking_app.Homescreen.HotelApiService;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HotelApiClient {
+public class Home_HotelApiClient {
     private static final String BASE_URL = "https://subsequent-distance-production.up.railway.app/";
 
     private static Retrofit retrofit = null;

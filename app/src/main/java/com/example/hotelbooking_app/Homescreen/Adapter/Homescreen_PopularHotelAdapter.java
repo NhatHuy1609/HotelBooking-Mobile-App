@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelsApiResponse;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelApiClient;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelsApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelEndpoint;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
 import android.content.SharedPreferences;
@@ -121,14 +121,14 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
         return view;
     }
     private void addToFavorites(int hotelId) {
-        HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
+        Home_HotelEndpoint hotelEndpoint = Home_HotelApiClient.getClient().create(Home_HotelEndpoint.class);
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString("jwtKey", null);
 
-        Call<HotelsApiResponse> call = hotelEndpoint.postFavoriteHotels(hotelId, "Bearer " + jwtToken);
-        call.enqueue(new Callback<HotelsApiResponse>() {
+        Call<Home_HotelsApiResponse> call = hotelEndpoint.postFavoriteHotels(hotelId, "Bearer " + jwtToken);
+        call.enqueue(new Callback<Home_HotelsApiResponse>() {
             @Override
-            public void onResponse(Call<HotelsApiResponse> call, Response<HotelsApiResponse> response) {
+            public void onResponse(Call<Home_HotelsApiResponse> call, Response<Home_HotelsApiResponse> response) {
                 if (response.isSuccessful()) {
                     // Handle the success response, update your data model if needed
                 } else {
@@ -137,21 +137,21 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onFailure(Call<HotelsApiResponse> call, Throwable t) {
+            public void onFailure(Call<Home_HotelsApiResponse> call, Throwable t) {
                 // Handle the failure (e.g., network error)
             }
         });
     }
 
     private void removeFromFavorites(int hotelId) {
-        HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
+        Home_HotelEndpoint hotelEndpoint = Home_HotelApiClient.getClient().create(Home_HotelEndpoint.class);
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString("jwtKey", null);
 
-        Call<HotelsApiResponse> call = hotelEndpoint.deleteFavoriteHotels(hotelId, "Bearer " + jwtToken);
-        call.enqueue(new Callback<HotelsApiResponse>() {
+        Call<Home_HotelsApiResponse> call = hotelEndpoint.deleteFavoriteHotels(hotelId, "Bearer " + jwtToken);
+        call.enqueue(new Callback<Home_HotelsApiResponse>() {
             @Override
-            public void onResponse(Call<HotelsApiResponse> call, Response<HotelsApiResponse> response) {
+            public void onResponse(Call<Home_HotelsApiResponse> call, Response<Home_HotelsApiResponse> response) {
                 if (response.isSuccessful()) {
                     // Handle the success response, update your data model if needed
                 } else {
@@ -160,7 +160,7 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onFailure(Call<HotelsApiResponse> call, Throwable t) {
+            public void onFailure(Call<Home_HotelsApiResponse> call, Throwable t) {
                 // Handle the failure (e.g., network error)
             }
         });
