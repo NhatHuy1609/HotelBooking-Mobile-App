@@ -18,11 +18,10 @@ import android.widget.LinearLayout;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAdapter;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Hotel;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelsApiResponse;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.ImageDetail;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
-import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
 import com.squareup.picasso.Picasso;
 
@@ -66,23 +65,24 @@ private class HotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_Near
         String jwtToken = sharedPreferences.getString("jwtKey", null);
 
         HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
-        Call<HotelApiResponse> call = hotelEndpoint.getFavoriteHotels("Bearer " + jwtToken);
+        Call<HotelsApiResponse> call = hotelEndpoint.getFavoriteHotels("Bearer " + jwtToken);
 
         try {
-            Response<HotelApiResponse> response = call.execute();
+            Response<HotelsApiResponse> response = call.execute();
             if (response.isSuccessful()) {
                 List<Hotel> apiHotels = response.body().getData();
                 for (Hotel apiHotel : apiHotels) {
 
                     // Convert API Hotel to Homescreen_Nearbyhotel
                     double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
+                    double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
                     Homescreen_Nearbyhotel nearbyHotel = new Homescreen_Nearbyhotel(
                             apiHotel.getId(),
                             apiHotel.getName(),
                             apiHotel.getAddress(),
                             formattedRate,
                             apiHotel.getReviewQuantity(),
-                            apiHotel.getPrice(),
+                            formattedPrice,
                             getHinhFromImageDetails(apiHotel.getImageDetails())
                     );
 

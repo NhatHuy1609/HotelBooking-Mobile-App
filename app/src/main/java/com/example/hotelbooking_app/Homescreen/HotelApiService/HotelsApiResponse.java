@@ -2,7 +2,7 @@ package com.example.hotelbooking_app.Homescreen.HotelApiService;
 
 import java.util.List;
 
-public class HotelApiResponse {
+public class HotelsApiResponse {
     private String message;
     private List<Hotel> data;
     private String status;

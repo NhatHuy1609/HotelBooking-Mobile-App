@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Booked;
 import com.example.hotelbooking_app.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class Homescreen_BookedAdapter extends BaseAdapter {
@@ -57,12 +58,12 @@ public class Homescreen_BookedAdapter extends BaseAdapter {
 
         txtTen.setText(bookedhotels.getTen());
         txtDiaChi.setText(bookedhotels.getDiaChi());
-        imgHinh.setImageResource(bookedhotels.getHinh());
+        imgHinh.setImageBitmap(bookedhotels.getHinh());
         txtDanhGia.setText(String.valueOf(bookedhotels.getDanhGia()));
         txtSLDanhGia.setText(String.valueOf(bookedhotels.getSoLuongDanhGia()));
-        txtGia.setText(bookedhotels.getGia());
-        txtCheckIn.setText(bookedhotels.getNgayCheckIn());
-        txtCheckOut.setText(bookedhotels.getNgayCheckOut());
+        txtGia.setText(String.valueOf(bookedhotels.getGia()));
+        txtCheckIn.setText(new SimpleDateFormat("dd/MM/yyyy").format(bookedhotels.getNgayCheckIn()));
+        txtCheckOut.setText(new SimpleDateFormat("dd/MM/yyyy").format(bookedhotels.getNgayCheckOut()));
         return view;
     }
 }

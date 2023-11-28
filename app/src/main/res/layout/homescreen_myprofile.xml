@@ -37,75 +37,85 @@
                 android:layout_marginRight="15dp"/>
 
         </LinearLayout>
-        <ImageView
-            android:id="@+id/myprofile_imgacc"
+        <FrameLayout
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/splash_screen_logo02"
-            android:clipToOutline="true"
-            android:background="@drawable/reviews_avatar"
-            android:layout_gravity="center"
-            android:scaleType="centerCrop"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="30dp">
-            <TextView
+            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/myprofile_imgacc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:text="Username"
-                android:textSize="17sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
+                android:src="@drawable/splash_screen_logo02"
+                android:clipToOutline="true"
+                android:background="@drawable/reviews_avatar"
+                android:scaleType="centerCrop"/>
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/homescreen_icon_edit_2"
+                android:layout_gravity="bottom|end"/>
+        </FrameLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/homescreen_custom_itempopular">
-            <ImageView
-                android:layout_width="30dp"
+            <TextView
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/homescreen_icon_user"/>
+                android:text="Username"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="|"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#06B3C4"
+                android:gravity="center_vertical"/>
             <EditText
+                android:id="@+id/myprofile_username"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="20dp"
-                android:text="HNLH"
+                android:text="hnlh"
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:gravity="center_vertical"
                 android:background="@null"/>
+        </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="30dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:text="Preferencess"
-                android:textSize="17sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/homescreen_custom_itempopular">
-            <ImageView
-                android:layout_width="30dp"
+            <TextView
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/homescreen_icon_sms"/>
+                android:text="Email"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="|"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#06B3C4"
+                android:gravity="center_vertical"/>
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -117,45 +127,44 @@
                 android:gravity="center_vertical"
                 android:background="@null"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="30dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:text="Account Linked With"
-                android:textSize="17sp"
-                android:textStyle="bold"/>
-        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/homescreen_custom_itempopular">
-            <ImageView
-                android:layout_width="30dp"
+            <TextView
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/signup_google_icon"/>
+                android:text="Phone"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="|"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#06B3C4"
+                android:gravity="center_vertical"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:paddingLeft="20dp"
-                android:text="Google"
+                android:text="0123456789"
                 android:layout_weight="1"
                 android:textStyle="bold"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/homescreen_icon_link"/>
+                android:gravity="center_vertical"
+                android:background="@null"/>
         </LinearLayout>
+
+
         <TextView
             android:id="@+id/myprofile_btn_save"
             android:layout_width="match_parent"

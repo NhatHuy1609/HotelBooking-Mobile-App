@@ -1,5 +1,4 @@
 package com.example.hotelbooking_app.Homescreen.HotelApiService;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.DELETE;
@@ -10,14 +9,18 @@ import retrofit2.http.Path;
 
 public interface HotelEndpoint {
     @GET("/api/v1/hotel")
-    Call<HotelApiResponse> getHotels(@Header("Authorization") String authorization);
+    Call<HotelsApiResponse> getHotels(@Header("Authorization") String authorization);
     @GET("/api/v1/hotel/popular")
-    Call<HotelApiResponse> getPpHotels(@Header("Authorization") String authorization);
+    Call<HotelsApiResponse> getPpHotels(@Header("Authorization") String authorization);
     @GET("/api/v1/favourite-hotel")
-    Call<HotelApiResponse> getFavoriteHotels(@Header("Authorization") String authorization);
+    Call<HotelsApiResponse> getFavoriteHotels(@Header("Authorization") String authorization);
+    @GET("/api/v1/booking")
+    Call<BookedApiResponse> getBooked(@Header("Authorization") String authorization);
+    @GET("/api/v1/hotel/{id}")
+    Call<HotelApiResponse> getHotel(@Path("id") int hotelId, @Header("Authorization") String authorization);
     @POST("/api/v1/favourite-hotel/{hotelId}")
-    Call<HotelApiResponse> postFavoriteHotels(@Path("hotelId") int hotelId, @Header("Authorization") String authorization);
+    Call<HotelsApiResponse> postFavoriteHotels(@Path("hotelId") int hotelId, @Header("Authorization") String authorization);
     @DELETE("/api/v1/favourite-hotel/{hotelId}")
-    Call<HotelApiResponse> deleteFavoriteHotels(@Path("hotelId") int hotelId, @Header("Authorization") String authorization);
+    Call<HotelsApiResponse> deleteFavoriteHotels(@Path("hotelId") int hotelId, @Header("Authorization") String authorization);
 
 }

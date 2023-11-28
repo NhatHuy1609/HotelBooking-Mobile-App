@@ -104,24 +104,34 @@
                 android:layout_centerInParent="true"
                 android:src="@drawable/homescreen_icon_archiveadd"></ImageView>
         </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:background="@drawable/home_custom_price"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="$"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/home_price_popularhotel"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="$80/Day"
-                android:textStyle="bold"
+                android:text="80"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"></TextView>
-        </RelativeLayout>
+                android:gravity="center"
+                android:text="/Day"/>
+
+        </LinearLayout>
         <ImageView
             android:id="@+id/home_tym"
             android:layout_width="30dp"

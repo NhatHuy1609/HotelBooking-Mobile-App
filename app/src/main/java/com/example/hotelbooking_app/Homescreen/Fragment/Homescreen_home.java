@@ -29,7 +29,7 @@ import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAda
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_PopularHotelAdapter;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Hotel;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelsApiResponse;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.ImageDetail;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
@@ -123,20 +123,6 @@ public class Homescreen_home extends Fragment {
             }
         });
 
-        /* Truong Dinh Nhat code intent from Home to Detail */
-        for (int i = 0; i < lnPopularHotel.getChildCount(); i++) {
-
-            View childView = lnPopularHotel.getChildAt(i);
-
-            childView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Handle click
-                    Intent intent = new Intent(getActivity(), DetailActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
 
          //Intent searching
         btn_seach = (ImageView) view.findViewById(R.id.home_btn_search);
@@ -161,21 +147,22 @@ public class Homescreen_home extends Fragment {
             String jwtToken = sharedPreferences.getString("jwtKey", null);
 
             HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
-            Call<HotelApiResponse> call = hotelEndpoint.getPpHotels("Bearer " + jwtToken);
+            Call<HotelsApiResponse> call = hotelEndpoint.getPpHotels("Bearer " + jwtToken);
             try {
-                Response<HotelApiResponse> response = call.execute();
+                Response<HotelsApiResponse> response = call.execute();
                 if (response.isSuccessful()) {
                     List<Hotel> apiHotels = response.body().getData();
                     for (Hotel apiHotel : apiHotels) {
                         // Convert API Hotel to Homescreen_Nearbyhotel
                         double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
+                        double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
                         Homescreen_PopularHotel popularHotel = new Homescreen_PopularHotel(
                                 apiHotel.getId(),
                                 apiHotel.getName(),
                                 apiHotel.getAddress(),
                                 formattedRate,
                                 apiHotel.getReviewQuantity(),
-                                apiHotel.getPrice(),
+                                formattedPrice,
                                 getHinhFromImageDetails(apiHotel.getImageDetails()),
                                 apiHotel.isFavourited()
                         );
@@ -200,8 +187,20 @@ public class Homescreen_home extends Fragment {
                 arrayPopularHotel.addAll(result);
                 adapter_1.notifyDataSetChanged();
                 for (int i = 0; i < adapter_1.getCount(); i++) {
-                    View ittem = adapter_1.getView(i, null, null);
-                    lnPopularHotel.addView(ittem);
+                    final int position = i;
+                    View item = adapter_1.getView(i, null, null);
+                    lnPopularHotel.addView(item);
+                    item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Lấy ID của view được nhấn
+                            int selectedHotelId = arrayPopularHotel.get(position).getHotelId();
+                            // Tạo intent để chuyển sang activity chi tiết và gửi ID
+                            Intent intent = new Intent(getContext(), DetailActivity.class);
+                            intent.putExtra("hotelId", selectedHotelId);
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
 
@@ -217,39 +216,23 @@ public class Homescreen_home extends Fragment {
             String jwtToken = sharedPreferences.getString("jwtKey", null);
 
             HotelEndpoint hotelEndpoint = HotelApiClient.getClient().create(HotelEndpoint.class);
-            Call<HotelApiResponse> call = hotelEndpoint.getHotels("Bearer " + jwtToken);
+            Call<HotelsApiResponse> call = hotelEndpoint.getHotels("Bearer " + jwtToken);
 
             try {
-                Response<HotelApiResponse> response = call.execute();
+                Response<HotelsApiResponse> response = call.execute();
                 if (response.isSuccessful()) {
                     List<Hotel> apiHotels = response.body().getData();
                     for (Hotel apiHotel : apiHotels) {
-
-                        // Get hotel rating
-//                        Call<RatingApiResponse> ratingCall = hotelEndpoint.getHotelRating(apiHotel.getId(), "Bearer " + jwtToken);
-//                        Response<RatingApiResponse> ratingResponse = ratingCall.execute();
-//                        double rating = 0.0;
-//                        if (ratingResponse.isSuccessful()) {
-//                            rating = ratingResponse.body().getData();
-//                        }
-
-                        // Get hotel reviews
-//                        Call<ReviewApiResponse> reviewCall = hotelEndpoint.getReviews(apiHotel.getId(), "Bearer " + jwtToken);
-//                        Response<ReviewApiResponse> reviewResponse = reviewCall.execute();
-//                        int reviewCount = 0;
-//                        if (reviewResponse.isSuccessful()) {
-//                            reviewCount = reviewResponse.body().getData().size();
-//                        }
-
                         // Convert API Hotel to Homescreen_Nearbyhotel
                         double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
+                        double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
                         Homescreen_Nearbyhotel nearbyHotel = new Homescreen_Nearbyhotel(
                                 apiHotel.getId(),
                                 apiHotel.getName(),
                                 apiHotel.getAddress(),
                                 formattedRate,
                                 apiHotel.getReviewQuantity(),
-                                apiHotel.getPrice(),
+                                formattedPrice,
                                 getHinhFromImageDetails(apiHotel.getImageDetails())
                         );
 
@@ -273,8 +256,20 @@ public class Homescreen_home extends Fragment {
                 arrayNearByHotel.addAll(result);
                 adapter.notifyDataSetChanged();
                 for (int i = 0; i < adapter.getCount(); i++) {
-                    View ittem = adapter.getView(i, null, null);
-                    lnNearbyHotel.addView(ittem);
+                    final int position = i;
+                    View item = adapter.getView(i, null, null);
+                    lnNearbyHotel.addView(item);
+                    item.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Lấy ID của view được nhấn
+                            int selectedHotelId = arrayNearByHotel.get(position).getHotelId();
+                            // Tạo intent để chuyển sang activity chi tiết và gửi ID
+                            Intent intent = new Intent(getContext(), DetailActivity.class);
+                            intent.putExtra("hotelId", selectedHotelId);
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 // Check and log the contents of arrayNearByHotel

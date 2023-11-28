@@ -9,13 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiClient;
-import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelApiResponse;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelsApiResponse;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.HotelEndpoint;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_PopularHotel;
 import com.example.hotelbooking_app.R;
 import android.content.SharedPreferences;
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -126,10 +125,10 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString("jwtKey", null);
 
-        Call<HotelApiResponse> call = hotelEndpoint.postFavoriteHotels(hotelId, "Bearer " + jwtToken);
-        call.enqueue(new Callback<HotelApiResponse>() {
+        Call<HotelsApiResponse> call = hotelEndpoint.postFavoriteHotels(hotelId, "Bearer " + jwtToken);
+        call.enqueue(new Callback<HotelsApiResponse>() {
             @Override
-            public void onResponse(Call<HotelApiResponse> call, Response<HotelApiResponse> response) {
+            public void onResponse(Call<HotelsApiResponse> call, Response<HotelsApiResponse> response) {
                 if (response.isSuccessful()) {
                     // Handle the success response, update your data model if needed
                 } else {
@@ -138,7 +137,7 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onFailure(Call<HotelApiResponse> call, Throwable t) {
+            public void onFailure(Call<HotelsApiResponse> call, Throwable t) {
                 // Handle the failure (e.g., network error)
             }
         });
@@ -149,10 +148,10 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
         SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString("jwtKey", null);
 
-        Call<HotelApiResponse> call = hotelEndpoint.deleteFavoriteHotels(hotelId, "Bearer " + jwtToken);
-        call.enqueue(new Callback<HotelApiResponse>() {
+        Call<HotelsApiResponse> call = hotelEndpoint.deleteFavoriteHotels(hotelId, "Bearer " + jwtToken);
+        call.enqueue(new Callback<HotelsApiResponse>() {
             @Override
-            public void onResponse(Call<HotelApiResponse> call, Response<HotelApiResponse> response) {
+            public void onResponse(Call<HotelsApiResponse> call, Response<HotelsApiResponse> response) {
                 if (response.isSuccessful()) {
                     // Handle the success response, update your data model if needed
                 } else {
@@ -161,7 +160,7 @@ public class Homescreen_PopularHotelAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onFailure(Call<HotelApiResponse> call, Throwable t) {
+            public void onFailure(Call<HotelsApiResponse> call, Throwable t) {
                 // Handle the failure (e.g., network error)
             }
         });
