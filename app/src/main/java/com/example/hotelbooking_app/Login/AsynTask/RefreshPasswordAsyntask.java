@@ -32,17 +32,14 @@ public class RefreshPasswordAsyntask extends AsyncTask<String, Void, Boolean> {
 
         try {
             Response<AccessTokenJson> response = call.execute();
-
             if (response.isSuccessful()) {
                 AccessTokenJson authenticationResponse = response.body();
                 String jwtToken = authenticationResponse.getAccessToken();
-
                 SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("jwtKey", jwtToken);
                 editor.putLong("lastPuttedJwtTime", System.currentTimeMillis());
                 editor.apply();
-
                 return true;
             } else {
                 Log.e("JWT", "Thong tin dang nhap bi sai roi");

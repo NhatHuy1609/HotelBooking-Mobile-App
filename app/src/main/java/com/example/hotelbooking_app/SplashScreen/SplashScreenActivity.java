@@ -24,21 +24,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
-    private  String BASE_URL;
-    private Retrofit retrofit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_layout);
-
         SystemClock.sleep(2000);
-
-        BASE_URL = getString(R.string.base_url);
-        // Initialize Retrofit only once
-        retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
         try {
             SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -46,24 +37,12 @@ public class SplashScreenActivity extends AppCompatActivity {
             long lastPuttedJwtTime = sharedPreferences.getLong("lastPuttedJwtTime", 0);
 
             if (!TextUtils.isEmpty(jwtToken) && lastPuttedJwtTime != 0) {
-                if (System.currentTimeMillis() - lastPuttedJwtTime > 1 * 30 * 60 * 1000) {
-                    new RefreshPasswordAsyntask(SplashScreenActivity.this, (AuthEnpoint) retrofit.create(AuthEnpoint.class), new AuthenticationCallback() {
-                        @Override
-                        public void onSuccess() {
-                            navigateToMain();
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            navigateToLogin();
-                        }
-                    }).execute(jwtToken);
-                } else {
+                if (System.currentTimeMillis() - lastPuttedJwtTime > 30 * 60 * 1000)
                     navigateToMain();
-                }
-            } else {
-                navigateToLogin();
+
             }
+            navigateToLogin();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -79,4 +58,5 @@ public class SplashScreenActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(SplashScreenActivity.this, LoginActivity.class);
         startActivity(loginIntent);
         finish();
-    }}
+    }
+}

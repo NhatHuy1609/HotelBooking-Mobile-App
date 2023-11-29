@@ -89,7 +89,7 @@
                     app:srcCompat="@drawable/signup_user_icon" />
 
                 <EditText
-                    android:id="@+id/username"
+                    android:id="@+id/signup_username"
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
                     android:hint="Create your username"
@@ -133,10 +133,10 @@
                     app:srcCompat="@drawable/signup_mail_icon" />
 
                 <EditText
-                    android:id="@+id/email"
+                    android:id="@+id/signu_Email"
                     android:layout_width="300dp"
                     android:layout_height="match_parent"
-                    android:hint="Create your Password"
+                    android:hint="Write your email"
                     android:textColor="@color/black" />
             </LinearLayout>
         </LinearLayout>

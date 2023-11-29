@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hotelbooking_app.AdditionalProfile.AdditionalProfileActivity;
+import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.Login.Activity.LoginActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Register.AsynTask.RegisterAsynTask;
@@ -40,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void openRegister() {
+        setContentView(R.layout.sinup_layout);
 
        String BASE_URL = getString(R.string.base_url);
         // Initialize Retrofit only once
@@ -50,13 +52,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-        setContentView(R.layout.sinup_layout);
         Button createBtn=findViewById(R.id.signup_create_btn);
         TextView textView=findViewById(R.id.signup_move_login);
         passwordText=findViewById(R.id.signup_password_text);
         passwordImageView=findViewById(R.id.signup_password_icon);
-        usernameEditText=findViewById(R.id.username);
-        emailEditText=findViewById(R.id.email);
+        usernameEditText=findViewById(R.id.signup_username);
+        emailEditText=findViewById(R.id.signu_Email);
 
 
 
@@ -64,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity {
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(RegisterActivity.this, " Register ", Toast.LENGTH_SHORT).show();
+
                 String password=passwordText.getText().toString();
                 String email=emailEditText.getText().toString();
                 String username=usernameEditText.getText().toString();
@@ -78,7 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onFailure() {
                         Toast.makeText(RegisterActivity.this, " Register Information are incorrect", Toast.LENGTH_SHORT).show();
                     }
-                });
+                })
+                        .execute(email,password,username)
+                ;
             }
         });
 

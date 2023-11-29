@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity  {
     private String BASE_URL ;
 
     private Retrofit retrofit;
-    private AuthEnpoint apiAuthEnpointService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,34 +184,6 @@ public class LoginActivity extends AppCompatActivity  {
         startActivity(intent);
     }
 
-    private boolean refreshToken(String jwtToken) {
-        Call<AccessTokenJson> refreshToken= apiAuthEnpointService.refreshToken(jwtToken);
-        refreshToken.enqueue(new Callback<AccessTokenJson>() {
-            @Override
-            public void onResponse(Call<AccessTokenJson> call, Response<AccessTokenJson> response) {
-                if(response.isSuccessful()){
-                    AccessTokenJson refeshAccessTokenJson=response.body();
-                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    Log.i("JWT", ""+ refeshAccessTokenJson.getAccessToken());
-                    editor.putString("jwtKey", refeshAccessTokenJson.getAccessToken());
-                    editor.putLong("lastPuttedJwtTime",  System.currentTimeMillis());
-                    editor.apply();
-                } else {
-                    Log.i("JWT", "Khong duoc");
-                    throw new RuntimeException("Jwt het han roi");
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<AccessTokenJson> call, Throwable t) {
-                throw new RuntimeException("Jwt het han roi");
-            }
-        });
-        return  true;
-    }
 
 
     private void showFailAuthentication() {
