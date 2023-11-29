@@ -45,7 +45,6 @@ public class Homescreen_mybooking_booked extends Fragment {
         View view = inflater.inflate(R.layout.homescreen_mybooking_fragment_booked, container, false);
         arrayBookedHotel = new ArrayList<>();
         new BookedsAsyncTask().execute();
-
         adapter = new Homescreen_BookedAdapter(getActivity(),R.layout.homescreen_item_booked, arrayBookedHotel);
 
         lnBookedHotel = (LinearLayout) view.findViewById(R.id.lvBookedHotel);

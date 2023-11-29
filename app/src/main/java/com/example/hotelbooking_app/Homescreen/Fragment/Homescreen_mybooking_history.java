@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAdapter;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_Hotel;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelApiClient;
+import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelApiResponse;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelsApiResponse;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelEndpoint;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_ImageDetail;
@@ -48,10 +49,6 @@ public class Homescreen_mybooking_history extends Fragment {
         adapter = new Homescreen_NearbyhotelAdapter(getActivity(),R.layout.homescreen_item_nearbyhotel, arrayHistory);
         lnHistory = (LinearLayout) view.findViewById(R.id.lvHistoryHotel);
 
-        for (int i=0; i< adapter.getCount(); i++) {
-            View item = adapter.getView(i,null,null);
-            lnHistory.addView(item);
-        }
         return view;
     }
 
@@ -72,22 +69,26 @@ private class HotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_Near
             if (response.isSuccessful()) {
                 List<Home_Hotel> apiHotels = response.body().getData();
                 for (Home_Hotel apiHotel : apiHotels) {
+                    Call<Home_HotelApiResponse> hotelCall = hotelEndpoint.getHotel(apiHotel.getId(),"Bearer " + jwtToken);
+                    Response<Home_HotelApiResponse> hotelResponse = hotelCall.execute();
+                    if(hotelResponse.isSuccessful()) {
+                        Home_Hotel apiTymHotel = hotelResponse.body().getData();
+                        // Convert API Hotel to Homescreen_Nearbyhotel
+                        double formattedRate = Math.round(apiTymHotel.getRate() * 10.0) / 10.0;
+                        double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
+                        Homescreen_Nearbyhotel nearbyHotel = new Homescreen_Nearbyhotel(
+                                apiHotel.getId(),
+                                apiHotel.getName(),
+                                apiHotel.getAddress(),
+                                formattedRate,
+                                apiTymHotel.getReviewQuantity(),
+                                formattedPrice,
+                                getHinhFromImageDetails(apiHotel.getImageDetails())
+                        );
+                        // Add to result list
+                        result.add(nearbyHotel);
+                    }
 
-                    // Convert API Hotel to Homescreen_Nearbyhotel
-                    double formattedRate = Math.round(apiHotel.getRate() * 10.0) / 10.0;
-                    double formattedPrice = Math.round(apiHotel.getPrice() / 24237);
-                    Homescreen_Nearbyhotel nearbyHotel = new Homescreen_Nearbyhotel(
-                            apiHotel.getId(),
-                            apiHotel.getName(),
-                            apiHotel.getAddress(),
-                            formattedRate,
-                            apiHotel.getReviewQuantity(),
-                            formattedPrice,
-                            getHinhFromImageDetails(apiHotel.getImageDetails())
-                    );
-
-                    // Add to result list
-                    result.add(nearbyHotel);
                 }
             } else {
                 Log.e("API Error", "Error response from API: " + response.message());

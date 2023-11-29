@@ -1,10 +1,13 @@
 package com.example.hotelbooking_app.Homescreen.HotelApiService;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface Home_HotelEndpoint {
@@ -22,5 +25,7 @@ public interface Home_HotelEndpoint {
     Call<Home_HotelsApiResponse> postFavoriteHotels(@Path("hotelId") int hotelId, @Header("Authorization") String authorization);
     @DELETE("/api/v1/favourite-hotel/{hotelId}")
     Call<Home_HotelsApiResponse> deleteFavoriteHotels(@Path("hotelId") int hotelId, @Header("Authorization") String authorization);
+    @PUT("/api/v1/auth/change-password")
+    Call<ResponseBody> changePassword(@Header("Authorization") String authorization, @Body Home_ChangePasswordRequest request);
 
 }

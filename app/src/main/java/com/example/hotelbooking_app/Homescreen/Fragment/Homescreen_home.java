@@ -79,8 +79,6 @@ public class Homescreen_home extends Fragment {
         adapter = new Homescreen_NearbyhotelAdapter(getActivity(), R.layout.homescreen_item_nearbyhotel, arrayNearByHotel);
 
 
-
-
         adapter_1 = new Homescreen_PopularHotelAdapter(getActivity(), R.layout.homescreen_item_popularhotel, arrayPopularHotel);
 
         horizontalScrollView = (HorizontalScrollView) view.findViewById(R.id.homescreen_horizontal_scroll_view);
@@ -88,7 +86,7 @@ public class Homescreen_home extends Fragment {
         lnNearbyHotel = (LinearLayout) view.findViewById(R.id.home_lvNearbyHotel);
 
         lnPopularHotel = (LinearLayout) view.findViewById(R.id.home_lvpopularhotel);
-//        lnPopularHotel = (LinearLayout) horizontalScrollView.getChildAt(0);
+
 
 
 
