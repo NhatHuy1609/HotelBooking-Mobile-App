@@ -1,10 +1,14 @@
 package com.example.hotelbooking_app.Searching.API;
 
-public class RatingApiRespone {
-    private String message;
-    private float data;
+import com.example.hotelbooking_app.Searching.Domain.Hotel;
 
-    public RatingApiRespone(String message, float data) {
+import java.util.List;
+
+public class SearchHotelApiRespone {
+    private String message;
+    private List<Hotel> data;
+
+    public SearchHotelApiRespone(String message, List<Hotel> data) {
         this.message = message;
         this.data = data;
     }
@@ -17,11 +21,11 @@ public class RatingApiRespone {
         this.message = message;
     }
 
-    public float getData() {
+    public List<Hotel> getData() {
         return data;
     }
 
-    public void setData(float data) {
+    public void setData(List<Hotel> data) {
         this.data = data;
     }
 }

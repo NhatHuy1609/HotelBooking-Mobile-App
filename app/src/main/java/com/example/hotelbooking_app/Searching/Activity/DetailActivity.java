@@ -1,21 +1,19 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
@@ -25,14 +23,10 @@ import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.ReviewsActivity;
 import com.example.hotelbooking_app.Searching.Adapter.ReviewHotelAdapter;
-import com.example.hotelbooking_app.Searching.Adapter.ReviewsItemAdapter;
 import com.example.hotelbooking_app.Searching.AsyncTask.DetailHotelApiCallAsyncTask;
 import com.example.hotelbooking_app.Searching.AsyncTask.ReviewHotelApiCallAsyncTask;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.Review;
-import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +111,6 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
             tvOverview.setText(hotel.getOverview());
             tvPrice.setText("" + hotel.getPrice());
 
-            // Load image using Picasso
             if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
                 ImageSlider imageSlider = findViewById(R.id.detail_img_slider);
                 ArrayList<SlideModel> slideModels = new ArrayList<>();

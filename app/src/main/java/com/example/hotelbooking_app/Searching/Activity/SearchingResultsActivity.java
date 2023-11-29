@@ -1,27 +1,35 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Adapter.ResultFilterAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.ResultItemAdapter;
+import com.example.hotelbooking_app.Searching.AsyncTask.SearchHotelApiCallAsyncTask;
+import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.ResultFilterDomain;
 import com.example.hotelbooking_app.Searching.Domain.ResultItemDomain;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SearchingResultsActivity extends AppCompatActivity {
+public class SearchingResultsActivity extends AppCompatActivity implements SearchHotelApiCallAsyncTask.ApiCallListener {
     ResultFilterAdapter resultFilterAdapter;
     ResultItemAdapter resultItemAdapter;
     RecyclerView rvResultFilter, rvResultItem;
@@ -37,31 +45,27 @@ public class SearchingResultsActivity extends AppCompatActivity {
         innitResultFilterRecyclerView();
 
         rvResultItem = findViewById(R.id.searching_rv_search_result_items);
-        innitResultItemRecyclerView();
+        resultItemAdapter = new ResultItemAdapter(this, new ArrayList<>());
 
         searchView = findViewById(R.id.searching_ed_result_search_view);
 
 
-
-
-        //Receiving data in Searching activity
         Intent intent = getIntent();
-        if (intent != null) {
-            String searchQuery = intent.getStringExtra("SEARCH_QUERY");
-            searchView.setQuery(searchQuery, false);
+        String searchQuery = intent.getStringExtra("SEARCH_QUERY");
+        searchView.setQuery(searchQuery, false);
+        getSearchHotels(searchQuery);
 
-            ArrayList<ResultItemDomain> allResults = arrResultItemData;
-            ArrayList<ResultItemDomain> filteredResults = filterResults(allResults, searchQuery);
-
-            resultItemAdapter = new ResultItemAdapter(filteredResults);
-            rvResultItem.setAdapter(resultItemAdapter);
-        }
-
-        resultItemAdapter.setOnItemClickListener(new ResultItemAdapter.OnItemClickListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onItemClick(int position) {
-                Intent intent = new Intent(SearchingResultsActivity.this, DetailActivity.class);
-                startActivity(intent);
+            public boolean onQueryTextSubmit(String query) {
+                getSearchHotels(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                getSearchHotels(newText);
+                return true;
             }
         });
 
@@ -75,36 +79,25 @@ public class SearchingResultsActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<ResultItemDomain> filterResults(ArrayList<ResultItemDomain> allResults, String searchQuery) {
-        ArrayList<ResultItemDomain> filteredResults = new ArrayList<>();
 
-        for (ResultItemDomain result : allResults) {
-            if (result.getName().toLowerCase().contains(searchQuery.toLowerCase())) {
-                filteredResults.add(result);
-            }
-        }
-
-        return filteredResults;
+    private void getSearchHotels(String searchQuery) {
+        new SearchHotelApiCallAsyncTask(this, this).execute(searchQuery);
     }
 
-    private void innitResultItemRecyclerView() {
-        arrResultItemData = new ArrayList<>();
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("HAI AN HOTEL", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-        arrResultItemData.add(new ResultItemDomain("Muong Thanh Luxury Hotel", "270 Vo Nguyen Giap, Da Nang", "$49.00", 4.5, 25, R.drawable.searching_image_muongthanh));
-
-        resultItemAdapter = new ResultItemAdapter(arrResultItemData);
-
+    @Override
+    public void onApiCallSuccess(List<Hotel> hotels) {
+        resultItemAdapter = new ResultItemAdapter(this, hotels);
+        resultItemAdapter.notifyDataSetChanged();
         rvResultItem.setLayoutManager(new GridLayoutManager(this, 2));
         rvResultItem.setAdapter(resultItemAdapter);
     }
+
+    @Override
+    public void onApiCallFailure(String errorMessage) {
+        Toast.makeText(this, "Api call failed", Toast.LENGTH_SHORT).show();
+        Log.e("API Error", errorMessage);
+    }
+
 
     private void innitResultFilterRecyclerView() {
         ArrayList<ResultFilterDomain> arrResultFilterData = new ArrayList<>();
@@ -117,7 +110,7 @@ public class SearchingResultsActivity extends AppCompatActivity {
 
         rvResultFilter.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         rvResultFilter.setAdapter(resultFilterAdapter);
-
-
     }
 }
+
+
