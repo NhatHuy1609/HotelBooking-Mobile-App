@@ -22,6 +22,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.ReviewsActivity;
+import com.example.hotelbooking_app.Searching.Adapter.ResultItemAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.ReviewHotelAdapter;
 import com.example.hotelbooking_app.Searching.AsyncTask.DetailHotelApiCallAsyncTask;
 import com.example.hotelbooking_app.Searching.AsyncTask.ReviewHotelApiCallAsyncTask;
@@ -140,10 +141,12 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onApiCallSuccess(List<Review> reviews) {
-        if (reviews != null) {
-            reviewHotelAdapter = new ReviewHotelAdapter(this, reviews);
+        if (reviews != null && reviews.size() > 0) {
+            List<Review> firstTwoReviews = reviews.subList(0, Math.min(2, reviews.size()));
+            reviewHotelAdapter = new ReviewHotelAdapter(this, firstTwoReviews);
             reviewHotelAdapter.notifyDataSetChanged();
-            rvReviewsItem.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            rvReviewsItem.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
             rvReviewsItem.setAdapter(reviewHotelAdapter);
         }
     }

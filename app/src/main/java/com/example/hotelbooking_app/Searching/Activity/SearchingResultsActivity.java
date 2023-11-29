@@ -1,22 +1,17 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.Image;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Adapter.ResultFilterAdapter;
@@ -24,7 +19,6 @@ import com.example.hotelbooking_app.Searching.Adapter.ResultItemAdapter;
 import com.example.hotelbooking_app.Searching.AsyncTask.SearchHotelApiCallAsyncTask;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.ResultFilterDomain;
-import com.example.hotelbooking_app.Searching.Domain.ResultItemDomain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +28,6 @@ public class SearchingResultsActivity extends AppCompatActivity implements Searc
     ResultItemAdapter resultItemAdapter;
     RecyclerView rvResultFilter, rvResultItem;
     androidx.appcompat.widget.SearchView searchView;
-    ArrayList<ResultItemDomain> arrResultItemData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +62,7 @@ public class SearchingResultsActivity extends AppCompatActivity implements Searc
             }
         });
 
-        ImageButton resultBackBtn = (ImageButton) findViewById(R.id.searching_result_back_button);
+        ImageButton resultBackBtn = findViewById(R.id.searching_result_back_button);
         resultBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
