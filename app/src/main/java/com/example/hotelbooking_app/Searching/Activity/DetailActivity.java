@@ -24,20 +24,24 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.ReviewsActivity;
+import com.example.hotelbooking_app.Searching.Adapter.ReviewHotelAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.ReviewsItemAdapter;
 import com.example.hotelbooking_app.Searching.AsyncTask.DetailHotelApiCallAsyncTask;
+import com.example.hotelbooking_app.Searching.AsyncTask.ReviewHotelApiCallAsyncTask;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
+import com.example.hotelbooking_app.Searching.Domain.Review;
 import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DetailActivity extends AppCompatActivity implements DetailHotelApiCallAsyncTask.ApiCallListener {
+public class DetailActivity extends AppCompatActivity implements DetailHotelApiCallAsyncTask.ApiCallListener, ReviewHotelApiCallAsyncTask.ApiCallListener {
     TextView tvName, tvAddress, tvOverview, tvPrice;
     RecyclerView rvReviewsItem;
     ImageButton detailBackBtn;
-    ReviewsItemAdapter reviewsItemAdapter;
+    ReviewHotelAdapter reviewHotelAdapter;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,13 +49,21 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_layout);
 
+        rvReviewsItem = findViewById(R.id.detail_rv_reviews_item);
+        AppCompatButton bookingBtn = findViewById(R.id.detail_booking_button);
+        detailBackBtn = findViewById(R.id.detail_back_button);
+        detailBackBtn = findViewById(R.id.detail_back_button);
+        TextView tvReviewsSeeAll = (TextView) findViewById(R.id.detail_tv_reviews_see_all);
+
+
         Intent intent = getIntent();
         int hotelId = intent.getIntExtra("hotelId", 0);
 
 
         getDetailHotel(hotelId);
+        getReviewById(hotelId);
 
-        detailBackBtn = findViewById(R.id.detail_back_button);
+
         detailBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,11 +72,9 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
             }
         });
 
-        hotelImageSlider();
 
-        rvReviewsItem = findViewById(R.id.detail_rv_reviews_item);
 
-        AppCompatButton bookingBtn = findViewById(R.id.detail_booking_button);
+
         bookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +85,6 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
         });
 
 
-        TextView tvReviewsSeeAll = (TextView) findViewById(R.id.detail_tv_reviews_see_all);
         tvReviewsSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +93,10 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
                 startActivity(intent);
             }
         });
+    }
+
+    private void getReviewById(int hotelId) {
+        new ReviewHotelApiCallAsyncTask(this, this).execute(hotelId);
     }
 
     private void getDetailHotel(int hotelId) {
@@ -131,21 +144,20 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void onApiCallSuccess(List<Review> reviews) {
+        if (reviews != null) {
+            reviewHotelAdapter = new ReviewHotelAdapter(this, reviews);
+            reviewHotelAdapter.notifyDataSetChanged();
+            rvReviewsItem.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+            rvReviewsItem.setAdapter(reviewHotelAdapter);
+        }
+    }
+
     @Override
     public void onApiCallFailure(String errorMessage) {
         Toast.makeText(this, "Api call failed", Toast.LENGTH_SHORT).show();
         Log.e("API Error", errorMessage);
-    }
-
-
-    private void hotelImageSlider() {
-        ImageSlider imageSlider = findViewById(R.id.detail_img_slider);
-        ArrayList<SlideModel> slideModels = new ArrayList<>();
-
-        slideModels.add(new SlideModel(R.drawable.searching_image_muongthanh, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.searching_image_muongthanh, ScaleTypes.FIT));
-        slideModels.add(new SlideModel(R.drawable.searching_image_muongthanh, ScaleTypes.FIT));
-
-        imageSlider.setImageList(slideModels, ScaleTypes.FIT);
     }
 }
