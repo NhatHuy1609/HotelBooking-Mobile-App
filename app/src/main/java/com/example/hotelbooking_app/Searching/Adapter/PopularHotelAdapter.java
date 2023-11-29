@@ -1,5 +1,9 @@
 package com.example.hotelbooking_app.Searching.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
 import com.squareup.picasso.Picasso;
@@ -17,9 +23,11 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapter.myViewHolder> {
+    Context context;
     List<Hotel> mListPopularHotel;
 
-    public PopularHotelAdapter(List<Hotel> mListPopularHotel) {
+    public PopularHotelAdapter(Context context, List<Hotel> mListPopularHotel) {
+        this.context = context;
         this.mListPopularHotel = mListPopularHotel;
     }
 
@@ -46,7 +54,6 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
 
         // Load image using Picasso
         if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
-            // Assuming you want to load the first image in the list
             String imageUrl = hotel.getImageDetails().get(0).getImg();
             Picasso.get().load(imageUrl).into(holder.imgHotel);
         } else {
@@ -62,6 +69,7 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
     public class myViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvAddress, tvRating, tvCount;
         ImageView imgHotel;
+        CardView cvHotel;
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -70,6 +78,25 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
             tvRating = itemView.findViewById(R.id.item_tv_recently_viewed_score);
             tvCount = itemView.findViewById(R.id.item_tv_recently_viewed_count);
             imgHotel = itemView.findViewById(R.id.item_img_recently_viewed);
+            cvHotel = itemView.findViewById(R.id.item_cv_recently_viewed);
+
+            cvHotel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Hotel clickedHotel = mListPopularHotel.get(position);
+                        int hotelId = clickedHotel.getId();
+
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra("hotelId", hotelId);
+
+                        // Start DetailActivity
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
+
     }
 }

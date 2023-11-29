@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
@@ -28,12 +29,12 @@ import com.example.hotelbooking_app.Searching.AsyncTask.DetailHotelApiCallAsyncT
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity implements DetailHotelApiCallAsyncTask.ApiCallListener {
     TextView tvName, tvAddress, tvOverview, tvPrice;
-    ImageView img1, img2, img3;
     RecyclerView rvReviewsItem;
     ImageButton detailBackBtn;
     ReviewsItemAdapter reviewsItemAdapter;
@@ -46,6 +47,7 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
 
         Intent intent = getIntent();
         int hotelId = intent.getIntExtra("hotelId", 0);
+
 
         getDetailHotel(hotelId);
 
@@ -78,6 +80,7 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, ReviewsActivity.class);
+                intent.putExtra("hotelId", hotelId);
                 startActivity(intent);
             }
         });
@@ -95,19 +98,42 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
             tvOverview = findViewById(R.id.detail_tv_overview_content);
             tvPrice = findViewById(R.id.detail_tv_price);
 
+
             tvName.setText(hotel.getName());
             tvAddress.setText(hotel.getAddress());
             tvOverview.setText(hotel.getOverview());
             tvPrice.setText("" + hotel.getPrice());
-            Toast.makeText(this, "Api call successfully", Toast.LENGTH_SHORT).show();
 
+            // Load image using Picasso
+            if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
+                ImageSlider imageSlider = findViewById(R.id.detail_img_slider);
+                ArrayList<SlideModel> slideModels = new ArrayList<>();
+
+                String imageUrl1 = hotel.getImageDetails().get(1).getImg();
+                String imageUrl2 = hotel.getImageDetails().get(2).getImg();
+                String imageUrl3 = hotel.getImageDetails().get(3).getImg();
+
+                slideModels.add(new SlideModel(imageUrl1, ScaleTypes.FIT));
+                slideModels.add(new SlideModel(imageUrl2, ScaleTypes.FIT));
+                slideModels.add(new SlideModel(imageUrl3, ScaleTypes.FIT));
+
+                // Using Glide to load images
+                for (SlideModel slideModel : slideModels) {
+                    ImageView imageView = new ImageView(this);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    Glide.with(this).load(slideModel.getImageUrl()).into(imageView);
+                }
+
+                // Set the images to the ImageSlider
+                imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+            } else {
+            }
         }
     }
 
     @Override
     public void onApiCallFailure(String errorMessage) {
         Toast.makeText(this, "Api call failed", Toast.LENGTH_SHORT).show();
-
         Log.e("API Error", errorMessage);
     }
 

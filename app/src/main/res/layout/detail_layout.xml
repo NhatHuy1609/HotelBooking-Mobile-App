@@ -94,9 +94,10 @@
 
                         <TextView
                             android:id="@+id/detail_tv_hotel_address"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
                             android:layout_marginBottom="28dp"
                             android:drawableStart="@drawable/detail_pin_icon"
                             android:drawablePadding="4dp"
@@ -104,13 +105,15 @@
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="@+id/detail_img_slider"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/detail_img_slider" />
 
                         <TextView
                             android:id="@+id/detail_tv_hotel_name"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
                             android:layout_marginBottom="8dp"
                             android:drawablePadding="4dp"
                             android:text="Muong Thanh Luxury Hotel"
@@ -118,6 +121,7 @@
                             android:textSize="20sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toTopOf="@+id/detail_tv_hotel_address"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@+id/detail_img_slider" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

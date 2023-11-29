@@ -152,7 +152,7 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
     @Override
     public void onApiCallSuccess(List<Hotel> popularHotels) {
         if (popularHotels != null) {
-            mPopularHotelAdapter = new PopularHotelAdapter(popularHotels);
+            mPopularHotelAdapter = new PopularHotelAdapter(this, popularHotels);
             mPopularHotelAdapter.notifyDataSetChanged();
             rvRecentlyViewed.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
             rvRecentlyViewed.setAdapter(mPopularHotelAdapter);
