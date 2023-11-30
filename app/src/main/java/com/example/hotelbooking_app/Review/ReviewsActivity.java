@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,10 +39,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ReviewsActivity extends AppCompatActivity {
     ImageView imageView;
     private Retrofit retrofit;
+    private String jwt;
 
     private Long hotelId;
     String baseUrl;
     private List<ReviewResponse> reviews=new ArrayList<>();
+    private Button commentBtn;
+    private EditText CommentText;
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +57,8 @@ public class ReviewsActivity extends AppCompatActivity {
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        imageView=findViewById(R.id.review_back_icon);
+         textView=findViewById(R.id.review_StarNumber);
 
 
 
@@ -60,15 +68,16 @@ public class ReviewsActivity extends AppCompatActivity {
     }
 
     private void openFragment() {
-        ReviewCommentFragment fragment= new ReviewCommentFragment();
+        ReviewCommentFragment fragment= new ReviewCommentFragment(hotelId,jwt);
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
+
     }
 
     private void openReview() {
-        imageView=findViewById(R.id.review_back_icon);
+
 
         Integer hotelIdInt= getIntent().getIntExtra("hotelId", 0);
         if(hotelIdInt==0){
@@ -87,7 +96,7 @@ public class ReviewsActivity extends AppCompatActivity {
         });
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String jwt= sharedPreferences.getString("jwtKey", "");
+         jwt= sharedPreferences.getString("jwtKey", "");
         if(jwt.isEmpty()){
             Intent intent=new Intent(ReviewsActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -138,7 +147,6 @@ public class ReviewsActivity extends AppCompatActivity {
         // Đánh giá từ người dùng
 
         // Số ngôi sao cần tô màu (ví dụ: 3.4 sẽ tô màu 4 ngôi sao)
-        TextView textView=findViewById(R.id.review_StarNumber);
         textView.setText(userRating+"");
         int numberOfStarsToColor = (int) Math.ceil(userRating);
 
