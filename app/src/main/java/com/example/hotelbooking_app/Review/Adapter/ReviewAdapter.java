@@ -1,5 +1,7 @@
 package com.example.hotelbooking_app.Review.Adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.hotelbooking_app.R;
-import com.example.hotelbooking_app.Review.Model.Review;
+import com.example.hotelbooking_app.Review.dto.ReviewResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
-    private List<Review> reviews;
+    private List<ReviewResponse> reviews ;
 
-    public ReviewAdapter(List<Review> reviews) {
+    public ReviewAdapter(List<ReviewResponse> reviews) {
         this.reviews = reviews;
     }
+
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -28,7 +32,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     }
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        Review review = reviews.get(position);
+        ReviewResponse review = reviews.get(position);
         holder.bind(review); // Gọi phương thức bind để ánh xạ dữ liệu vào các phần tử của mẫu.
     }
     @Override
@@ -52,13 +56,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             avatarReviewer=itemView.findViewById(R.id.review_item_avatar);
         }
 
-        public void bind(Review review) {
+        public void bind(ReviewResponse review) {
             // Ánh xạ dữ liệu từ đánh giá vào các phần tử của mẫu
-            reviewerNameTextView.setText(review.getReviewerName());
-            ratingTextView.setText(String.valueOf(review.getRating()));
+            reviewerNameTextView.setText(review.getUsername());
+            ratingTextView.setText(String.valueOf(review.getRate()));
             evaluatedStarImageView.setImageResource(R.drawable.review_star);
-            reviewTextTextView.setText(review.getReviewText());
-            avatarReviewer.setImageResource(R.drawable.profile_avatar_default);
+            reviewTextTextView.setText(review.getContent());
+            Bitmap bitmap= BitmapFactory.decodeByteArray(review.getAvatarImg(),0,review.getAvatarImg().length);
+            avatarReviewer.setImageBitmap(bitmap);
         }
     }
 }

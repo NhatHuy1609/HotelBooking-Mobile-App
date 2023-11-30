@@ -7,36 +7,54 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.hotelbooking_app.Login.Activity.LoginActivity;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.Adapter.ReviewAdapter;
+import com.example.hotelbooking_app.Review.ApiService.ICallBack;
+import com.example.hotelbooking_app.Review.ApiService.ReviewEndpoint;
+import com.example.hotelbooking_app.Review.AsyncTask.ReviewAsynctask;
 import com.example.hotelbooking_app.Review.Fragment.ReviewCommentFragment;
 import com.example.hotelbooking_app.Review.Model.Review;
+import com.example.hotelbooking_app.Review.dto.ReviewResponse;
 import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ReviewsActivity extends AppCompatActivity {
     ImageView imageView;
+    private Retrofit retrofit;
 
+    private Long hotelId;
+    String baseUrl;
+    private List<ReviewResponse> reviews=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.evaluatting_layout);
+        baseUrl=getString(R.string.base_url);
+
+        retrofit= new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+
         openReview();
-        imageView=findViewById(R.id.review_back_icon);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(ReviewsActivity.this, DetailActivity.class);
-                startActivity(intent);
-            }
-        });
 
         openFragment();
     }
@@ -50,30 +68,74 @@ public class ReviewsActivity extends AppCompatActivity {
     }
 
     private void openReview() {
-        setContentView(R.layout.evaluatting_layout);
-        List<Review> reviews = new ArrayList<>();
-        reviews.add(new Review("Mộng Di đại sư 01", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));
-        reviews.add(new Review("Mộng Di đại sư 02", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));
-        reviews.add(new Review("Mộng Di đại sư 03", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));
-        reviews.add(new Review("Mộng Di đại sư 04", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));        reviews.add(new Review("Mộng Di đại sư", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));
-        reviews.add(new Review("Mộng Di đại sư 05", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));        reviews.add(new Review("Mộng Di đại sư", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));
-        reviews.add(new Review("Mộng Di đại sư 06", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));        reviews.add(new Review("Mộng Di đại sư", 3.5f, "Amazing. The room is good. I am Stephen Chow's close friend. Can you give me a discount?"));
+        imageView=findViewById(R.id.review_back_icon);
 
-        RecyclerView recyclerView = findViewById(R.id.review_recycleView);
-        ReviewAdapter adapter = new ReviewAdapter(reviews);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Quy định cách dữ liệu sẽ được hiển thị (theo danh sách, lưới, vv).
-        Float rate=computeRating(reviews);
-        setStarRating(rate);
+        Integer hotelIdInt= getIntent().getIntExtra("hotelId", 0);
+        if(hotelIdInt==0){
+            hotelId=1L;
+        }else {
+            hotelId=Long.parseLong(hotelIdInt.toString());
+        }
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ReviewsActivity.this, DetailActivity.class);
+                intent.putExtra("hotelId", Integer.parseInt(hotelId+""));
+                startActivity(intent);
+            }
+        });
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String jwt= sharedPreferences.getString("jwtKey", "");
+        if(jwt.isEmpty()){
+            Intent intent=new Intent(ReviewsActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+        //-----------------------------
+        new ReviewAsynctask(new ICallBack() {
+            @Override
+            public void onSuccess(List<ReviewResponse> reviewResponses) {
+                reviews=reviewResponses;
+                RecyclerView recyclerView = findViewById(R.id.review_recycleView);
+                ReviewAdapter adapter = new ReviewAdapter(reviews);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ReviewsActivity.this)); // Quy định cách dữ liệu sẽ được hiển thị (theo danh sách, lưới, vv).
+                Float rate=computeRating(reviews);
+                setStarRating(rate);
+            }
+
+            @Override
+            public void onFailure() {
+                Toast.makeText(ReviewsActivity.this, "Mang yeu. ", Toast.LENGTH_SHORT).show();
+                reviews=new ArrayList<ReviewResponse>();
+            }
+        }, retrofit.create(ReviewEndpoint.class)).execute(jwt, hotelId+"");
+
+
+        //----------------------------------
+
+
+
+
+
     }
 
-    private Float computeRating(List<Review> reviews) {
-        float totalRating=reviews.stream().map(Review::getRating).reduce(0.f, (a,b) -> a+b);
-        return  totalRating/((float)reviews.size());
+    private Float computeRating(List<ReviewResponse> reviews) {
+
+        if(reviews!=null) {
+            try {
+                float totalRating = reviews.stream().map(ReviewResponse::getRate).reduce(0.f, (a, b) -> a + b).floatValue();
+                return totalRating / ((float) reviews.size());
+            }catch (Exception exception){
+                exception.printStackTrace();
+            }
+        }
+        return 0.f;
     }
 
     private void setStarRating(float userRating) {
-        // Đánh giá từ người dùng, ví dụ: 3.4
+        // Đánh giá từ người dùng
 
         // Số ngôi sao cần tô màu (ví dụ: 3.4 sẽ tô màu 4 ngôi sao)
         TextView textView=findViewById(R.id.review_StarNumber);
