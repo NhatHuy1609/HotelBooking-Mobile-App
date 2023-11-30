@@ -1,5 +1,6 @@
 package com.example.hotelbooking_app.Searching.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +78,7 @@ public class SearchingResultsActivity extends AppCompatActivity implements Searc
         new SearchHotelApiCallAsyncTask(this, this).execute(searchQuery);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onApiCallSuccess(List<Hotel> hotels) {
         resultItemAdapter = new ResultItemAdapter(this, hotels);
@@ -94,9 +96,11 @@ public class SearchingResultsActivity extends AppCompatActivity implements Searc
 
     private void innitResultFilterRecyclerView() {
         ArrayList<ResultFilterDomain> arrResultFilterData = new ArrayList<>();
-        arrResultFilterData.add(new ResultFilterDomain("Latest"));
+        //  Soft by reviewQuantity
         arrResultFilterData.add(new ResultFilterDomain("Most Popular"));
+        //  Soft by price
         arrResultFilterData.add(new ResultFilterDomain("Cheapest"));
+        //  Soft by rate
         arrResultFilterData.add(new ResultFilterDomain("High Rating"));
 
         resultFilterAdapter = new ResultFilterAdapter(arrResultFilterData);

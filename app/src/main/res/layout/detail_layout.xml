@@ -149,7 +149,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/detail_tv_facility_see_all"
+                    android:id="@+id/searching_tv_popular_hotel_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See All"

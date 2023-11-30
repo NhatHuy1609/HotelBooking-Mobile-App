@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".Searching.Activity.SearchingActivity">
 
 
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -85,7 +87,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searching_rv_last_search"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="58dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
@@ -100,17 +102,17 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/searching_tv_recently_viewed"
+                    android:id="@+id/searching_tv_popular_hotel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Popular Search"
+                    android:text="Popular Hotels"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/detail_tv_facility_see_all"
+                    android:id="@+id/searching_tv_popular_hotel_see_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See All"
@@ -120,7 +122,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/searching_rv_recently_viewed"
+                android:id="@+id/searching_rv_popular_hotel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -141,22 +143,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Popular Search"
+                    android:text="High Rating Hotels"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/searching_rv_popular_search"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/searching_rv_high_rating_hotel"
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
+                android:layout_marginBottom="16dp"
                 android:dividerHeight="4dp"
-                tools:listitem="@layout/searching_item_popular_search" />
+                android:scrollbars="none"
+                tools:listitem="@layout/searching_item_high_rating_hotel" />
 
         </LinearLayout>
     </ScrollView>

@@ -11,9 +11,9 @@ public class Hotel {
     private List<ImageDetail> imageDetails;
     private int reviewQuantity;
     private boolean isFavourited;
-    private float rate;
+    private double rate;
 
-    public Hotel(int id, String name, String address, String price, String overview, List<ImageDetail> imageDetails, int reviewQuantity, boolean isFavourited, float rate) {
+    public Hotel(int id, String name, String address, String price, String overview, List<ImageDetail> imageDetails, int reviewQuantity, boolean isFavourited, double rate) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -89,11 +89,11 @@ public class Hotel {
         isFavourited = favourited;
     }
 
-    public float getRate() {
+    public double getRate() {
         return rate;
     }
 
-    public void setRate(float rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 }

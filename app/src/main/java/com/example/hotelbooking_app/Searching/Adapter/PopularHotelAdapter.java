@@ -31,10 +31,6 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
         this.mListPopularHotel = mListPopularHotel;
     }
 
-    public void setPopularHotels(List<Hotel> popularHotels) {
-        mListPopularHotel = popularHotels;
-    }
-
     @NonNull
     @Override
     public PopularHotelAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -67,7 +63,7 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
     }
 
     public class myViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvAddress, tvRating, tvCount;
+        TextView tvName, tvAddress, tvRating, tvCount, tvSeeAll;
         ImageView imgHotel;
         CardView cvHotel;
         public myViewHolder(@NonNull View itemView) {
@@ -79,6 +75,7 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
             tvCount = itemView.findViewById(R.id.item_tv_recently_viewed_count);
             imgHotel = itemView.findViewById(R.id.item_img_recently_viewed);
             cvHotel = itemView.findViewById(R.id.item_cv_recently_viewed);
+            tvSeeAll = itemView.findViewById(R.id.searching_tv_popular_hotel_see_all);
 
             cvHotel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,6 +94,5 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
                 }
             });
         }
-
     }
 }
