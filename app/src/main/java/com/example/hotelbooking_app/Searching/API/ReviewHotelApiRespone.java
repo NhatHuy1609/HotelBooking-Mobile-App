@@ -1,15 +1,14 @@
 package com.example.hotelbooking_app.Searching.API;
 
-import com.example.hotelbooking_app.Searching.Domain.Hotel;
-import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
+import com.example.hotelbooking_app.Searching.Domain.Review;
 
 import java.util.List;
 
-public class PopularHotelApiRespone {
+public class ReviewHotelApiRespone {
     private String message;
-    private List<Hotel> data;
+    private List<Review> data;
 
-    public PopularHotelApiRespone(String message, List<Hotel> data) {
+    public ReviewHotelApiRespone(String message, List<Review> data) {
         this.message = message;
         this.data = data;
     }
@@ -22,11 +21,11 @@ public class PopularHotelApiRespone {
         this.message = message;
     }
 
-    public List<Hotel> getData() {
+    public List<Review> getData() {
         return data;
     }
 
-    public void setData(List<Hotel> data) {
+    public void setData(List<Review> data) {
         this.data = data;
     }
 }

@@ -1,17 +1,18 @@
 package com.example.hotelbooking_app.Searching.API;
 
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
-import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
 
 import java.util.List;
 
-public class PopularHotelApiRespone {
+public class HotelApiRespone {
     private String message;
     private List<Hotel> data;
+    private String status;
 
-    public PopularHotelApiRespone(String message, List<Hotel> data) {
+    public HotelApiRespone(String message, List<Hotel> data, String status) {
         this.message = message;
         this.data = data;
+        this.status = status;
     }
 
     public String getMessage() {
@@ -28,5 +29,13 @@ public class PopularHotelApiRespone {
 
     public void setData(List<Hotel> data) {
         this.data = data;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

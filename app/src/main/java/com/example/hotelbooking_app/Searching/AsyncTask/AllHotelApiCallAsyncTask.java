@@ -4,11 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+import com.example.hotelbooking_app.Searching.API.HotelApiRespone;
+import com.example.hotelbooking_app.Searching.API.HotelApiService;
 import com.example.hotelbooking_app.Searching.API.PopularHotelApiRespone;
 import com.example.hotelbooking_app.Searching.API.PopularHotelApiService;
 import com.example.hotelbooking_app.Searching.API.PopularHotelRetrofitClient;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
-import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,16 +17,16 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class PopularHotelApiCallAsyncTask extends AsyncTask<Void, Void, List<Hotel>> {
+public class AllHotelApiCallAsyncTask extends AsyncTask<Void, Void, List<Hotel>> {
     private Context context;
     private ApiCallListener listener;
 
     public interface ApiCallListener {
-        void onApiCallSuccess(List<Hotel> popularHotels);
-        void onApiCallFailure(String errorMessage);
+        void onGetAllHotelsCompleted(List<Hotel> hotels);
+        void onGetAllHotelsFailure(String errorMessage);
     }
 
-    public PopularHotelApiCallAsyncTask(Context context, ApiCallListener listener) {
+    public AllHotelApiCallAsyncTask(Context context, ApiCallListener listener) {
         this.context = context;
         this.listener = listener;
     }
@@ -36,10 +37,10 @@ public class PopularHotelApiCallAsyncTask extends AsyncTask<Void, Void, List<Hot
         String authToken = preferences.getString("jwtKey", null);
         if (authToken != null) {
             try {
-                PopularHotelApiService apiService = PopularHotelRetrofitClient.getRetrofitInstance().create(PopularHotelApiService.class);
-                Call<PopularHotelApiRespone> call = apiService.getAllPopularHotels("Bearer " + authToken);
+                HotelApiService apiService = PopularHotelRetrofitClient.getRetrofitInstance().create(HotelApiService.class);
+                Call<HotelApiRespone> call = apiService.getAllHotels("Bearer " + authToken);
 
-                Response<PopularHotelApiRespone> response = call.execute();
+                Response<HotelApiRespone> response = call.execute();
                 if (response.isSuccessful() && response.body() != null) {
                     return response.body().getData();
                 } else {
@@ -55,13 +56,12 @@ public class PopularHotelApiCallAsyncTask extends AsyncTask<Void, Void, List<Hot
     }
 
     @Override
-    protected void onPostExecute(List<Hotel> popularHotels) {
-        super.onPostExecute(popularHotels);
-
-        if (popularHotels != null) {
-            listener.onApiCallSuccess(popularHotels);
+    protected void onPostExecute(List<Hotel> hotels) {
+        super.onPostExecute(hotels);
+        if (hotels != null) {
+            listener.onGetAllHotelsCompleted(hotels);
         } else {
-            listener.onApiCallFailure("API call failed");
+            listener.onGetAllHotelsFailure("API call failed");
         }
     }
 }

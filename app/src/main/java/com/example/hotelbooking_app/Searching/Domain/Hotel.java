@@ -11,8 +11,9 @@ public class Hotel {
     private List<ImageDetail> imageDetails;
     private int reviewQuantity;
     private boolean isFavourited;
+    private double rate;
 
-    public Hotel(int id, String name, String address, String price, String overview, List<ImageDetail> imageDetails, int reviewQuantity, boolean isFavourited) {
+    public Hotel(int id, String name, String address, String price, String overview, List<ImageDetail> imageDetails, int reviewQuantity, boolean isFavourited, double rate) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -21,6 +22,7 @@ public class Hotel {
         this.imageDetails = imageDetails;
         this.reviewQuantity = reviewQuantity;
         this.isFavourited = isFavourited;
+        this.rate = rate;
     }
 
     public int getId() {
@@ -85,5 +87,13 @@ public class Hotel {
 
     public void setFavourited(boolean favourited) {
         isFavourited = favourited;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 }

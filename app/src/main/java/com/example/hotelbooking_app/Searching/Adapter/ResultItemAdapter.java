@@ -1,5 +1,7 @@
 package com.example.hotelbooking_app.Searching.Adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,58 +12,61 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.request.target.ImageViewTargetFactory;
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
+import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.ResultItemDomain;
-import com.example.hotelbooking_app.Searching.Domain.ReviewsItemDomain;
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResultItemAdapter extends RecyclerView.Adapter<ResultItemAdapter.resultItemHolder> {
-    OnItemClickListener onItemClickListener;
-    ArrayList<ResultItemDomain> arrResultItemData;
+    private Context context;
+    private List<Hotel> mListHotels;
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    public ResultItemAdapter(Context context, List<Hotel> mListHotels) {
+        this.context = context;
+        this.mListHotels = mListHotels;
     }
-
-    public ResultItemAdapter(ArrayList<ResultItemDomain> arrResultItemData) {
-        this.arrResultItemData = arrResultItemData;
-    }
-
     @NonNull
     @Override
     public ResultItemAdapter.resultItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.searching_item_search_result_items, parent, false);
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.searching_item_search_result_items, parent, false);
         return new resultItemHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ResultItemAdapter.resultItemHolder holder, int position) {
-    holder.tvName.setText(arrResultItemData.get(position).getName());
-    holder.tvAddress.setText(arrResultItemData.get(position).getAddress());
-    holder.tvScore.setText("" + arrResultItemData.get(position).getScore());
-    holder.tvCount.setText("(" + arrResultItemData.get(position).getCount() + ")");
-    holder.tvPrice.setText(arrResultItemData.get(position).getPrice());
-    holder.imgHotel.setImageResource(arrResultItemData.get(position).getPicUrl());
-    holder.cvHotel.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onItemClickListener.onItemClick(position);
+        Hotel hotel = mListHotels.get(position);
+
+        // Set other data to the views
+        holder.tvName.setText(hotel.getName());
+        holder.tvAddress.setText(hotel.getAddress());
+        holder.tvRating.setText("" + hotel.getRate());
+        holder.tvPrice.setText("" + hotel.getPrice());
+        holder.tvCount.setText("(" + hotel.getReviewQuantity() + ")");
+
+        // Load image using Picasso
+        if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
+            String imageUrl = hotel.getImageDetails().get(0).getImg();
+            Picasso.get().load(imageUrl).into(holder.imgHotel);
+        } else {
+            holder.imgHotel.setImageResource(R.drawable.searching_image_muongthanh);
         }
-    });
     }
 
     @Override
     public int getItemCount() {
-        return arrResultItemData.size();
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+        return mListHotels.size();
     }
 
     public class resultItemHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvAddress, tvScore, tvCount, tvPrice;
+        TextView tvName, tvAddress, tvPrice, tvRating, tvCount;
         ImageView imgHotel;
         CardView cvHotel;
         public resultItemHolder(@NonNull View itemView) {
@@ -69,11 +74,28 @@ public class ResultItemAdapter extends RecyclerView.Adapter<ResultItemAdapter.re
 
             tvName = itemView.findViewById(R.id.item_tv_search_result_name);
             tvAddress = itemView.findViewById(R.id.item_tv_search_result_address);
-            tvScore = itemView.findViewById(R.id.item_tv_search_result_score);
-            tvCount = itemView.findViewById(R.id.item_tv_result_item_count);
             tvPrice = itemView.findViewById(R.id.item_tv_search_result_price);
+            tvRating = itemView.findViewById(R.id.item_tv_search_result_score);
+            tvCount = itemView.findViewById(R.id.item_tv_result_item_count);
             imgHotel = itemView.findViewById(R.id.item_img_search_result);
             cvHotel = itemView.findViewById(R.id.item_cv_search_result);
+
+            cvHotel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Hotel clickedHotel = mListHotels.get(position);
+                        int hotelId = clickedHotel.getId();
+
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra("hotelId", hotelId);
+
+                        // Start DetailActivity
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
     }
 }
