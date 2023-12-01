@@ -2,21 +2,15 @@ package com.example.hotelbooking_app.Searching.AsyncTask;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.AsyncTask;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.hotelbooking_app.Searching.API.DetailHotelApiRespone;
 import com.example.hotelbooking_app.Searching.API.DetailHotelApiService;
-import com.example.hotelbooking_app.Searching.API.PopularHotelApiRespone;
-import com.example.hotelbooking_app.Searching.API.PopularHotelApiService;
-import com.example.hotelbooking_app.Searching.API.PopularHotelRetrofitClient;
+import com.example.hotelbooking_app.Searching.API.HotelApiService;
+import com.example.hotelbooking_app.Searching.API.HotelRetrofitClient;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -44,7 +38,7 @@ public class DetailHotelApiCallAsyncTask extends AsyncTask<Integer, Void, Hotel>
 
         if (authToken != null) {
             try {
-                DetailHotelApiService apiService = PopularHotelRetrofitClient.getRetrofitInstance().create(DetailHotelApiService.class);
+                HotelApiService apiService = HotelRetrofitClient.getRetrofitInstance().create(HotelApiService.class);
                 Call<DetailHotelApiRespone> call = apiService.getHotelById("Bearer " + authToken, hotelId);
 
                 Response<DetailHotelApiRespone> response = call.execute();

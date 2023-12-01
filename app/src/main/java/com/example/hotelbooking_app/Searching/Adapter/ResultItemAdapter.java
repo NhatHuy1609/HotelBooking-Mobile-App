@@ -44,11 +44,14 @@ public class ResultItemAdapter extends RecyclerView.Adapter<ResultItemAdapter.re
     public void onBindViewHolder(@NonNull ResultItemAdapter.resultItemHolder holder, int position) {
         Hotel hotel = mListHotels.get(position);
 
+        double formattedRate = Math.round(hotel.getRate() * 10.0) / 10.0;
+        double formattedPrice = Math.round(hotel.getPrice() / 24237);
+
         // Set other data to the views
         holder.tvName.setText(hotel.getName());
         holder.tvAddress.setText(hotel.getAddress());
-        holder.tvRating.setText("" + hotel.getRate());
-        holder.tvPrice.setText("" + hotel.getPrice());
+        holder.tvRating.setText("" + formattedRate);
+        holder.tvPrice.setText("$" + formattedPrice + "/day");
         holder.tvCount.setText("(" + hotel.getReviewQuantity() + ")");
 
         // Load image using Picasso

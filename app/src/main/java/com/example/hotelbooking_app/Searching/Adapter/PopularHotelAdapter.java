@@ -1,7 +1,5 @@
 package com.example.hotelbooking_app.Searching.Adapter;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -17,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
-import com.example.hotelbooking_app.Searching.Domain.PopularHotel;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,7 +31,7 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
     @NonNull
     @Override
     public PopularHotelAdapter.myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.searching_item_recently_viewed, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.searching_item_popular_hotels, parent, false);
         return new myViewHolder(view);
     }
 
@@ -42,10 +39,13 @@ public class PopularHotelAdapter extends RecyclerView.Adapter<PopularHotelAdapte
     public void onBindViewHolder(@NonNull PopularHotelAdapter.myViewHolder holder, int position) {
         Hotel hotel = mListPopularHotel.get(position);
 
+        double formattedRate = Math.round(hotel.getRate() * 10.0) / 10.0;
+//        double formattedPrice = Math.round(hotel.getPrice() / 24237);
+
         // Set other data to the views
         holder.tvName.setText(hotel.getName());
         holder.tvAddress.setText(hotel.getAddress());
-        holder.tvRating.setText("" + hotel.getRate());
+        holder.tvRating.setText("" + formattedRate);
         holder.tvCount.setText("(" + hotel.getReviewQuantity() + ")");
 
         // Load image using Picasso

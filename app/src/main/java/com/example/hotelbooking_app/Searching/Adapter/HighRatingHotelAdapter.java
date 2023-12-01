@@ -46,8 +46,11 @@ public class HighRatingHotelAdapter extends RecyclerView.Adapter<HighRatingHotel
     public void onBindViewHolder(@NonNull HighRatingHotelAdapter.myViewHolder holder, int position) {
         Hotel hotel = mListHighRating.get(position);
 
+        double formattedRate = Math.round(hotel.getRate() * 10.0) / 10.0;
+
+
         holder.tvName.setText(hotel.getName());
-        holder.tvRating.setText("" + hotel.getRate());
+        holder.tvRating.setText("" + formattedRate);
 
         // Load image using Picasso
         if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
