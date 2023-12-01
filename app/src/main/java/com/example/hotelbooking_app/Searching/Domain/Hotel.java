@@ -6,14 +6,14 @@ public class Hotel {
     private int id;
     private String name;
     private String address;
-    private String price;
+    private double price;
     private String overview;
     private List<ImageDetail> imageDetails;
     private int reviewQuantity;
     private boolean isFavourited;
     private double rate;
 
-    public Hotel(int id, String name, String address, String price, String overview, List<ImageDetail> imageDetails, int reviewQuantity, boolean isFavourited, double rate) {
+    public Hotel(int id, String name, String address, double price, String overview, List<ImageDetail> imageDetails, int reviewQuantity, boolean isFavourited, double rate) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -49,11 +49,11 @@ public class Hotel {
         this.address = address;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

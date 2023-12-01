@@ -71,6 +71,7 @@ public class SearchingResultsActivity extends AppCompatActivity implements Searc
                 startActivity(intent);
             }
         });
+        // End onCreate()
     }
 
 

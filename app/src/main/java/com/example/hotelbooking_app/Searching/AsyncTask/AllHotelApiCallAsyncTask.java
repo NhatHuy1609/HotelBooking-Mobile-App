@@ -6,9 +6,7 @@ import android.os.AsyncTask;
 
 import com.example.hotelbooking_app.Searching.API.HotelApiRespone;
 import com.example.hotelbooking_app.Searching.API.HotelApiService;
-import com.example.hotelbooking_app.Searching.API.PopularHotelApiRespone;
-import com.example.hotelbooking_app.Searching.API.PopularHotelApiService;
-import com.example.hotelbooking_app.Searching.API.PopularHotelRetrofitClient;
+import com.example.hotelbooking_app.Searching.API.HotelRetrofitClient;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 
 import java.io.IOException;
@@ -37,7 +35,7 @@ public class AllHotelApiCallAsyncTask extends AsyncTask<Void, Void, List<Hotel>>
         String authToken = preferences.getString("jwtKey", null);
         if (authToken != null) {
             try {
-                HotelApiService apiService = PopularHotelRetrofitClient.getRetrofitInstance().create(HotelApiService.class);
+                HotelApiService apiService = HotelRetrofitClient.getRetrofitInstance().create(HotelApiService.class);
                 Call<HotelApiRespone> call = apiService.getAllHotels("Bearer " + authToken);
 
                 Response<HotelApiRespone> response = call.execute();

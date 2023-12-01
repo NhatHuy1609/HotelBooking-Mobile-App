@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
-import com.example.hotelbooking_app.Searching.API.PopularHotelApiRespone;
-import com.example.hotelbooking_app.Searching.API.PopularHotelApiService;
-import com.example.hotelbooking_app.Searching.API.PopularHotelRetrofitClient;
-import com.example.hotelbooking_app.Searching.API.SearchHotelApiRespone;
-import com.example.hotelbooking_app.Searching.API.SearchHotelApiService;
+import com.example.hotelbooking_app.Searching.API.HotelApiRespone;
+import com.example.hotelbooking_app.Searching.API.HotelApiService;
+import com.example.hotelbooking_app.Searching.API.HotelRetrofitClient;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 
 import java.io.IOException;
@@ -40,10 +38,10 @@ public class SearchHotelApiCallAsyncTask extends AsyncTask<String, Void, List<Ho
 
         if (authToken != null) {
             try {
-                SearchHotelApiService apiService = PopularHotelRetrofitClient.getRetrofitInstance().create(SearchHotelApiService.class);
-                Call<SearchHotelApiRespone> call = apiService.getSearchHotels("Bearer " + authToken, keyword);
+                HotelApiService apiService = HotelRetrofitClient.getRetrofitInstance().create(HotelApiService.class);
+                Call<HotelApiRespone> call = apiService.getSearchHotels("Bearer " + authToken, keyword);
 
-                Response<SearchHotelApiRespone> response = call.execute();
+                Response<HotelApiRespone> response = call.execute();
                 if (response.isSuccessful() && response.body() != null) {
                     return response.body().getData();
                 } else {

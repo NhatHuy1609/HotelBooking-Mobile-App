@@ -36,9 +36,11 @@ public class ReviewHotelAdapter extends RecyclerView.Adapter<ReviewHotelAdapter.
     public void onBindViewHolder(@NonNull ReviewHotelAdapter.myViewHolder holder, int position) {
         Review review = reviews.get(position);
 
+        double formattedRate = Math.round(review.getRate() * 10.0) / 10.0;
+
         // Set other data to the views
-        holder.tvName.setText("Unknown");
-        holder.tvRaing.setText("" + review.getRate());
+        holder.tvName.setText("@user092347891");
+        holder.tvRaing.setText("" + formattedRate);
         holder.tvContent.setText(review.getContent());
     }
 

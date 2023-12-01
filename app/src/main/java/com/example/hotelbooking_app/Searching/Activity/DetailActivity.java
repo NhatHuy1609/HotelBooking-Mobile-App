@@ -88,6 +88,7 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
                 startActivity(intent);
             }
         });
+        //End onCreate()
     }
 
     private void getReviewById(int hotelId) {
@@ -101,6 +102,8 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
     @Override
     public void onApiCallSuccess(Hotel hotel) {
         if (hotel != null) {
+            double formattedPrice = Math.round(hotel.getPrice() / 24237);
+
             tvName = findViewById(R.id.detail_tv_hotel_name);
             tvAddress = findViewById(R.id.detail_tv_hotel_address);
             tvOverview = findViewById(R.id.detail_tv_overview_content);
@@ -110,7 +113,7 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
             tvName.setText(hotel.getName());
             tvAddress.setText(hotel.getAddress());
             tvOverview.setText(hotel.getOverview());
-            tvPrice.setText("" + hotel.getPrice());
+            tvPrice.setText("$" + formattedPrice);
 
             if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
                 ImageSlider imageSlider = findViewById(R.id.detail_img_slider);

@@ -12,7 +12,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +21,10 @@ import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Searching.Adapter.HighRatingHotelAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.LastSearchAdapter;
 import com.example.hotelbooking_app.Searching.Adapter.PopularHotelAdapter;
-import com.example.hotelbooking_app.Searching.Adapter.PopularSearchAdapter;
 import com.example.hotelbooking_app.Searching.AsyncTask.AllHotelApiCallAsyncTask;
 import com.example.hotelbooking_app.Searching.AsyncTask.PopularHotelApiCallAsyncTask;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
 import com.example.hotelbooking_app.Searching.Domain.LastSearchDomain;
-import com.example.hotelbooking_app.Searching.Domain.PopularSearchDomain;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -98,6 +95,22 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
             }
         });
 
+        TextView seeAllBtn_1 = findViewById(R.id.searching_tv_popular_hotel_see_all);
+        seeAllBtn_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SwithToSearchingResultActivity();
+            }
+        });
+
+        TextView seeAllBtn_2 = findViewById(R.id.searching_tv_high_rating_see_all);
+        seeAllBtn_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SwithToSearchingResultActivity();
+            }
+        });
+
         //  Intent to HomescreenActivity
         ImageButton returnHomeBtn = findViewById(R.id.searching_back_button);
         returnHomeBtn.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +121,13 @@ public class SearchingActivity extends AppCompatActivity implements PopularHotel
             }
         });
         // End onCreate()
+    }
+
+    private void SwithToSearchingResultActivity() {
+        Intent intent = new Intent(SearchingActivity.this, SearchingResultsActivity.class);
+        String NULL_TEXT = "";
+        intent.putExtra("SEARCH_QUERY", NULL_TEXT);
+        startActivity(intent);
     }
 
 

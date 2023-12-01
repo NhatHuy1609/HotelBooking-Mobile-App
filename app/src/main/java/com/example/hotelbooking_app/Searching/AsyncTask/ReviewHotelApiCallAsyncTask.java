@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
-import com.example.hotelbooking_app.Searching.API.DetailHotelApiRespone;
-import com.example.hotelbooking_app.Searching.API.DetailHotelApiService;
-import com.example.hotelbooking_app.Searching.API.PopularHotelRetrofitClient;
+import com.example.hotelbooking_app.Searching.API.HotelRetrofitClient;
 import com.example.hotelbooking_app.Searching.API.ReviewHotelApiRespone;
 import com.example.hotelbooking_app.Searching.API.ReviewHotelApiService;
 import com.example.hotelbooking_app.Searching.Domain.Review;
@@ -40,7 +38,7 @@ public class ReviewHotelApiCallAsyncTask extends AsyncTask<Integer, Void, List<R
 
         if (authToken != null) {
             try {
-                ReviewHotelApiService apiService = PopularHotelRetrofitClient.getRetrofitInstance().create(ReviewHotelApiService.class);
+                ReviewHotelApiService apiService = HotelRetrofitClient.getRetrofitInstance().create(ReviewHotelApiService.class);
                 Call<ReviewHotelApiRespone> call = apiService.getReviewHotelById("Bearer " + authToken, hotelId);
 
                 Response<ReviewHotelApiRespone> response = call.execute();
