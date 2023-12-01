@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import java.util.Date;
 
 public class Homescreen_Booked {
+    private int hotelId;
     private String Ten;
     private String DiaChi;
     private double DanhGia;
@@ -15,7 +16,8 @@ public class Homescreen_Booked {
     private Date NgayCheckIn;
     private Date NgayCheckOut;
 
-    public Homescreen_Booked(String ten, String diaChi, double danhGia, int soLuongDanhGia, double gia, Bitmap hinh, Date ngayCheckIn, Date ngayCheckOut) {
+    public Homescreen_Booked(int hotelId, String ten, String diaChi, double danhGia, int soLuongDanhGia, double gia, Bitmap hinh, Date ngayCheckIn, Date ngayCheckOut) {
+        this.hotelId = hotelId;
         Ten = ten;
         DiaChi = diaChi;
         DanhGia = danhGia;
@@ -24,6 +26,14 @@ public class Homescreen_Booked {
         Hinh = hinh;
         NgayCheckIn = ngayCheckIn;
         NgayCheckOut = ngayCheckOut;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     public String getTen() {

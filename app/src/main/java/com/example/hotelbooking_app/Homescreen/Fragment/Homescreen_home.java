@@ -46,7 +46,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 
@@ -56,7 +58,7 @@ public class Homescreen_home extends Fragment {
     TextView nearbyHotels,txtLocation;
     ScrollView scrollview;
 
-    ImageView btn_seach;
+    ImageView btn_seach, avt_user;
     RelativeLayout btn_acc;
     BottomNavigationView bottomNavigationView;
     ArrayList<Homescreen_Nearbyhotel> arrayNearByHotel;
@@ -69,6 +71,8 @@ public class Homescreen_home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.homescreen_fragment_home, container, false);
+        avt_user = view.findViewById(R.id.home_img_accout);
+        loadUserAvatar();
 
 
         arrayNearByHotel = new ArrayList<>();
@@ -318,6 +322,28 @@ public class Homescreen_home extends Fragment {
     public int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round((float)dp * density);
+    }
+    private void loadUserAvatar() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String jwtToken = sharedPreferences.getString("jwtKey", null);
+
+        Home_HotelEndpoint hotelEndpoint = Home_HotelApiClient.getClient().create(Home_HotelEndpoint.class);
+        Call<ResponseBody> avtCall = hotelEndpoint.getUserAvatar("Bearer " + jwtToken);
+
+        avtCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
+                    avt_user.setImageBitmap(bitmap);
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+        });
     }
 
 

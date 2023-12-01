@@ -1,6 +1,7 @@
 package com.example.hotelbooking_app.Homescreen.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,7 @@ import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_HotelEndpoin
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_ImageDetail;
 import com.example.hotelbooking_app.Homescreen.Hotels.Homescreen_Nearbyhotel;
 import com.example.hotelbooking_app.R;
+import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -107,8 +109,20 @@ private class HotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_Near
             arrayHistory.addAll(result);
             adapter.notifyDataSetChanged();
             for (int i = 0; i < adapter.getCount(); i++) {
-                View ittem = adapter.getView(i, null, null);
-                lnHistory.addView(ittem);
+                final int position = i;
+                View item = adapter.getView(i, null, null);
+                lnHistory.addView(item);
+                item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Lấy ID của view được nhấn
+                        int selectedHotelId = arrayHistory.get(position).getHotelId();
+                        // Tạo intent để chuyển sang activity chi tiết và gửi ID
+                        Intent intent = new Intent(getContext(), DetailActivity.class);
+                        intent.putExtra("hotelId", selectedHotelId);
+                        startActivity(intent);
+                    }
+                });
             }
 
             // Check and log the contents of arrayNearByHotel

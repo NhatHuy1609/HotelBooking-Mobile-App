@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
 
     <application
@@ -65,13 +68,14 @@
             android:exported="true" />
         <activity
             android:name=".Homescreen.Activity.Homescreen_changepassword"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Homescreen.Activity.Homescreen_notifications"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Homescreen.Activity.Homescreen_myprofile"
-            android:exported="false"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_homescreen_myprofile"
             android:theme="@style/Theme.HotelBooking_App" />
     </application>
