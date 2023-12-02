@@ -148,7 +148,7 @@ public class Homescreen_myprofile extends AppCompatActivity {
                     }, 5000);
                 } else {
                     // Xử lý khi có lỗi khi post ảnh
-                    txtError_avt.setTextColor(Color.GREEN);
+                    txtError_avt.setTextColor(Color.RED);
                     txtError_avt.setText("Failed to upload avatar.");
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -168,8 +168,14 @@ public class Homescreen_myprofile extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 // Xử lý khi có lỗi
-                txtError_avt.setTextColor(Color.GREEN);
+                txtError_avt.setTextColor(Color.RED);
                 txtError_avt.setText("Image size does not match.");
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtError_avt.setText("");
+                    }
+                }, 5000);
             }
         });
 
