@@ -30,8 +30,9 @@
                             android:id="@+id/home_img_accout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@drawable/splash_screen_logo02"
+                            android:src="@drawable/profile_default_avatar"
                             android:clipToOutline="true"
+                            android:scaleType="centerCrop"
                             android:background="@drawable/reviews_avatar">
                         </ImageView>
 

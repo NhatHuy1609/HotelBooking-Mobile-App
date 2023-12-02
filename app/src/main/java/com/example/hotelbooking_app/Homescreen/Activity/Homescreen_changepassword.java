@@ -110,11 +110,8 @@ public class Homescreen_changepassword extends AppCompatActivity {
                             new_password.setText("");
                             confirm_password.setText("");
                             confirm_password.clearFocus();
-                            confirm_password.setCursorVisible(false);
                             new_password.clearFocus();
-                            new_password.setCursorVisible(false);
                             current_password.clearFocus();
-                            current_password.setCursorVisible(false);
                             handler.postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
