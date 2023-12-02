@@ -51,6 +51,7 @@ public class HighRatingHotelAdapter extends RecyclerView.Adapter<HighRatingHotel
 
         holder.tvName.setText(hotel.getName());
         holder.tvRating.setText("" + formattedRate);
+        holder.tvCount.setText("(" + hotel.getReviewQuantity() + ")");
 
         // Load image using Picasso
         if (hotel.getImageDetails() != null && !hotel.getImageDetails().isEmpty()) {
@@ -86,7 +87,7 @@ public class HighRatingHotelAdapter extends RecyclerView.Adapter<HighRatingHotel
 
     public class myViewHolder extends RecyclerView.ViewHolder
     {
-        TextView tvName, tvRating;
+        TextView tvName, tvRating, tvCount;
         AppCompatButton btnBook;
         ImageView imgHotel;
         CardView cvHotel;
@@ -94,6 +95,7 @@ public class HighRatingHotelAdapter extends RecyclerView.Adapter<HighRatingHotel
             super(itemView);
             tvName = itemView.findViewById(R.id.item_tv_high_rating_hotel_name);
             tvRating = itemView.findViewById(R.id.item_tv_high_rating_hotel_rate);
+            tvCount = itemView.findViewById(R.id.item_tv_high_rating_hotel_rate_count);
             btnBook = itemView.findViewById(R.id.item_tv_high_rating_hotel_button);
             imgHotel = itemView.findViewById(R.id.item_img_high_rating_hotel);
             cvHotel = itemView.findViewById(R.id.item_cv_high_rating_hotel);
