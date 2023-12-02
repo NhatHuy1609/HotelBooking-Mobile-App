@@ -52,8 +52,8 @@ public class SearchingResultsActivity extends AppCompatActivity implements Searc
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getSearchHotels(query);
-                return true;
+//                getSearchHotels(query);
+                return false;
             }
 
             @Override

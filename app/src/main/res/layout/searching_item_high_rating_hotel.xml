@@ -46,19 +46,17 @@
 
         <TextView
             android:id="@+id/item_tv_high_rating_hotel_rate"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginBottom="12dp"
             android:drawableStart="@drawable/searching_star_icon"
             android:gravity="center_vertical"
             android:text="Rating"
-            android:textStyle="bold"
             android:textColor="@color/searching_yellow"
             android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/item_tv_high_rating_hotel_button"
             app:layout_constraintStart_toEndOf="@+id/item_img_high_rating_hotel" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -73,6 +71,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_tv_high_rating_hotel_rate_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="(Count)"
+            android:textSize="14sp"
+            android:textColor="@color/searching_grey"
+            app:layout_constraintBottom_toBottomOf="@+id/item_tv_high_rating_hotel_rate"
+            app:layout_constraintStart_toEndOf="@+id/item_tv_high_rating_hotel_rate"
+            app:layout_constraintTop_toTopOf="@+id/item_tv_high_rating_hotel_rate" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
