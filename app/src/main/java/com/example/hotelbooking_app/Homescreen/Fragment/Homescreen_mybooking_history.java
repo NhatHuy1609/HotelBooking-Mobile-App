@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.hotelbooking_app.Homescreen.Adapter.Homescreen_NearbyhotelAdapter;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_Hotel;
@@ -39,12 +40,16 @@ public class Homescreen_mybooking_history extends Fragment {
     LinearLayout lnHistory;
     ArrayList<Homescreen_Nearbyhotel> arrayHistory;
     Homescreen_NearbyhotelAdapter adapter;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.homescreen_mybooking_fragment_history, container, false);
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
         arrayHistory = new ArrayList<>();
         new HotelsAsyncTask().execute();
 
@@ -139,6 +144,7 @@ private class HotelsAsyncTask extends AsyncTask<Void, Void, List<Homescreen_Near
         } else {
             Log.e("API Error", "Null response received from API");
         }
+        progressBar.setVisibility(View.GONE);
     }
 
 

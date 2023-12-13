@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -52,6 +53,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
+
+
+
 public class Homescreen_home extends Fragment {
     HorizontalScrollView horizontalScrollView;
     LinearLayout lnNearbyHotel,lnPopularHotel,lnLocation;
@@ -65,14 +69,20 @@ public class Homescreen_home extends Fragment {
     ArrayList<Homescreen_PopularHotel> arrayPopularHotel;
     Homescreen_NearbyhotelAdapter adapter;
     Homescreen_PopularHotelAdapter adapter_1;
+    ProgressBar progressBar, progressBar_1;
 
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.homescreen_fragment_home, container, false);
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar_1 = view.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+
         avt_user = view.findViewById(R.id.home_img_accout);
         loadUserAvatar();
+
 
 
         arrayNearByHotel = new ArrayList<>();
@@ -205,6 +215,7 @@ public class Homescreen_home extends Fragment {
                     });
                 }
             }
+            progressBar_1.setVisibility(View.GONE);
 
         }
     }
@@ -261,6 +272,7 @@ public class Homescreen_home extends Fragment {
                     final int position = i;
                     View item = adapter.getView(i, null, null);
                     lnNearbyHotel.addView(item);
+
                     item.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -288,6 +300,7 @@ public class Homescreen_home extends Fragment {
             } else {
                 Log.e("API Error", "Null response received from API");
             }
+            progressBar.setVisibility(View.GONE);
         }
 
 

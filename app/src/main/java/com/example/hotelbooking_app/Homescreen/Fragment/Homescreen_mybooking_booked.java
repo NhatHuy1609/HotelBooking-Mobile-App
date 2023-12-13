@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_Booked;
 import com.example.hotelbooking_app.Homescreen.HotelApiService.Home_BookedApiResponse;
@@ -40,11 +41,15 @@ public class Homescreen_mybooking_booked extends Fragment {
     LinearLayout lnBookedHotel;
     ArrayList<Homescreen_Booked> arrayBookedHotel;
     Homescreen_BookedAdapter  adapter;
+    ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.homescreen_mybooking_fragment_booked, container, false);
+        progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
         arrayBookedHotel = new ArrayList<>();
         new BookedsAsyncTask().execute();
         adapter = new Homescreen_BookedAdapter(getActivity(),R.layout.homescreen_item_booked, arrayBookedHotel);
@@ -145,6 +150,7 @@ public class Homescreen_mybooking_booked extends Fragment {
             } else {
                 Log.e("API Error", "Null response received from API");
             }
+            progressBar.setVisibility(View.GONE);
         }
 
 

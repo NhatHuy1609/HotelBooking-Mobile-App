@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 public class Homescreen_myprofile extends AppCompatActivity {
 
     ImageButton btn_back;
@@ -51,12 +53,14 @@ public class Homescreen_myprofile extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
     private Handler handler;
+    ProgressBar progressBar_1;
 
     ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen_myprofile);
+        progressBar_1 = findViewById(R.id.progress_bar);
 
         btn_back = findViewById(R.id.myprofile_btn_back);
         imgProfile = findViewById(R.id.myprofile_imgacc);
@@ -238,6 +242,7 @@ public class Homescreen_myprofile extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Bitmap bitmap = BitmapFactory.decodeStream(response.body().byteStream());
                     imgProfile.setImageBitmap(bitmap);
+                    progressBar_1.setVisibility(View.GONE);
                 } else {
                     // Xử lý khi không tải được ảnh đại diện
                 }
