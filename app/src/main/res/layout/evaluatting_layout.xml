@@ -43,7 +43,7 @@
 
     <LinearLayout
         android:id="@+id/review_wrap_lineaLayout_02"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="170dp"
         android:layout_marginTop="1dp"
         android:orientation="horizontal"
@@ -63,7 +63,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="36dp"
                 android:layout_marginTop="28dp"
-                android:text="4.4"
+                android:text="0.0"
                 android:textSize="45dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -117,6 +117,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/numberReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
@@ -269,28 +270,12 @@
         app:layout_constraintTop_toBottomOf="@+id/review_wrap_lineaLayout_02"
         app:layout_constraintVertical_bias="0.068">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/review_list_fragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.9"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-condensed-medium"
-                android:text="Reviews"
-                android:textSize="30dp" />
-            <!-- item_layout.xml -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/review_recycleView"
-                android:layout_width="match_parent"
-                android:layout_height="370dp"
-                >
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </LinearLayout>
 
     <FrameLayout

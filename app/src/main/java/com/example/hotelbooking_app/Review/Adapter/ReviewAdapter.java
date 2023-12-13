@@ -2,6 +2,7 @@ package com.example.hotelbooking_app.Review.Adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +28,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.i("ReviewAdapter",reviews.size()+"");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_item_layout, parent, false);
         return new ReviewViewHolder(itemView);
     }
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         ReviewResponse review = reviews.get(position);
-        holder.bind(review); // Gọi phương thức bind để ánh xạ dữ liệu vào các phần tử của mẫu.
+        holder.bind(review);
     }
     @Override
     public int getItemCount() {

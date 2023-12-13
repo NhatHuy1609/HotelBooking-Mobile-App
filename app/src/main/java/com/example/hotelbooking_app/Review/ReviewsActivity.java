@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import com.example.hotelbooking_app.Review.ApiService.ICallBack;
 import com.example.hotelbooking_app.Review.ApiService.ReviewEndpoint;
 import com.example.hotelbooking_app.Review.AsyncTask.ReviewAsynctask;
 import com.example.hotelbooking_app.Review.Fragment.ReviewCommentFragment;
+import com.example.hotelbooking_app.Review.Fragment.ReviewListFragment;
 import com.example.hotelbooking_app.Review.Model.Review;
 import com.example.hotelbooking_app.Review.dto.ReviewResponse;
 import com.example.hotelbooking_app.Searching.Activity.DetailActivity;
@@ -47,6 +49,7 @@ public class ReviewsActivity extends AppCompatActivity {
     private Button commentBtn;
     private EditText CommentText;
     private TextView textView;
+    private TextView numberReview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,19 +62,23 @@ public class ReviewsActivity extends AppCompatActivity {
                 .build();
         imageView=findViewById(R.id.review_back_icon);
          textView=findViewById(R.id.review_StarNumber);
+        numberReview=findViewById(R.id.numberReview);
 
 
 
         openReview();
 
-        openFragment();
+
     }
 
     private void openFragment() {
         ReviewCommentFragment fragment= new ReviewCommentFragment(hotelId,jwt);
+        Log.i("Start openFragment ", "Revies size: "+ reviews.size());
+        ReviewListFragment reviewListFragment=new ReviewListFragment(reviews);
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
+        fragmentTransaction.replace(R.id.review_list_fragment, reviewListFragment);
         fragmentTransaction.commit();
 
     }
@@ -106,12 +113,12 @@ public class ReviewsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<ReviewResponse> reviewResponses) {
                 reviews=reviewResponses;
-                RecyclerView recyclerView = findViewById(R.id.review_recycleView);
-                ReviewAdapter adapter = new ReviewAdapter(reviews);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(ReviewsActivity.this)); // Quy định cách dữ liệu sẽ được hiển thị (theo danh sách, lưới, vv).
                 Float rate=computeRating(reviews);
                 setStarRating(rate);
+                numberReview.setText("Base on "+reviewResponses.size()+" reviews");
+
+
+                openFragment();
             }
 
             @Override
