@@ -1,5 +1,6 @@
 package com.example.hotelbooking_app.Booking.Data;
 
+import com.example.hotelbooking_app.Booking.Item.BookingPaymentMethod;
 import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 
 import java.io.Serializable;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class BookingFormDetailData implements Serializable {
+    private int hotelId;
     private int selectedRoomValue;
     private int selectedAdultValue;
     private int selectedChildValue;
@@ -14,6 +16,7 @@ public class BookingFormDetailData implements Serializable {
     private Date endDate;
     private String phoneNumber;
     private ArrayList<BookingRoomType> roomTypeList;
+    private BookingPaymentMethod bookingPaymentMethod;
 
     public ArrayList<BookingRoomType> getRoomTypeList() {
         return roomTypeList;
@@ -27,6 +30,23 @@ public class BookingFormDetailData implements Serializable {
         this.selectedRoomValue = 0;
         this.selectedAdultValue = 0;
         this.selectedChildValue = 0;
+        this.roomTypeList = new ArrayList<BookingRoomType>();
+    }
+
+    public BookingPaymentMethod getBookingPaymentMethod() {
+        return bookingPaymentMethod;
+    }
+
+    public void setBookingPaymentMethod(BookingPaymentMethod bookingPaymentMethod) {
+        this.bookingPaymentMethod = bookingPaymentMethod;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
     public int getSelectedRoomValue() {

@@ -20,6 +20,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
+import com.example.hotelbooking_app.Booking.Constants.Constants;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.ReviewsActivity;
 import com.example.hotelbooking_app.Searching.Adapter.ResultItemAdapter;
@@ -54,10 +55,8 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
         Intent intent = getIntent();
         int hotelId = intent.getIntExtra("hotelId", 0);
 
-
         getDetailHotel(hotelId);
         getReviewById(hotelId);
-
 
         detailBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,18 +66,15 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
             }
         });
 
-
-
-
         bookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, BookingActivity.class);
+                intent.setAction(Constants.ACTION_DETAIL_TO_BOOKING);
                 intent.putExtra("hotelId", hotelId);
                 startActivity(intent);
             }
         });
-
 
         tvReviewsSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override

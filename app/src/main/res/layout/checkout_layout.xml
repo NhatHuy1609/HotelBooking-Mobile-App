@@ -55,6 +55,7 @@
             app:cardCornerRadius="16dp">
 
             <ImageView
+                android:id="@+id/checkout_hotel_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
@@ -78,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Mường thanh hotel"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -477,7 +478,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/payment_select"
+            android:id="@+id/booking_payment_bottom_sheet_open_button"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="4dp"

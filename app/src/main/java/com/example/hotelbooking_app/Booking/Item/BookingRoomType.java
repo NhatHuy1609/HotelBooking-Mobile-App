@@ -1,5 +1,7 @@
 package com.example.hotelbooking_app.Booking.Item;
 
+import com.example.hotelbooking_app.Booking.Enum.RoomType;
+
 import java.io.Serializable;
 
 public class BookingRoomType implements Serializable {
@@ -7,12 +9,22 @@ public class BookingRoomType implements Serializable {
     private String name;
     private String description;
     private boolean isSelected;
+    private RoomType roomType;
 
-    public BookingRoomType(int id, String name, String description, boolean isSelected) {
+    public BookingRoomType(int id, String name, String description, boolean isSelected, RoomType roomType) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.isSelected = isSelected;
+        this.roomType = roomType;
+    }
+
+    public RoomType getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(RoomType roomType) {
+        this.roomType = roomType;
     }
 
     public int getId() {

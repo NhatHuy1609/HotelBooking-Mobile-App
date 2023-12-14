@@ -171,6 +171,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/booking_checkbox_policy_1"
                     android:layout_width="36dp"
                     android:layout_height="wrap_content" />
 
@@ -187,6 +188,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/booking_checkbox_policy_2"
                     android:layout_width="36dp"
                     android:layout_height="wrap_content" />
 
