@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import com.example.hotelbooking_app.Searching.API.DetailHotelApiRespone;
-import com.example.hotelbooking_app.Searching.API.DetailHotelApiService;
 import com.example.hotelbooking_app.Searching.API.HotelApiService;
 import com.example.hotelbooking_app.Searching.API.HotelRetrofitClient;
 import com.example.hotelbooking_app.Searching.Domain.Hotel;
