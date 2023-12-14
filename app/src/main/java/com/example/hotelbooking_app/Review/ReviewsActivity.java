@@ -72,14 +72,18 @@ public class ReviewsActivity extends AppCompatActivity {
     }
 
     private void openFragment() {
-        ReviewCommentFragment fragment= new ReviewCommentFragment(hotelId,jwt);
-        Log.i("Start openFragment ", "Revies size: "+ reviews.size());
-        ReviewListFragment reviewListFragment=new ReviewListFragment(reviews);
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        try {
+        ReviewCommentFragment fragment = new ReviewCommentFragment(hotelId, jwt);
+        Log.i("Start openFragment ", "Revies size: " + reviews.size());
+        ReviewListFragment reviewListFragment = new ReviewListFragment(reviews);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.replace(R.id.review_list_fragment, reviewListFragment);
         fragmentTransaction.commit();
+    } catch (Exception e){
+        e.printStackTrace();
+    }
 
     }
 

@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.hotelbooking_app.Homescreen.HomescreenActivity;
 import com.example.hotelbooking_app.Login.Activity.LoginActivity;
@@ -29,23 +31,27 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen_layout);
-        SystemClock.sleep(2000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                    String jwtToken = sharedPreferences.getString("jwtKey", null);
+                    long lastPuttedJwtTime = sharedPreferences.getLong("lastPuttedJwtTime", 0);
 
-        try {
-            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            String jwtToken = sharedPreferences.getString("jwtKey", null);
-            long lastPuttedJwtTime = sharedPreferences.getLong("lastPuttedJwtTime", 0);
-
-            if (!TextUtils.isEmpty(jwtToken) && lastPuttedJwtTime != 0) {
-                if (System.currentTimeMillis() - lastPuttedJwtTime > 30 * 60 * 1000)
-                    navigateToMain();
-
+                    if (!TextUtils.isEmpty(jwtToken) && lastPuttedJwtTime != 0 &&
+                            (System.currentTimeMillis() - lastPuttedJwtTime < 5 * 60 * 1000)) {
+                        navigateToMain();
+                    } else {
+                        navigateToLogin();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    navigateToLogin();
+                }
             }
-            navigateToLogin();
+        }, 2000);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     private void navigateToMain() {
