@@ -52,8 +52,13 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
         TextView tvReviewsSeeAll = (TextView) findViewById(R.id.detail_tv_reviews_see_all);
 
 
+        int hotelId;
         Intent intent = getIntent();
-        int hotelId = intent.getIntExtra("hotelId", 0);
+        if (intent.getAction() != null && intent.getAction().toString().equals(Constants.ACTION_BOOKING_TO_DETAIL)) {
+            hotelId = intent.getIntExtra("hotelId", 0);
+        } else {
+            hotelId = intent.getIntExtra("hotelId", 0);
+        }
 
         getDetailHotel(hotelId);
         getReviewById(hotelId);

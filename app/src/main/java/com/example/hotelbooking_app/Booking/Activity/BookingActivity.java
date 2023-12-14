@@ -109,6 +109,9 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
     private void setUpNavigateBackToDetail() {
         backBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, DetailActivity.class);
+            intent.setAction(Constants.ACTION_BOOKING_TO_DETAIL);
+            intent.putExtra("hotelId", bookingHotelId);
+
             startActivity(intent);
         });
     }
