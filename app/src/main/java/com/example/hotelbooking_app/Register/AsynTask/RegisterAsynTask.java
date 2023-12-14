@@ -1,5 +1,6 @@
 package com.example.hotelbooking_app.Register.AsynTask;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -17,11 +18,21 @@ public class RegisterAsynTask extends AsyncTask<String, Void, Boolean> {
     private Context context;
     private RegisterEndpoint registerEndpoint;
     private RegisterCallBack registerCallBack;
+    private ProgressDialog progressDialog;
 
     public RegisterAsynTask(Context context, RegisterEndpoint registerEndpoint, RegisterCallBack registerCallBack) {
         this.context = context;
         this.registerEndpoint = registerEndpoint;
         this.registerCallBack = registerCallBack;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Register your account...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     @Override
@@ -61,9 +72,13 @@ public class RegisterAsynTask extends AsyncTask<String, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean success) {
-       if(success)
+       if(success) {
+           progressDialog.dismiss();
            registerCallBack.onSuccess();
-       else
+       }
+       else {
+           progressDialog.dismiss();
            registerCallBack.onFailure();
+       }
     }
 }

@@ -20,6 +20,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
+import com.example.hotelbooking_app.Booking.Constants.Constants;
 import com.example.hotelbooking_app.R;
 import com.example.hotelbooking_app.Review.ReviewsActivity;
 import com.example.hotelbooking_app.Searching.Adapter.ResultItemAdapter;
@@ -51,13 +52,16 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
         TextView tvReviewsSeeAll = (TextView) findViewById(R.id.detail_tv_reviews_see_all);
 
 
+        int hotelId;
         Intent intent = getIntent();
-        int hotelId = intent.getIntExtra("hotelId", 0);
-
+        if (intent.getAction() != null && intent.getAction().toString().equals(Constants.ACTION_BOOKING_TO_DETAIL)) {
+            hotelId = intent.getIntExtra("hotelId", 0);
+        } else {
+            hotelId = intent.getIntExtra("hotelId", 0);
+        }
 
         getDetailHotel(hotelId);
         getReviewById(hotelId);
-
 
         detailBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,18 +71,15 @@ public class DetailActivity extends AppCompatActivity implements DetailHotelApiC
             }
         });
 
-
-
-
         bookingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this, BookingActivity.class);
+                intent.setAction(Constants.ACTION_DETAIL_TO_BOOKING);
                 intent.putExtra("hotelId", hotelId);
                 startActivity(intent);
             }
         });
-
 
         tvReviewsSeeAll.setOnClickListener(new View.OnClickListener() {
             @Override

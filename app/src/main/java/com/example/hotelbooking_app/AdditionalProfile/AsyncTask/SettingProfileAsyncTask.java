@@ -1,5 +1,6 @@
 package com.example.hotelbooking_app.AdditionalProfile.AsyncTask;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -32,7 +33,6 @@ public class SettingProfileAsyncTask extends AsyncTask<String, Void, Boolean> {
         this.profileEndpoint = profileEndpoint;
         this.callBack = callBack;
         this.file = file;
-
     }
 
     @Override

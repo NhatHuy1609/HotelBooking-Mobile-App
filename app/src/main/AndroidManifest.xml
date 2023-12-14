@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 
 
     <application
@@ -13,10 +13,10 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HotelBooking_App"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
         <!-- Phan Phuoc Huan -->
@@ -48,6 +48,9 @@
             android:name=".Booking.Activity.BookingActivity"
             android:exported="true" />
         <activity
+            android:name=".Booking.Activity.BookingAddCardActivity"
+            android:exported="true" />
+        <activity
             android:name=".Booking.Activity.BookingCheckoutActivity"
             android:exported="true" /> <!-- Truong Dinh Nhat -->
         <activity
@@ -75,9 +78,9 @@
         <activity
             android:name=".Homescreen.Activity.Homescreen_myprofile"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_homescreen_myprofile"
-            android:theme="@style/Theme.HotelBooking_App" />
+            android:theme="@style/Theme.HotelBooking_App"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

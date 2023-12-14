@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.hotelbooking_app.Booking.Activity.BookingActivity;
 import com.example.hotelbooking_app.Booking.Adapter.BookingRoomTypeAdapter;
 import com.example.hotelbooking_app.Booking.Data.BookingFormDetailData;
+import com.example.hotelbooking_app.Booking.Enum.RoomType;
 import com.example.hotelbooking_app.Booking.Interface.OnSaveClickListener;
 import com.example.hotelbooking_app.Booking.Item.BookingRoomType;
 import com.example.hotelbooking_app.R;
@@ -88,14 +89,12 @@ public class BookingRoomsSelectBottomSheet extends BottomSheetDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.roomTypeList = new ArrayList<>();
-        roomTypeList.add(new BookingRoomType(1,"King Room", "This is king room type", false));
-        roomTypeList.add(new BookingRoomType(2,"Queen Room", "This is queen room type", false));
-        roomTypeList.add(new BookingRoomType(3,"A Room", "This is queen A type", false));
-        roomTypeList.add(new BookingRoomType(4,"B Room", "This is queen B type", false));
-        roomTypeList.add(new BookingRoomType(5,"C Room", "This is queen C type", false));
-        roomTypeList.add(new BookingRoomType(6,"D Room", "This is queen D type", false));
-        roomTypeList.add(new BookingRoomType(7,"E Room", "This is queen E type", false));
-        roomTypeList.add(new BookingRoomType(8,"F Room", "This is queen F type", false));
+        roomTypeList.add(new BookingRoomType(1,"Single Room", "This is single room type", false, RoomType.Single));
+        roomTypeList.add(new BookingRoomType(2,"Double Room", "This is double room type", false, RoomType.Double));
+        roomTypeList.add(new BookingRoomType(3,"Queen Room", "This is queen room type", false, RoomType.Queen));
+        roomTypeList.add(new BookingRoomType(4,"King Room", "This is king room type", false, RoomType.King));
+        roomTypeList.add(new BookingRoomType(5,"Twin Room", "This is twin room type", false, RoomType.Twin));
+        roomTypeList.add(new BookingRoomType(6,"Studio Room", "This is studio room type", false, RoomType.Studio));
 
 
         // Handle filter selected room type

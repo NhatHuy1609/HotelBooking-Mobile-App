@@ -5,13 +5,16 @@ import android.os.Bundle;
 //import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.hotelbooking_app.Booking.Constants.Constants;
 import com.example.hotelbooking_app.Booking.Data.BookingFormDetailData;
+import com.example.hotelbooking_app.Booking.Fragment.AlertDialogFragment;
 import com.example.hotelbooking_app.Booking.Fragment.BookingGuestsSelectBottomSheet;
 import com.example.hotelbooking_app.Booking.Fragment.BookingRoomsSelectBottomSheet;
 
@@ -42,7 +45,10 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
     private TextView datesSelect;
     private EditText phoneNumberSelect;
     private AppCompatButton continueBtn;
+    private CheckBox ckbPolicy1, ckbPolicy2;
     private MaterialDatePicker<Pair<Long, Long>> datePicker;
+
+    private int bookingHotelId;
     BookingFormDetailData bookingFormDetailData;
 
     @Override
@@ -60,12 +66,23 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
         phoneNumberSelect = findViewById(R.id.booking_phone_number);
         continueBtn = findViewById(R.id.booking_continue_button);
         backBtn = findViewById(R.id.booking_back_button);
+        ckbPolicy1 = findViewById(R.id.booking_checkbox_policy_1);
+        ckbPolicy2 = findViewById(R.id.booking_checkbox_policy_2);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            bookingFormDetailData = (BookingFormDetailData) bundle.getSerializable("bookingFormData");
-            updateBookingFormView(bookingFormDetailData);
+
+        if (intent.getAction() != null && intent.getAction().equals(Constants.ACTION_DETAIL_TO_BOOKING)) {
+            bookingHotelId = intent.getIntExtra("hotelId", 0);
+        }
+
+        if (intent.getAction() != null && intent.getAction().equals(Constants.ACTION_CHECKOUT_TO_BOOKING)) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                bookingFormDetailData = (BookingFormDetailData) bundle.getSerializable("bookingFormData");
+
+                bookingHotelId = bookingFormDetailData.getHotelId();
+                updateBookingFormView(bookingFormDetailData);
+            }
         }
 
         setupGuestsSelect(bookingFormDetailData);
@@ -92,6 +109,9 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
     private void setUpNavigateBackToDetail() {
         backBtn.setOnClickListener(v -> {
             Intent intent = new Intent(this, DetailActivity.class);
+            intent.setAction(Constants.ACTION_BOOKING_TO_DETAIL);
+            intent.putExtra("hotelId", bookingHotelId);
+
             startActivity(intent);
         });
     }
@@ -99,15 +119,53 @@ public class BookingActivity extends AppCompatActivity implements OnSaveClickLis
     private void setUpNavigateToCheckout() {
         continueBtn.setOnClickListener(v -> {
             bookingFormDetailData.setPhoneNumber(String.valueOf(phoneNumberSelect.getText()));
+            bookingFormDetailData.setHotelId(bookingHotelId);
 
-            Intent intent = new Intent(this, BookingCheckoutActivity.class);
-            Bundle bundle = new Bundle();
+            if (checkDataBeforeNavigateToCheckout() == Constants.STATE_OK) {
+                Intent intent = new Intent(this, BookingCheckoutActivity.class);
+                intent.setAction(Constants.ACTION_BOOKING_TO_CHECKOUT);
 
-            bundle.putSerializable("bookingFormData", (Serializable) bookingFormDetailData);
-            intent.putExtras(bundle);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bookingFormData", (Serializable) bookingFormDetailData);
+                intent.putExtras(bundle);
 
-            startActivity(intent);
+                startActivity(intent);
+            } else {
+                AlertDialogFragment.showAlertDialog(this,"Lack of information", checkDataBeforeNavigateToCheckout());
+            }
         });
+    }
+
+    private String checkDataBeforeNavigateToCheckout() {
+        if (bookingFormDetailData.getStartDate() == null) {
+            return "Please select a start date";
+        }
+
+        if (bookingFormDetailData.getEndDate() == null) {
+            return "Please select a end date";
+        }
+
+        if (bookingFormDetailData.getSelectedChildValue() == 0 && bookingFormDetailData.getSelectedAdultValue() == 0) {
+            return "Please choose people quantity";
+        }
+
+        if (bookingFormDetailData.getSelectedRoomValue() == 0) {
+            return "Please choose room quantity";
+        }
+
+        if (bookingFormDetailData.getRoomTypeList().size() == 0) {
+            return "Please select room type";
+        }
+
+        if (bookingFormDetailData.getPhoneNumber().equals("")) {
+            return "Please fill in your phone number";
+        }
+
+        if (!ckbPolicy1.isChecked() || !ckbPolicy2.isChecked()) {
+            return "Please agree with our policies";
+        }
+
+        return Constants.STATE_OK;
     }
 
     private void setupGuestsSelect(BookingFormDetailData bookingFormDetailData) {

@@ -148,8 +148,6 @@ public class AdditionalProfileActivity extends AppCompatActivity {
 
 
         uploadImg();
-
-
     }
     private void showCalendarDialog() {
         Dialog calendarDialog = new Dialog(this); // 'this' tham chiếu đến Activity hiện tại

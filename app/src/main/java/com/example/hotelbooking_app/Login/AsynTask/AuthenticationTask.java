@@ -1,5 +1,6 @@
 package com.example.hotelbooking_app.Login.AsynTask;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -20,11 +21,21 @@ public class AuthenticationTask extends AsyncTask<String, Void, Boolean> {
     private Context context;
     private AuthenticationCallback callback;
     private AuthEnpoint apiAuthEnpointService;
+    private ProgressDialog progressDialog;
 
     public AuthenticationTask(Context context, AuthenticationCallback callback, AuthEnpoint apiAuthEnpointService) {
         this.context = context;
         this.callback = callback;
         this.apiAuthEnpointService = apiAuthEnpointService;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Login to your account...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     @Override
@@ -65,8 +76,10 @@ public class AuthenticationTask extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean success) {
         if (success) {
+            progressDialog.dismiss();
             callback.onSuccess();
         } else {
+            progressDialog.dismiss();
             callback.onFailure();
         }
     }
