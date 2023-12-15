@@ -231,7 +231,7 @@ public class BookingCheckoutActivity extends AppCompatActivity implements
         Date hotelDateBookedEnd = bookingFormDetailData.getEndDate();
 
         Long totalDayBooked = getDateDiff(hotelDateBookedStart, hotelDateBookedEnd, TimeUnit.DAYS);
-        Double hotelTotalPriceBooked = totalDayBooked * hotelPriceValue;
+        Double hotelTotalPriceBooked = totalDayBooked * hotelPriceValue * bookingFormDetailData.getRoomTypeList().size();
         Double hotelTotalBillPriceBooked = hotelTotalPriceBooked + 2.5;
 
         DecimalFormat decimalFormat = new DecimalFormat("#,##0");
