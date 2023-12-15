@@ -289,7 +289,7 @@ public class Homescreen_myprofile extends AppCompatActivity {
                     edt_phone.setText(userData.getPhone());
                     edt_address.setText(userData.getAddress());
 
-                    loadUserAvatar();
+                     loadUserAvatar();
                 }
             } else {
                 // Handle error case

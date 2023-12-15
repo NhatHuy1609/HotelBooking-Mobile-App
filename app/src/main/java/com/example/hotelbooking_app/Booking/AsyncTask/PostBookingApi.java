@@ -67,7 +67,10 @@ public class PostBookingApi extends AsyncTask<Void, Void, Boolean> {
             // Start another activity upon success
             progressDialog.dismiss();
             Intent intent = new Intent(context, HomescreenActivity.class);
+//            context.startActivity(intent);
+            intent.putExtra("navigateTo", "mybookingfragment");
             context.startActivity(intent);
+
         } else {
             progressDialog.dismiss();
             Toast.makeText(context, "Booking hotel failed!", Toast.LENGTH_SHORT).show();

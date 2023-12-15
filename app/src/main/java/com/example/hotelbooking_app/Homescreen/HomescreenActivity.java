@@ -29,9 +29,14 @@ public class HomescreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homescreen);
 
-        //bottom navigation
         bottomNavigationView = findViewById(R.id.homescreen_bottom_navigation);
-        getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, homefragment).commit();
+        String navigateToFragment = getIntent().getStringExtra("navigateTo");
+        if ("mybookingfragment".equals(navigateToFragment)) {
+            bottomNavigationView.setSelectedItemId(R.id.btn_mybooking);
+            getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, mybookingfragment).commit();
+        } else {
+            getSupportFragmentManager().beginTransaction().replace(R.id.homescreen_containerr, homefragment).commit();
+        }
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
