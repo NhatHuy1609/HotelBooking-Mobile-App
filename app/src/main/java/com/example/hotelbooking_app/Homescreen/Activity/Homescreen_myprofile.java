@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -78,7 +79,7 @@ public class Homescreen_myprofile extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveChanges();
+                    saveChanges();
             }
         });
 
@@ -110,7 +111,6 @@ public class Homescreen_myprofile extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            // Lấy đường dẫn của ảnh
             Uri uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
@@ -136,6 +136,7 @@ public class Homescreen_myprofile extends AppCompatActivity {
 
         Home_HotelEndpoint hotelEndpoint = Home_HotelApiClient.getClient().create(Home_HotelEndpoint.class);
         Call<ResponseBody> call = hotelEndpoint.uploadUserAvatar("Bearer " + jwtToken, body);
+
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -183,6 +184,7 @@ public class Homescreen_myprofile extends AppCompatActivity {
             }
         });
 
+
         // Retrieve user input from EditText fields
         String updatedFirstName = edt_firstname.getText().toString();
         String updatedLastName = edt_lastname.getText().toString();
@@ -218,17 +220,6 @@ public class Homescreen_myprofile extends AppCompatActivity {
         return imageFile;
     }
 
-
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        android.database.Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String filePath = cursor.getString(column_index);
-        cursor.close();
-        return filePath;
-    }
-
     private void loadUserAvatar() {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String jwtToken = sharedPreferences.getString("jwtKey", null);
@@ -245,6 +236,14 @@ public class Homescreen_myprofile extends AppCompatActivity {
                     progressBar_1.setVisibility(View.GONE);
                 } else {
                     // Xử lý khi không tải được ảnh đại diện
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar_1.setVisibility(View.GONE);
+                            imgProfile.setImageResource(R.drawable.profile_default_avatar);
+                        }
+
+                    }, 3000);
                 }
             }
 
@@ -346,4 +345,7 @@ public class Homescreen_myprofile extends AppCompatActivity {
             }
         });
     }
+
+
+
 }

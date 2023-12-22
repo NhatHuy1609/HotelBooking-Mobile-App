@@ -145,10 +145,6 @@ public class Homescreen_changepassword extends AppCompatActivity {
 
 
     }
-    private void hideSoftKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 
 
 }

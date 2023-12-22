@@ -74,7 +74,6 @@ public class Homescreen_mybooking extends Fragment {
         mybooking_btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add this line to go back to the previous fragment
                 getFragmentManager().popBackStack();
                 // Update the selected item in the BottomNavigationView
                 bottomNavigationView.setSelectedItemId(((HomescreenActivity)getActivity()).getPreviousFragmentId());
